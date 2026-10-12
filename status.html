@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-surface": "#121b2e", "on-error": "#ffffff", "primary-fixed-dim": "#b0c6ff", "secondary-fixed": "#d9e2ff", "on-secondary-container": "#fefcff", "outline": "#757780", "primary-container": "#102a5c", "tertiary-fixed-dim": "#bec7d3", "on-primary-fixed": "#001945", "surface": "#f9f9ff", "surface-dim": "#d1daf4", "on-tertiary-container": "#8b949f", "surface-container": "#e9edff", "on-primary": "#ffffff", "primary": "#00153e", "error": "#ba1a1a", "inverse-surface": "#273044", "inverse-on-surface": "#edf0ff", "on-tertiary": "#ffffff", "secondary-fixed-dim": "#afc6ff", "surface-tint": "#475d92", "on-secondary-fixed": "#001a43", "secondary-container": "#006ef2", "on-secondary": "#ffffff", "tertiary": "#101821", "tertiary-fixed": "#dae3ef", "tertiary-container": "#242d36", "on-tertiary-fixed-variant": "#3f4851", "surface-variant": "#d9e2fc", "on-background": "#121b2e", "on-primary-fixed-variant": "#2f4578", "on-secondary-fixed-variant": "#004398", "on-primary-container": "#7d93cb", "surface-bright": "#f9f9ff", "surface-container-high": "#e1e8ff", "primary-fixed": "#d9e2ff", "surface-container-highest": "#d9e2fc", "on-surface-variant": "#44464f", "surface-container-lowest": "#ffffff", "outline-variant": "#c5c6d0", "secondary": "#0057c2", "background": "#f9f9ff", "on-error-container": "#93000a", "surface-container-low": "#f1f3ff", "on-tertiary-fixed": "#141c25", "error-container": "#ffdad6", "inverse-primary": "#b0c6ff" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "gutter": "1rem", "space-xl": "2rem", "space-md": "1rem", "space-sm": "0.5rem", "space-xs": "0.25rem", "margin": "1.5rem", "space-lg": "1.5rem" }, "fontFamily": { "body-md": [ "Inter" ], "telemetry-sm": [ "JetBrains Mono" ], "headline-md": [ "Inter" ], "label-sm": [ "Inter" ], "label-md": [ "Inter" ], "headline-sm": [ "Inter" ], "telemetry-md": [ "JetBrains Mono" ], "body-sm": [ "Inter" ], "headline-lg": [ "Inter" ], "body-lg": [ "Inter" ], "display-lg": [ "Inter" ] }, "fontSize": { "body-md": [ "14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" } ], "telemetry-sm": [ "11px", { "lineHeight": "16px", "letterSpacing": "0em", "fontWeight": "400" } ], "headline-md": [ "20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "label-sm": [ "11px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600" } ], "label-md": [ "13px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "500" } ], "headline-sm": [ "16px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "600" } ], "telemetry-md": [ "13px", { "lineHeight": "18px", "letterSpacing": "-0.01em", "fontWeight": "500" } ], "body-sm": [ "13px", { "lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400" } ], "headline-lg": [ "24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600" } ], "body-lg": [ "16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" } ], "display-lg": [ "32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" } ] } } } };</script></head><body class="bg-background font-body-md text-on-surface antialiased min-h-screen"><aside class="fixed left-0 top-0 h-full w-60 bg-surface-container-lowest z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col"><div class="h-16 px-space-md flex items-center gap-space-sm bg-primary-container text-on-primary"><div class="w-8 h-8 rounded-lg bg-secondary-container flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-on-secondary text-[20px]">drive_file_stream</span></div><div class="flex flex-col min-w-0"><span class="font-headline-sm text-headline-sm text-on-primary tracking-tight truncate leading-tight">Pilot Photonics</span><span class="font-telemetry-sm text-telemetry-sm text-on-primary-container uppercase tracking-wider truncate">Adoption-ELS</span></div></div><div class="px-space-md pt-space-lg pb-space-xs"><span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Control Plane</span></div><nav class="flex flex-col gap-space-xs px-space-sm" data-active-classes="bg-surface-container text-secondary font-semibold"><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg transition-colors bg-surface-container text-secondary font-semibold" data-path="status" href="#"><span class="material-symbols-outlined text-[20px]">tune</span><span class="font-label-md text-label-md">Status</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="setup" href="#"><span class="material-symbols-outlined text-[20px]">hub</span><span class="font-label-md text-label-md">SetUp</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="administration" href="#"><span class="material-symbols-outlined text-[20px]">settings_ethernet</span><span class="font-label-md text-label-md">Administration</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="support" href="#"><span class="material-symbols-outlined text-[20px]">help_outline</span><span class="font-label-md text-label-md">Support</span></a></nav></div><div class="p-space-sm m-space-sm rounded-lg bg-surface-container-low flex items-center justify-between"><a class="flex items-center gap-space-sm min-w-0 text-left" data-path="profile" href="#"><div class="relative flex-shrink-0"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><span class="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-secondary-container ring-1 ring-surface-container-lowest"></span></div><div class="flex flex-col min-w-0"><span class="font-label-md text-label-md text-on-surface truncate">admin</span><span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant truncate">Superuser</span></div></a><a class="p-space-xs text-on-surface-variant hover:text-on-surface" data-path="profile" href="#"><span class="material-symbols-outlined text-[18px]">more_vert</span></a></div></aside><div class="pl-60"><header class="fixed top-0 left-60 right-0 h-16 bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-lg"><div class="flex items-center gap-space-sm min-w-0"><span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary bg-surface-container px-space-xs py-0.5 rounded">Appliance</span><div class="flex items-center gap-space-xs"><span class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate">Adoption-ELS</span><span class="text-on-surface-variant">//</span><span class="font-body-sm text-body-sm text-on-surface-variant truncate">WDM External Laser Source</span></div></div><div class="flex items-center gap-space-md"><div class="hidden md:flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container-low"><span class="material-symbols-outlined text-on-surface-variant text-[16px]">schedule</span><span class="font-telemetry-sm text-telemetry-sm text-on-surface font-medium">Oct 8, 2026, 17:15 Asia/Calcutta</span></div><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container text-secondary"><span class="w-2 h-2 rounded-full bg-secondary-container"></span><span class="font-label-sm text-label-sm font-semibold tracking-wide uppercase">Online / Operational</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="relative pt-16 bg-background min-h-screen"><div class="max-w-7xl mx-auto p-space-lg"><div class="flex flex-col w-full">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-lg">
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs text-on-surface-variant mb-1">
+<span class="font-telemetry-sm text-telemetry-sm uppercase tracking-wider">Telemetry Control Plane</span>
+<span>/</span>
+<span class="font-telemetry-sm text-telemetry-sm text-secondary uppercase tracking-wider">Node 01</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-on-surface font-semibold tracking-tight">Adoption-ELS Appliance Status</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-0.5">Real-time optical source telemetry and operational health</p>
+</div>
+<div class="flex items-center gap-space-sm flex-wrap">
+<div class="flex items-center gap-space-sm px-space-md py-space-xs rounded bg-surface-container-low shadow-sm">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Rocker Switch</span>
+<span class="inline-flex items-center px-space-xs py-0.5 rounded font-telemetry-sm text-telemetry-sm font-semibold bg-surface-container text-on-surface-variant">OFF</span>
+</div>
+<div class="flex items-center gap-space-sm px-space-md py-space-xs rounded bg-surface-container-low shadow-sm">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Key Switch</span>
+<span class="inline-flex items-center px-space-xs py-0.5 rounded font-telemetry-sm text-telemetry-sm font-semibold bg-surface-container text-on-surface-variant">OFF</span>
+</div>
+<div class="flex items-center gap-space-xs px-space-sm py-space-xs rounded bg-surface-container-lowest shadow-sm">
+<span class="w-2 h-2 rounded-full bg-secondary-container animate-pulse"></span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface font-medium">1000ms Poll</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg mb-space-lg">
+<div class="lg:col-span-12 rounded-lg bg-surface-container-lowest p-space-lg shadow-sm flex flex-col xl:flex-row gap-space-xl">
+<div class="xl:w-5/12 flex flex-col justify-between">
+<div class="flex flex-col">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-semibold">Chassis Topology</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">1U Rack Unit</span>
+</div>
+<div class="relative w-full rounded bg-surface-container-low p-space-md flex flex-col items-center justify-center min-h-[180px] overflow-hidden group">
+<img alt="Lyra-ELS 16-Channel WDM External Laser Source Chassis" class="w-full h-auto object-contain max-h-[160px] filter drop-shadow hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCm6F-CzOrZD1O-mjhae6fM-dQfBdHa8rBRSl28vLEOrCBhuWFoVm6QPo-dlgXH5J0J1ETBFoXkIY4N2XL4vB8jSqtUP8UZabg7iH6Bpp80wvDvW52i-gmL5_u_LbKxYmiShVOSS3LlhOsBnOEi8fyqFmAnhdddXsrYxqHuDViQ8aguVcvwzG129XT7skL7NhV8Ew7pJt6BjuoBXxL0JuIlkigiQEYscvL3VrQf5LvPoUFUuFJVkPtC"/>
+<div class="absolute inset-x-0 bottom-0 py-1 px-space-sm bg-gradient-to-t from-primary/80 to-transparent flex items-center justify-between">
+<span class="font-telemetry-sm text-telemetry-sm text-on-primary">Front Facia: Inactive</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-primary-fixed-dim">WDM Grid ITU-T</span>
+</div>
+</div>
+<div class="mt-space-sm flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm text-on-surface">Lyra-ELS 16-Channel WDM</span>
+<span class="font-label-sm text-label-sm px-space-xs py-0.5 rounded bg-surface-container text-on-surface-variant font-medium">External Laser Source</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-space-sm mt-space-md pt-space-md bg-surface-container-low p-space-sm rounded">
+<div class="flex items-center gap-space-sm">
+<div class="w-7 h-7 rounded bg-surface-container-lowest flex items-center justify-center text-secondary shadow-sm">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Health Status</span>
+<div class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span>
+<span class="font-label-md text-label-md text-on-surface font-semibold truncate">Normal / Healthy</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="w-7 h-7 rounded bg-surface-container-lowest flex items-center justify-center text-secondary shadow-sm">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Software Status</span>
+<div class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span>
+<span class="font-label-md text-label-md text-on-surface font-semibold truncate">Verified / Operational</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="xl:w-7/12 flex flex-col justify-between">
+<div class="flex items-center justify-between pb-space-xs mb-space-sm">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">Essential System Information</span>
+<span class="font-telemetry-sm text-telemetry-sm text-secondary bg-surface-container px-space-xs py-0.5 rounded">Core Node A</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-space-lg gap-y-space-sm text-body-sm">
+<div class="flex items-center justify-between py-1 bg-surface-container-low px-space-sm rounded">
+<span class="font-label-md text-label-md text-on-surface-variant">Software Version</span>
+<span class="font-telemetry-md text-telemetry-md text-on-surface font-semibold">2.05</span>
+</div>
+<div class="flex items-center justify-between py-1 bg-surface-container-low px-space-sm rounded">
+<span class="font-label-md text-label-md text-on-surface-variant">Build Version</span>
+<span class="font-telemetry-md text-telemetry-md text-on-surface">fw110126</span>
+</div>
+<div class="flex items-center justify-between py-1 bg-surface-container-low px-space-sm rounded md:col-span-2">
+<span class="font-label-md text-label-md text-on-surface-variant">System Uptime</span>
+<span class="font-telemetry-md text-telemetry-md text-on-surface font-medium">10 wk(s) 2 day(s) 4 hr(s) 27 min(s)</span>
+</div>
+<div class="flex items-center justify-between py-1 bg-surface-container-low px-space-sm rounded md:col-span-2">
+<span class="font-label-md text-label-md text-on-surface-variant">Boot Time</span>
+<div class="inline-flex items-center gap-1 px-space-xs py-0.5 rounded bg-error-container text-on-error-container">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+<span class="font-telemetry-sm text-telemetry-sm font-semibold">Not Available !!</span>
+</div>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm flex flex-col gap-space-sm">
+<div class="p-space-sm rounded bg-surface-container-low">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">Free Space Distribution</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface">Data: <strong class="font-semibold text-secondary">10.98 GB</strong> | xData: <strong class="font-semibold text-secondary">10.98 GB</strong></span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-high overflow-hidden flex">
+<div class="h-full bg-secondary-container" style="width: 48%;"></div>
+<div class="h-full bg-primary" style="width: 2%;"></div>
+<div class="h-full bg-surface-dim" style="width: 50%;"></div>
+</div>
+<div class="flex justify-between items-center mt-1">
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">Partition Pool A</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">Available: 86.4%</span>
+</div>
+</div>
+<div class="p-space-sm rounded bg-surface-container-low">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">System Memory Utilization</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface">Total: <strong class="font-medium">4.00 GB</strong> | Used: <strong class="font-medium text-secondary">1.02 GB</strong> | Free: <strong class="font-medium">2.80 GB</strong></span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-high overflow-hidden flex">
+<div class="h-full bg-secondary" style="width: 25.5%;"></div>
+<div class="h-full bg-surface-container-highest" style="width: 74.5%;"></div>
+</div>
+<div class="flex justify-between items-center mt-1">
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">Allocation: 25.5% In Use</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">ECC DDR4 Protected</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="rounded-lg bg-surface-container-lowest p-space-lg shadow-sm mb-space-lg">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between pb-space-sm mb-space-md gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-7 h-7 rounded bg-secondary-container text-on-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">view_module</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-tight">Current Settings</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Channel Status &amp; Laser Diode Emitter Levels</p>
+</div>
+</div>
+<div class="flex items-center gap-space-xs self-start sm:self-auto">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">All 16 Emitters Set to 0.00 mA (Standby)</span>
+</div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-space-xs">
+<div class="p-space-xs rounded bg-surface-container-low flex flex-col hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Laser 1</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+</div>
+<div class="mt-1 flex items-baseline justify-between">
+<span class="font-telemetry-md text-telemetry-md font-semibold text-on-surface">0</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">mA</span>
+</div>
+</div>
+<div class="p-space-xs rounded bg-surface-container-low flex flex-col hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Laser 2</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+</div>
+<div class="mt-1 flex items-baseline justify-between">
+<span class="font-telemetry-md text-telemetry-md font-semibold text-on-surface">0</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">mA</span>
+</div>
+</div>
+<div class="p-space-xs rounded bg-surface-container-low flex flex-col hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Laser 3</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+</div>
+<div class="mt-1 flex items-baseline justify-between">
+<span class="font-telemetry-md text-telemetry-md font-semibold text-on-surface">0</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">mA</span>
+</div>
+</div>
+<div class="p-space-xs rounded bg-surface-container-low flex flex-col hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Laser 4</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+</div>
+<div class="mt-1 flex items-baseline justify-between">
+<span class="font-telemetry-md text-telemetry-md font-semibold text-on-surface">0</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">mA</span>
+</div>
+</div>
+<div class="p-space-xs rounded bg-surface-container-low flex flex-col hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Laser 5</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+</div>
+<div class="mt-1 flex items-baseline justify-between">
+<span class="font-telemetry-md text-telemetry-md font-semibold text-on-surface">0</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">mA</span>
+</div>
+</div>
+<div class="p-space-xs rounded bg-surface-container-low flex flex-col hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Laser 6</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+</div>
+<div class="mt-1 flex items-baseline justify-between">
+<span class="font-telemetry-md text-telemetry-md font-semibold text-on-surface">0</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">mA</span>
+</div>
+</div>
+<div class="p-space-xs rounded bg-surface-container-low flex flex-col hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Laser 7</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+</div>
+<div class="mt-1 flex items-baseline justify-between">
+<span class="font-telemetry-md text-telemetry-md font-semibold text-on-surface">0</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">mA</span>
+</div>
+</div>
+<div class="p-space-xs rounded bg-surface-container-low flex flex-col hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Laser 8</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+</div>
+<div class="mt-1 flex items-baseline justify-between">
+<span class="font-telemetry-md text-telemetry-md font-semibold text-on-surface">0</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">mA</span>
+</div>
+</div>
+<div class="p-space-xs rounded bg-surface-container-low flex flex-col hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Laser 9</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+</div>
+<div class="mt-1 flex items-baseline justify-between">
+<span class="font-telemetry-md text-telemetry-md font-semibold text-on-surface">0</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">mA</span>
+</div>
+</div>
+<div class="p-space-xs rounded bg-surface-container-low flex flex-col hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Laser 10</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+</div>
+<div class="mt-1 flex items-baseline justify-between">
+<span class="font-telemetry-md text-telemetry-md font-semibold text-on-surface">0</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">mA</span>
+</div>
+</div>
+<div class="p-space-xs rounded bg-surface-container-low flex flex-col hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Laser 11</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+</div>
+<div class="mt-1 flex items-baseline justify-between">
+<span class="font-telemetry-md text-telemetry-md font-semibold text-on-surface">0</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">mA</span>
+</div>
+</div>
+<div class="p-space-xs rounded bg-surface-container-low flex flex-col hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Laser 12</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+</div>
+<div class="mt-1 flex items-baseline justify-between">
+<span class="font-telemetry-md text-telemetry-md font-semibold text-on-surface">0</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">mA</span>
+</div>
+</div>
+<div class="p-space-xs rounded bg-surface-container-low flex flex-col hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Laser 13</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+</div>
+<div class="mt-1 flex items-baseline justify-between">
+<span class="font-telemetry-md text-telemetry-md font-semibold text-on-surface">0</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">mA</span>
+</div>
+</div>
+<div class="p-space-xs rounded bg-surface-container-low flex flex-col hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Laser 14</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+</div>
+<div class="mt-1 flex items-baseline justify-between">
+<span class="font-telemetry-md text-telemetry-md font-semibold text-on-surface">0</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">mA</span>
+</div>
+</div>
+<div class="p-space-xs rounded bg-surface-container-low flex flex-col hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Laser 15</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+</div>
+<div class="mt-1 flex items-baseline justify-between">
+<span class="font-telemetry-md text-telemetry-md font-semibold text-on-surface">0</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">mA</span>
+</div>
+</div>
+<div class="p-space-xs rounded bg-surface-container-low flex flex-col hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Laser 16</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+</div>
+<div class="mt-1 flex items-baseline justify-between">
+<span class="font-telemetry-md text-telemetry-md font-semibold text-on-surface">0</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">mA</span>
+</div>
+</div>
+</div>
+</div>
+<div class="rounded-lg bg-surface-container-lowest p-space-lg shadow-sm mb-space-lg">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md mb-space-lg">
+<div class="flex items-center gap-space-xs bg-surface-container-low p-1 rounded-lg">
+<button class="telemetry-tab active flex items-center gap-1.5 px-space-md py-1.5 rounded font-label-md text-label-md bg-secondary-container text-on-secondary shadow-sm transition-all" data-metric="temp" type="button">
+<span class="w-2 h-2 rounded-full bg-on-secondary"></span>
+<span>Temp</span>
+</button>
+<button class="telemetry-tab flex items-center gap-1.5 px-space-md py-1.5 rounded font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all" data-metric="psu" type="button">
+<span class="w-2 h-2 rounded-full bg-outline-variant"></span>
+<span>PSU's</span>
+</button>
+<button class="telemetry-tab flex items-center gap-1.5 px-space-md py-1.5 rounded font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all" data-metric="ethernet" type="button">
+<span class="w-2 h-2 rounded-full bg-outline-variant"></span>
+<span>Ethernet</span>
+</button>
+<button class="telemetry-tab flex items-center gap-1.5 px-space-md py-1.5 rounded font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all" data-metric="disk" type="button">
+<span class="w-2 h-2 rounded-full bg-outline-variant"></span>
+<span>Disk Space</span>
+</button>
+</div>
+<div class="flex items-center gap-1 bg-surface-container-low p-1 rounded-lg">
+<button class="timespan-btn active px-space-sm py-1 rounded font-telemetry-sm text-telemetry-sm bg-surface-container-lowest text-secondary font-semibold shadow-sm" data-span="minutes" type="button">Minutes</button>
+<button class="timespan-btn px-space-sm py-1 rounded font-telemetry-sm text-telemetry-sm text-on-surface-variant hover:text-on-surface" data-span="hours" type="button">Hours</button>
+<button class="timespan-btn px-space-sm py-1 rounded font-telemetry-sm text-telemetry-sm text-on-surface-variant hover:text-on-surface" data-span="days" type="button">Days</button>
+<button class="timespan-btn px-space-sm py-1 rounded font-telemetry-sm text-telemetry-sm text-on-surface-variant hover:text-on-surface" data-span="weeks" type="button">Weeks</button>
+<button class="timespan-btn px-space-sm py-1 rounded font-telemetry-sm text-telemetry-sm text-on-surface-variant hover:text-on-surface" data-span="month" type="button">Month</button>
+</div>
+</div>
+<div class="rounded-lg bg-surface-container-low p-space-lg flex flex-col justify-between min-h-[260px] relative overflow-hidden">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="font-headline-sm text-headline-sm text-on-surface" id="telemetry-chart-title">Thermal Sensor Array Matrix</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">Sensor: Chassis Internal Board (Ambient 24.2°C)</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-secondary-container animate-ping"></span>
+<span class="font-telemetry-sm text-telemetry-sm text-secondary font-medium">LIVE STREAM</span>
+</div>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">Baseline: 0.00 offset</span>
+</div>
+</div>
+<div class="w-full my-auto py-space-lg">
+<div class="relative w-full h-32 flex items-center">
+<div class="absolute inset-0 flex flex-col justify-between opacity-30 pointer-events-none">
+<div class="w-full h-px bg-outline-variant"></div>
+<div class="w-full h-px bg-outline-variant"></div>
+<div class="w-full h-px bg-outline-variant"></div>
+</div>
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 1000 120">
+<line class="text-secondary/40" stroke="currentColor" stroke-dasharray="4 4" stroke-width="2" x1="0" x2="1000" y1="60" y2="60"></line>
+<path class="text-secondary-container" d="M 0 60 Q 250 58, 500 60 T 1000 60" fill="none" stroke="currentColor" stroke-width="2.5"></path>
+<circle class="fill-secondary-container shadow" cx="996" cy="60" r="4"></circle>
+</svg>
+</div>
+</div>
+<div class="flex items-center justify-between text-telemetry-sm text-on-surface-variant pt-space-xs">
+<span>-60 min</span>
+<span>-45 min</span>
+<span>-30 min</span>
+<span>-15 min</span>
+<span class="text-secondary font-medium">Now (Baseline Steady)</span>
+</div>
+</div>
+</div>
+<div class="rounded-lg bg-surface-container-lowest p-space-md shadow-sm flex flex-col sm:flex-row items-center justify-between gap-space-md mb-space-xl">
+<div class="flex items-center gap-space-md flex-wrap w-full sm:w-auto">
+<button class="px-space-md py-space-sm rounded bg-surface-container-low hover:bg-surface-container text-on-surface font-label-md text-label-md flex items-center gap-space-xs shadow-sm transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+<span>View Logs</span>
+</button>
+<div class="flex items-center gap-space-sm px-space-sm py-space-xs rounded bg-surface-container-low">
+<span class="font-label-md text-label-md text-on-surface">Turn All Outputs OFF</span>
+<button aria-checked="true" class="output-toggle relative inline-flex h-5 w-9 flex-shrink-0 cursor-pointer rounded-full bg-secondary-container transition-colors duration-200 focus:outline-none" role="switch" type="button">
+<span class="translate-x-4 inline-block h-4 w-4 transform rounded-full bg-surface-container-lowest shadow transition duration-200 ease-in-out mt-0.5"></span>
+</button>
+</div>
+<div class="flex items-center gap-space-sm px-space-sm py-space-xs rounded bg-surface-container-low">
+<span class="font-label-md text-label-md text-on-surface">Turn Module OFF</span>
+<button aria-checked="true" class="module-toggle relative inline-flex h-5 w-9 flex-shrink-0 cursor-pointer rounded-full bg-secondary-container transition-colors duration-200 focus:outline-none" role="switch" type="button">
+<span class="translate-x-4 inline-block h-4 w-4 transform rounded-full bg-surface-container-lowest shadow transition duration-200 ease-in-out mt-0.5"></span>
+</button>
+</div>
+</div>
+<div class="flex items-center gap-space-md text-on-surface-variant text-label-sm w-full sm:w-auto justify-between sm:justify-end">
+<span class="font-label-sm text-label-sm">Follow us:</span>
+<div class="flex items-center gap-space-xs">
+<a aria-label="Facebook" class="w-7 h-7 rounded bg-surface-container-low flex items-center justify-center hover:bg-surface-container hover:text-secondary transition-colors" href="#">
+<span class="font-telemetry-sm text-telemetry-sm font-bold">f</span>
+</a>
+<a aria-label="Twitter" class="w-7 h-7 rounded bg-surface-container-low flex items-center justify-center hover:bg-surface-container hover:text-secondary transition-colors" href="#">
+<span class="font-telemetry-sm text-telemetry-sm font-bold">t</span>
+</a>
+<a aria-label="Google Plus / Web" class="w-7 h-7 rounded bg-surface-container-low flex items-center justify-center hover:bg-surface-container hover:text-secondary transition-colors" href="#">
+<span class="font-telemetry-sm text-telemetry-sm font-bold">g+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row items-center justify-between text-on-surface-variant py-space-md">
+<span class="font-telemetry-sm text-telemetry-sm">Pilot Photonics Adoption-ELS Core Micro-controller © 2026</span>
+<div class="flex items-center gap-space-md mt-2 sm:mt-0">
+<span class="font-telemetry-sm text-telemetry-sm">Interface Rev 2.05.8</span>
+<span class="font-telemetry-sm text-telemetry-sm">Cryptographic Handshake SEC-OK</span>
+</div>
+</div>
+</div>
+<script>
+  (function() {
+    const tabs = document.querySelectorAll('.telemetry-tab');
+    const chartTitle = document.getElementById('telemetry-chart-title');
+    const timespanBtns = document.querySelectorAll('.timespan-btn');
+    const toggles = document.querySelectorAll('.output-toggle, .module-toggle');
+
+    const titles = {
+      temp: 'Thermal Sensor Array Matrix',
+      psu: 'Power Supply Unit Rail Voltages (PSU 1 & PSU 2)',
+      ethernet: '10/100/1000 Base-T Optical Interface Telemetry',
+      disk: 'Storage Partition IOPS & Volume Utilization'
+    };
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => {
+          t.classList.remove('bg-secondary-container', 'text-on-secondary', 'shadow-sm');
+          t.classList.add('text-on-surface-variant');
+          const dot = t.querySelector('span');
+          if (dot) {
+            dot.className = 'w-2 h-2 rounded-full bg-outline-variant';
+          }
+        });
+        tab.classList.remove('text-on-surface-variant');
+        tab.classList.add('bg-secondary-container', 'text-on-secondary', 'shadow-sm');
+        const activeDot = tab.querySelector('span');
+        if (activeDot) {
+          activeDot.className = 'w-2 h-2 rounded-full bg-on-secondary';
+        }
+        const metric = tab.dataset.metric;
+        if (chartTitle && titles[metric]) {
+          chartTitle.textContent = titles[metric];
+        }
+      });
+    });
+
+    timespanBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        timespanBtns.forEach(b => {
+          b.classList.remove('bg-surface-container-lowest', 'text-secondary', 'font-semibold', 'shadow-sm');
+          b.classList.add('text-on-surface-variant');
+        });
+        btn.classList.remove('text-on-surface-variant');
+        btn.classList.add('bg-surface-container-lowest', 'text-secondary', 'font-semibold', 'shadow-sm');
+      });
+    });
+
+    toggles.forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        const isChecked = toggle.getAttribute('aria-checked') === 'true';
+        const circle = toggle.querySelector('span');
+        if (isChecked) {
+          toggle.setAttribute('aria-checked', 'false');
+          toggle.classList.remove('bg-secondary-container');
+          toggle.classList.add('bg-outline-variant');
+          circle.classList.remove('translate-x-4');
+          circle.classList.add('translate-x-0.5');
+        } else {
+          toggle.setAttribute('aria-checked', 'true');
+          toggle.classList.remove('bg-outline-variant');
+          toggle.classList.add('bg-secondary-container');
+          circle.classList.remove('translate-x-0.5');
+          circle.classList.add('translate-x-4');
+        }
+      });
+    });
+  })();
+</script></div></main></div><script>(function(){var M={status:"status.html",setup:"setup.html",administration:"administration.html",support:"support.html",profile:"userProfile.html"};document.querySelectorAll("[data-path]").forEach(function(a){var p=a.getAttribute("data-path");if(M[p])a.setAttribute("href",M[p]);});})();</script></body></html>

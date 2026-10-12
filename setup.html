@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-surface": "#121b2e", "on-error": "#ffffff", "primary-fixed-dim": "#b0c6ff", "secondary-fixed": "#d9e2ff", "on-secondary-container": "#fefcff", "outline": "#757780", "primary-container": "#102a5c", "tertiary-fixed-dim": "#bec7d3", "on-primary-fixed": "#001945", "surface": "#f9f9ff", "surface-dim": "#d1daf4", "on-tertiary-container": "#8b949f", "surface-container": "#e9edff", "on-primary": "#ffffff", "primary": "#00153e", "error": "#ba1a1a", "inverse-surface": "#273044", "inverse-on-surface": "#edf0ff", "on-tertiary": "#ffffff", "secondary-fixed-dim": "#afc6ff", "surface-tint": "#475d92", "on-secondary-fixed": "#001a43", "secondary-container": "#006ef2", "on-secondary": "#ffffff", "tertiary": "#101821", "tertiary-fixed": "#dae3ef", "tertiary-container": "#242d36", "on-tertiary-fixed-variant": "#3f4851", "surface-variant": "#d9e2fc", "on-background": "#121b2e", "on-primary-fixed-variant": "#2f4578", "on-secondary-fixed-variant": "#004398", "on-primary-container": "#7d93cb", "surface-bright": "#f9f9ff", "surface-container-high": "#e1e8ff", "primary-fixed": "#d9e2ff", "surface-container-highest": "#d9e2fc", "on-surface-variant": "#44464f", "surface-container-lowest": "#ffffff", "outline-variant": "#c5c6d0", "secondary": "#0057c2", "background": "#f9f9ff", "on-error-container": "#93000a", "surface-container-low": "#f1f3ff", "on-tertiary-fixed": "#141c25", "error-container": "#ffdad6", "inverse-primary": "#b0c6ff" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "gutter": "1rem", "space-xl": "2rem", "space-md": "1rem", "space-sm": "0.5rem", "space-xs": "0.25rem", "margin": "1.5rem", "space-lg": "1.5rem" }, "fontFamily": { "body-md": [ "Inter" ], "telemetry-sm": [ "JetBrains Mono" ], "headline-md": [ "Inter" ], "label-sm": [ "Inter" ], "label-md": [ "Inter" ], "headline-sm": [ "Inter" ], "telemetry-md": [ "JetBrains Mono" ], "body-sm": [ "Inter" ], "headline-lg": [ "Inter" ], "body-lg": [ "Inter" ], "display-lg": [ "Inter" ] }, "fontSize": { "body-md": [ "14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" } ], "telemetry-sm": [ "11px", { "lineHeight": "16px", "letterSpacing": "0em", "fontWeight": "400" } ], "headline-md": [ "20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "label-sm": [ "11px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600" } ], "label-md": [ "13px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "500" } ], "headline-sm": [ "16px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "600" } ], "telemetry-md": [ "13px", { "lineHeight": "18px", "letterSpacing": "-0.01em", "fontWeight": "500" } ], "body-sm": [ "13px", { "lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400" } ], "headline-lg": [ "24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600" } ], "body-lg": [ "16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" } ], "display-lg": [ "32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" } ] } } } };</script></head><body class="bg-background font-body-md text-on-surface antialiased min-h-screen"><aside class="fixed left-0 top-0 h-full w-60 bg-surface-container-lowest z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col"><div class="h-16 px-space-md flex items-center gap-space-sm bg-primary-container text-on-primary"><div class="w-8 h-8 rounded-lg bg-secondary-container flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-on-secondary text-[20px]">drive_file_stream</span></div><div class="flex flex-col min-w-0"><span class="font-headline-sm text-headline-sm text-on-primary tracking-tight truncate leading-tight">Pilot Photonics</span><span class="font-telemetry-sm text-telemetry-sm text-on-primary-container uppercase tracking-wider truncate">Adoption-ELS</span></div></div><div class="px-space-md pt-space-lg pb-space-xs"><span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Control Plane</span></div><nav class="flex flex-col gap-space-xs px-space-sm" data-active-classes="bg-surface-container text-secondary font-semibold"><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="status" href="#"><span class="material-symbols-outlined text-[20px]">tune</span><span class="font-label-md text-label-md">Status</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg transition-colors bg-surface-container text-secondary font-semibold" data-path="setup" href="#"><span class="material-symbols-outlined text-[20px]">hub</span><span class="font-label-md text-label-md">SetUp</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="administration" href="#"><span class="material-symbols-outlined text-[20px]">settings_ethernet</span><span class="font-label-md text-label-md">Administration</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="support" href="#"><span class="material-symbols-outlined text-[20px]">help_outline</span><span class="font-label-md text-label-md">Support</span></a></nav></div><div class="p-space-sm m-space-sm rounded-lg bg-surface-container-low flex items-center justify-between"><a class="flex items-center gap-space-sm min-w-0 text-left" data-path="profile" href="#"><div class="relative flex-shrink-0"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><span class="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-secondary-container ring-1 ring-surface-container-lowest"></span></div><div class="flex flex-col min-w-0"><span class="font-label-md text-label-md text-on-surface truncate">admin</span><span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant truncate">Superuser</span></div></a><a class="p-space-xs text-on-surface-variant hover:text-on-surface" data-path="profile" href="#"><span class="material-symbols-outlined text-[18px]">more_vert</span></a></div></aside><div class="pl-60"><header class="fixed top-0 left-60 right-0 h-16 bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-lg"><div class="flex items-center gap-space-sm min-w-0"><span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary bg-surface-container px-space-xs py-0.5 rounded">Appliance</span><div class="flex items-center gap-space-xs"><span class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate">Adoption-ELS</span><span class="text-on-surface-variant">//</span><span class="font-body-sm text-body-sm text-on-surface-variant truncate">WDM External Laser Source</span></div></div><div class="flex items-center gap-space-md"><div class="hidden md:flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container-low"><span class="material-symbols-outlined text-on-surface-variant text-[16px]">schedule</span><span class="font-telemetry-sm text-telemetry-sm text-on-surface font-medium">Oct 8, 2026, 17:15 Asia/Calcutta</span></div><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container text-secondary"><span class="w-2 h-2 rounded-full bg-secondary-container"></span><span class="font-label-sm text-label-sm font-semibold tracking-wide uppercase">Online / Operational</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="relative pt-16 bg-background min-h-screen"><div class="max-w-7xl mx-auto p-space-lg"><div class="flex flex-col w-full">
+<!-- Top Context Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-lg">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs text-secondary font-label-sm uppercase tracking-wider mb-1">
+<span class="material-symbols-outlined text-[16px]">settings_ethernet</span>
+<span>Appliance Lifecycle Provisioning</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">System Setup</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-0.5">Network binding, peripheral buses, and remote storage configuration.</p>
+</div>
+<div class="flex items-center gap-space-sm bg-surface-container-low px-space-md py-space-xs rounded-xl shadow-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary-container animate-pulse"></span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant font-medium">PHY MAC: <span class="text-on-surface font-semibold">00:1B:44:11:3A:F8</span></span>
+<span class="text-on-surface-variant mx-1">•</span>
+<span class="font-telemetry-sm text-telemetry-sm text-secondary font-medium">MTU 1500 (Jumbo Supported)</span>
+</div>
+</div>
+<!-- Horizontal Stepper -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm mb-space-lg">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-space-md relative">
+<!-- Step 1: Connection (Active) -->
+<div class="flex items-center gap-space-sm relative z-10">
+<div class="w-9 h-9 rounded-full bg-secondary-container text-on-secondary flex items-center justify-center font-label-md text-label-md font-semibold shadow-sm ring-4 ring-surface-container">
+<span class="material-symbols-outlined text-[18px]">cable</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm uppercase text-secondary tracking-wide">Step 01</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate">Connection</span>
+</div>
+</div>
+<!-- Step 2: Module Control -->
+<div class="flex items-center gap-space-sm relative z-10 opacity-70">
+<div class="w-9 h-9 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-label-md text-label-md font-semibold">
+<span class="material-symbols-outlined text-[18px]">memory</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm uppercase text-on-surface-variant tracking-wide">Step 02</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-medium truncate">Module Control</span>
+</div>
+</div>
+<!-- Step 3: Calibration -->
+<div class="flex items-center gap-space-sm relative z-10 opacity-70">
+<div class="w-9 h-9 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-label-md text-label-md font-semibold">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm uppercase text-on-surface-variant tracking-wide">Step 03</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-medium truncate">Calibration</span>
+</div>
+</div>
+<!-- Step 4: Debug -->
+<div class="flex items-center gap-space-sm relative z-10 opacity-70">
+<div class="w-9 h-9 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-label-md text-label-md font-semibold">
+<span class="material-symbols-outlined text-[18px]">bug_report</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm uppercase text-on-surface-variant tracking-wide">Step 04</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-medium truncate">Debug</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Form Sections Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-space-lg mb-space-lg">
+<!-- Section 1: Ethernet Configuration -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-space-md mb-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">lan</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Ethernet Configuration</h2>
+<p class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">Interface: eth0 (Dual SFP28 Control Lane)</p>
+</div>
+</div>
+<!-- Toggle -->
+<label class="inline-flex items-center gap-space-xs cursor-pointer select-none">
+<input checked="" class="sr-only peer" id="toggle-eth" type="checkbox"/>
+<div class="w-10 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-surface-container-lowest after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface-container-lowest after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary-container"></div>
+<span class="font-label-sm text-label-sm text-on-surface font-medium">Enable</span>
+</label>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase">IP Address</label>
+<input class="h-9 px-space-sm rounded-lg bg-surface-container-low font-telemetry-sm text-telemetry-sm text-on-surface focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-secondary-container transition" type="text" value="172.31.14.233"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase">Subnet Mask</label>
+<input class="h-9 px-space-sm rounded-lg bg-surface-container-low font-telemetry-sm text-telemetry-sm text-on-surface focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-secondary-container transition" type="text" value="255.255.240.0"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase">Default Gateway</label>
+<input class="h-9 px-space-sm rounded-lg bg-surface-container-low font-telemetry-sm text-telemetry-sm text-on-surface focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-secondary-container transition" type="text" value="172.31.0.1"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase">DNS Server</label>
+<input class="h-9 px-space-sm rounded-lg bg-surface-container-low font-telemetry-sm text-telemetry-sm text-on-surface focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-secondary-container transition" type="text" value="127.0.0.53"/>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-lg mt-space-md">
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-secondary">verified</span> Subnet validation active
+        </span>
+<button class="px-space-md py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition" type="button">Save</button>
+</div>
+</div>
+<!-- Section 2: Serial Interface -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-space-md mb-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">terminal</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Serial Interface</h2>
+<p class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">UART Port /dev/ttyS0 Protocol Bridge</p>
+</div>
+</div>
+<!-- Toggle -->
+<label class="inline-flex items-center gap-space-xs cursor-pointer select-none">
+<input checked="" class="sr-only peer" id="toggle-serial" type="checkbox"/>
+<div class="w-10 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-surface-container-lowest after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface-container-lowest after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary-container"></div>
+<span class="font-label-sm text-label-sm text-on-surface font-medium">Enable</span>
+</label>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-space-sm">
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase">BAUD Rate</label>
+<div class="relative">
+<select class="w-full h-9 px-space-sm appearance-none rounded-lg bg-surface-container-low font-telemetry-sm text-telemetry-sm text-on-surface focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-secondary-container transition">
+<option selected="" value="10">10 (115200)</option>
+<option value="9">9 (57600)</option>
+<option value="8">8 (38400)</option>
+<option value="7">7 (19200)</option>
+</select>
+<span class="material-symbols-outlined pointer-events-none absolute right-2 top-2 text-[18px] text-on-surface-variant">expand_more</span>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase">Parity</label>
+<div class="relative">
+<select class="w-full h-9 px-space-sm appearance-none rounded-lg bg-surface-container-low font-telemetry-sm text-telemetry-sm text-on-surface focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-secondary-container transition">
+<option selected="" value="11">11 (None)</option>
+<option value="odd">Odd</option>
+<option value="even">Even</option>
+</select>
+<span class="material-symbols-outlined pointer-events-none absolute right-2 top-2 text-[18px] text-on-surface-variant">expand_more</span>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase">Data Bits</label>
+<div class="relative">
+<select class="w-full h-9 px-space-sm appearance-none rounded-lg bg-surface-container-low font-telemetry-sm text-telemetry-sm text-on-surface focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-secondary-container transition">
+<option selected="" value="12">12 (8-bit)</option>
+<option value="7">7-bit</option>
+</select>
+<span class="material-symbols-outlined pointer-events-none absolute right-2 top-2 text-[18px] text-on-surface-variant">expand_more</span>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase">Flow Control</label>
+<div class="relative">
+<select class="w-full h-9 px-space-sm appearance-none rounded-lg bg-surface-container-low font-telemetry-sm text-telemetry-sm text-on-surface focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-secondary-container transition">
+<option selected="" value="13">13 (RTS/CTS)</option>
+<option value="xon">XON/XOFF</option>
+<option value="none">None</option>
+</select>
+<span class="material-symbols-outlined pointer-events-none absolute right-2 top-2 text-[18px] text-on-surface-variant">expand_more</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-lg mt-space-md">
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-secondary">memory</span> Hardware Flow Pin Assured
+        </span>
+<button class="px-space-md py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition" type="button">Save</button>
+</div>
+</div>
+<!-- Section 3: Remote Storage -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-space-md mb-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">cloud_sync</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Remote Storage</h2>
+<p class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">NAS Mount Point for Diagnostic Spectrograms</p>
+</div>
+</div>
+<!-- Toggle -->
+<label class="inline-flex items-center gap-space-xs cursor-pointer select-none">
+<input checked="" class="sr-only peer" id="toggle-storage" type="checkbox"/>
+<div class="w-10 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-surface-container-lowest after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface-container-lowest after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary-container"></div>
+<span class="font-label-sm text-label-sm text-on-surface font-medium">Enable</span>
+</label>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase">Share</label>
+<input class="h-9 px-space-sm rounded-lg bg-surface-container-low font-telemetry-sm text-telemetry-sm text-on-surface focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-secondary-container transition" type="text" value="share"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase">User</label>
+<input class="h-9 px-space-sm rounded-lg bg-surface-container-low font-telemetry-sm text-telemetry-sm text-on-surface focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-secondary-container transition" type="text" value="admin"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase">Password</label>
+<div class="relative">
+<input class="w-full h-9 px-space-sm pr-9 rounded-lg bg-surface-container-low font-telemetry-sm text-telemetry-sm text-on-surface focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-secondary-container transition" id="storage-pass" type="password" value="SuperSecret123"/>
+<button class="absolute right-2 top-2 text-on-surface-variant hover:text-on-surface" onclick="const p = document.getElementById('storage-pass'); p.type = p.type === 'password' ? 'text' : 'password';" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase">Protocol</label>
+<div class="relative">
+<select class="w-full h-9 px-space-sm appearance-none rounded-lg bg-surface-container-low font-telemetry-sm text-telemetry-sm text-on-surface focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-secondary-container transition">
+<option selected="" value="NFS">NFS v4.2</option>
+<option value="SMB">SMB / CIFS</option>
+<option value="WebDAV">WebDAV (TLS)</option>
+</select>
+<span class="material-symbols-outlined pointer-events-none absolute right-2 top-2 text-[18px] text-on-surface-variant">expand_more</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-lg mt-space-md">
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-secondary">folder_shared</span> Target path: /mnt/els-wdm/share
+        </span>
+<button class="px-space-md py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition" type="button">Save</button>
+</div>
+</div>
+<!-- Section 4: Security & Access -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-space-md mb-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">shield</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Security &amp; Access</h2>
+<p class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">Remote Cryptographic Shell Services</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-surface-container text-secondary font-medium">Policy Enforced</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-lg pt-space-sm">
+<!-- Radio 1: Enable SSH -->
+<div class="p-space-md rounded-xl bg-surface-container-low flex flex-col gap-space-sm">
+<span class="font-label-md text-label-md text-on-surface font-medium">Enable SSH</span>
+<div class="flex items-center gap-space-lg">
+<label class="flex items-center gap-space-xs cursor-pointer">
+<input checked="" class="w-4 h-4 text-secondary-container accent-secondary-container" name="ssh_toggle" type="radio" value="yes"/>
+<span class="font-body-md text-body-md text-on-surface">Yes</span>
+</label>
+<label class="flex items-center gap-space-xs cursor-pointer">
+<input class="w-4 h-4 text-secondary-container accent-secondary-container" name="ssh_toggle" type="radio" value="no"/>
+<span class="font-body-md text-body-md text-on-surface">No</span>
+</label>
+</div>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">Default Port: 22 (ECDSA 384-bit)</span>
+</div>
+<!-- Radio 2: Enable Reverse SSH -->
+<div class="p-space-md rounded-xl bg-surface-container-low flex flex-col gap-space-sm">
+<span class="font-label-md text-label-md text-on-surface font-medium">Enable Reverse SSH</span>
+<div class="flex items-center gap-space-lg">
+<label class="flex items-center gap-space-xs cursor-pointer">
+<input class="w-4 h-4 text-secondary-container accent-secondary-container" name="rev_ssh_toggle" type="radio" value="yes"/>
+<span class="font-body-md text-body-md text-on-surface">Yes</span>
+</label>
+<label class="flex items-center gap-space-xs cursor-pointer">
+<input checked="" class="w-4 h-4 text-secondary-container accent-secondary-container" name="rev_ssh_toggle" type="radio" value="no"/>
+<span class="font-body-md text-body-md text-on-surface">No</span>
+</label>
+</div>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">Diagnostic Tunnel: Disabled</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-lg mt-space-md">
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-secondary">vpn_key</span> Session isolation active
+        </span>
+<button class="px-space-md py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition" type="button">Save</button>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation & Workflow Bar -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col sm:flex-row items-center justify-between gap-space-md mb-space-lg">
+<button class="w-full sm:w-auto inline-flex items-center justify-center gap-space-xs px-space-md py-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md font-semibold transition" onclick="document.getElementById('email-modal').classList.toggle('hidden')" type="button">
+<span class="material-symbols-outlined text-[18px] text-secondary">mail</span>
+<span>Set Up Email</span>
+</button>
+<div class="flex items-center gap-space-sm w-full sm:w-auto justify-end">
+<button class="px-space-lg py-2 rounded-lg bg-surface-container-low text-on-surface-variant font-label-md text-label-md cursor-not-allowed opacity-60" disabled="" type="button">
+        Previous
+      </button>
+<button class="inline-flex items-center gap-space-xs px-space-lg py-2 rounded-lg bg-secondary-container hover:bg-secondary text-on-secondary font-label-md text-label-md font-semibold shadow-sm transition" type="button">
+<span>Next Step: Module Control</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Telemetry Baseline & Reference Inspection Section -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm mb-space-lg">
+<div class="flex items-center justify-between mb-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary">architecture</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Optical Subsystem Provisioning Context</h3>
+</div>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">HW Revision ELS-2026-X8</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<div class="bg-surface-container-low p-space-md rounded-xl">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Internal Loopback</span>
+<div class="font-headline-md text-headline-md text-on-surface font-semibold mt-1">127.0.0.1:8088</div>
+<div class="font-telemetry-sm text-telemetry-sm text-secondary mt-1">Optical Transceiver IPC Bridge</div>
+</div>
+<div class="bg-surface-container-low p-space-md rounded-xl">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Auxiliary Serial Bus</span>
+<div class="font-headline-md text-headline-md text-on-surface font-semibold mt-1">115,200 Baud</div>
+<div class="font-telemetry-sm text-telemetry-sm text-secondary mt-1">No Parity • 1 Stop Bit • RTS/CTS</div>
+</div>
+<div class="bg-surface-container-low p-space-md rounded-xl">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">NFS Sync Daemon</span>
+<div class="font-headline-md text-headline-md text-on-surface font-semibold mt-1">Mounted &amp; Ready</div>
+<div class="font-telemetry-sm text-telemetry-sm text-secondary mt-1">14.2 GB buffer allocated</div>
+</div>
+</div>
+</div>
+<!-- Showcase Image Inspector: Reference View -->
+<div class="bg-surface-container-low rounded-xl p-space-lg shadow-sm mb-space-lg">
+<div class="flex items-center justify-between mb-space-md">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider font-semibold">Appliance Screen Matrix</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Provisioning Reference Specimen</h3>
+</div>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">Archival Image ID: 52.51.210.139</span>
+</div>
+<div class="rounded-lg overflow-hidden max-h-80 bg-surface-container-lowest flex items-center justify-center">
+<img alt="System Setup Reference Snapshot" class="w-full object-contain max-h-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5SROSaKokxgr5U49GScTkHBCikc2KMPNEULvt6SC1KK0qXTu4rxzdv639n8wQK1idueim5A8KzwOr5Xda1gF5Y6VEQGU9mjck_VeIdAviHdp2K7XO8oloR-R016qs8cOI-79M96lNBTdiVt47cRzQTEglW1n6xBkFK-wMpYHBzxXy6bZMHBOCxwXvKDH8y-jGLklqcS9VcnSgKyegEglyeTnCtNRngBUp4C5vB4R89ZCkBcbOnPJ8"/>
+</div>
+</div>
+<!-- Set Up Email Modal (Interactive Overlay & Showcase) -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-space-md bg-inverse-surface/40 backdrop-blur-sm" id="email-modal">
+<div class="w-full max-w-lg bg-surface-container-lowest rounded-xl shadow-2xl p-space-lg flex flex-col">
+<!-- Modal Header -->
+<div class="flex items-center justify-between pb-space-md mb-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">forward_to_inbox</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface font-semibold">Set Up Email</h3>
+<p class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">Configure automated SMTP notifications</p>
+</div>
+</div>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container text-on-surface-variant hover:text-on-surface flex items-center justify-center transition" onclick="document.getElementById('email-modal').classList.add('hidden')" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Modal Body Inputs -->
+<form class="flex flex-col gap-space-md" onsubmit="event.preventDefault(); document.getElementById('email-modal').classList.add('hidden');">
+<!-- Recipient & Sender -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm">
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase">Recipient email</label>
+<input class="h-9 px-space-sm rounded-lg bg-surface-container-low font-telemetry-sm text-telemetry-sm text-on-surface focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-secondary-container transition" placeholder="ops@pilotphotonics.com" required="" type="email"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase">Sender email</label>
+<input class="h-9 px-space-sm rounded-lg bg-surface-container-low font-telemetry-sm text-telemetry-sm text-on-surface focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-secondary-container transition" placeholder="els-appliance@domain.internal" required="" type="email"/>
+</div>
+</div>
+<!-- Authentication Checkbox & Password -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm items-end">
+<div class="flex items-center gap-space-xs h-9 px-space-sm rounded-lg bg-surface-container-low">
+<input checked="" class="w-4 h-4 text-secondary-container rounded accent-secondary-container" id="auth_check" type="checkbox"/>
+<label class="font-label-md text-label-md text-on-surface select-none" for="auth_check">Authentication (Y/N)</label>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase">Password</label>
+<input class="h-9 px-space-sm rounded-lg bg-surface-container-low font-telemetry-sm text-telemetry-sm text-on-surface focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-secondary-container transition" placeholder="••••••••••••" type="password"/>
+</div>
+</div>
+<!-- SMTP Server & Port -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-sm">
+<div class="sm:col-span-2 flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase">SMTP Server</label>
+<input class="h-9 px-space-sm rounded-lg bg-surface-container-low font-telemetry-sm text-telemetry-sm text-on-surface focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-secondary-container transition" placeholder="smtp.office365.com" required="" type="text"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase">Port Number</label>
+<input class="h-9 px-space-sm rounded-lg bg-surface-container-low font-telemetry-sm text-telemetry-sm text-on-surface focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-secondary-container transition" placeholder="587" required="" type="number" value="587"/>
+</div>
+</div>
+<!-- Alert messages toggle -->
+<div class="flex items-center justify-between p-space-sm rounded-lg bg-surface-container-low">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px] text-secondary">notifications_active</span>
+<span class="font-label-md text-label-md text-on-surface font-medium">Alert messages ON</span>
+</div>
+<label class="inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-surface-container-lowest after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface-container-lowest after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-secondary-container"></div>
+</label>
+</div>
+<!-- Action Buttons -->
+<div class="flex items-center justify-end gap-space-sm pt-space-md">
+<button class="px-space-md py-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-error font-label-md text-label-md font-semibold transition" onclick="document.getElementById('email-modal').classList.add('hidden')" type="button">
+            Close
+          </button>
+<button class="px-space-lg py-2 rounded-lg bg-secondary-container hover:bg-secondary text-on-secondary font-label-md text-label-md font-semibold shadow-sm transition" type="submit">
+            Accept
+          </button>
+</div>
+</form>
+</div>
+</div>
+<!-- Social & Brand Footer -->
+<footer class="pt-space-md flex flex-col sm:flex-row items-center justify-between gap-space-md text-on-surface-variant">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-sm text-label-sm font-semibold uppercase tracking-wider text-secondary">Follow us:</span>
+<div class="flex items-center gap-space-xs">
+<a class="w-8 h-8 rounded-lg bg-surface-container-lowest hover:bg-surface-container flex items-center justify-center text-on-surface hover:text-secondary shadow-sm transition" href="#">
+<span class="font-telemetry-sm font-bold">X</span>
+</a>
+<a class="w-8 h-8 rounded-lg bg-surface-container-lowest hover:bg-surface-container flex items-center justify-center text-on-surface hover:text-secondary shadow-sm transition" href="#">
+<span class="font-telemetry-sm font-bold">in</span>
+</a>
+<a class="w-8 h-8 rounded-lg bg-surface-container-lowest hover:bg-surface-container flex items-center justify-center text-on-surface hover:text-secondary shadow-sm transition" href="#">
+<span class="material-symbols-outlined text-[18px]">public</span>
+</a>
+</div>
+</div>
+<div class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">
+      Pilot Photonics Adoption-ELS © 2026. Microcode build 1.4.29-stable.
+    </div>
+</footer>
+</div></div></main></div><script>(function(){var M={status:"status.html",setup:"setup.html",administration:"administration.html",support:"support.html",profile:"userProfile.html"};document.querySelectorAll("[data-path]").forEach(function(a){var p=a.getAttribute("data-path");if(M[p])a.setAttribute("href",M[p]);});})();</script></body></html>
