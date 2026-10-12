@@ -95,9 +95,9 @@
         <div class="pp-card-head">
           <h2 class="pp-card-title">Status</h2>
           <div class="d-flex gap-3 text-muted" style="font-size:11px">
-            <span class="d-flex align-items-center gap-2"><span class="pp-dot ok"></span>OK</span>
-            <span class="d-flex align-items-center gap-2"><span class="pp-dot warn"></span>Warn</span>
-            <span class="d-flex align-items-center gap-2"><span class="pp-dot"></span>N/A</span>
+            <span class="d-flex align-items-center gap-2"><span class="pp-dot ok static"></span>OK</span>
+            <span class="d-flex align-items-center gap-2"><span class="pp-dot warn static"></span>Warn</span>
+            <span class="d-flex align-items-center gap-2"><span class="pp-dot static"></span>N/A</span>
           </div>
         </div>
         <div id="statusPanel" class="pp-rows pp-side-scroll"></div>
@@ -115,13 +115,13 @@
   // i_drive.set_current — 0 on the real screenshot (Rocker / Key switch OFF)
   var lasers = []; for (var i = 1; i <= 16; i++) lasers.push({ name: "Laser" + i, current: 0 });
 
-  // status: 0 = unavailable, 1 = healthy, 2 = warning   (cgi_statusPageManager.py)
+  // status: 0 = unavailable, 1 = healthy, 2 = warning   (cgi_statusPageManager.py), 3 = disconnected / fault (red)
   var STATUS = [
     { name: "Ethernet", icon: "fa-network-wired", open: true, items: [{ name: "eth0", status: 1, detail: "up" }] },
     { name: "Current Controller", icon: "fa-bolt", items:
       lasers.map(function (l) { return { name: l.name + " Current", status: 1, detail: l.current + " mA" }; }) },
     { name: "TEC", icon: "fa-snowflake", items:
-      lasers.map(function (l, k) { return { name: "TEC " + (k + 1), status: 1 }; }) },
+      lasers.map(function (l, k) { return { name: "TEC " + (k + 1), status: 3, detail: "Disconnected" }; }) },
     { name: "Temperature", icon: "fa-thermometer-half", open: true, items: [{ name: "CPU Temperature", status: 1, detail: "52.6 °C" }] },
     { name: "Power Supply", icon: "fa-plug", open: true, items: [{ name: "core_voltage", status: 1, detail: "0.86 V" }] },
     { name: "Disk Space", icon: "fa-hdd", open: true, items: [
@@ -136,11 +136,11 @@
   }).join("");
 
   /* ---------- Status panel ---------- */
-  var DOT = { 0: "", 1: " ok", 2: " warn" };
+  var DOT = { 0: "", 1: " ok", 2: " warn", 3: " bad" };
   document.getElementById("statusPanel").innerHTML = STATUS.map(function (g) {
     var ok = g.items.filter(function (x) { return x.status === 1; }).length;
-    var worst = g.items.some(function (x) { return x.status === 2; }) ? 2 : (ok === g.items.length ? 1 : 0);
-    var badge = worst === 1 ? "ok" : worst === 2 ? "warn" : "muted";
+    var has = function (st) { return g.items.some(function (x) { return x.status === st; }); };
+    var badge = has(3) ? "bad" : has(2) ? "warn" : ok === g.items.length ? "ok" : "muted";
     return '<details class="pp-acc pp-status-group"' + (g.open ? " open" : "") + ">" +
       '<summary><span class="pp-icon"><i class="fas ' + g.icon + '"></i></span>' +
         '<span class="flex-1 fw-500" style="font-size:13.5px">' + g.name + "</span>" +

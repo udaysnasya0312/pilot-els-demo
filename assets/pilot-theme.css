@@ -481,3 +481,33 @@ details.pp-card > summary { border-radius: var(--radius-lg); }
 .pp-side-scroll::-webkit-scrollbar { width: 8px; }
 .pp-side-scroll::-webkit-scrollbar-thumb { border-radius: 8px; background: var(--line-strong); }
 .pp-side-scroll::-webkit-scrollbar-thumb:hover { background: var(--faint); }
+
+/* ---------- LED indicators: smooth blink for green (ok) and red (bad) status dots ---------- */
+.pp-dot.ok, .pp-badge.ok::before { --led: 34,160,107; }
+.pp-dot.bad, .pp-badge.bad::before { --led: 229,72,77; }
+.pp-dot.ok, .pp-dot.bad, .pp-badge.ok::before, .pp-badge.bad::before {
+  animation: pp-led 2s ease-in-out infinite;
+}
+@keyframes pp-led {
+  0%   { opacity: 1;   box-shadow: 0 0 0 0 rgba(var(--led), .55), 0 0 4px rgba(var(--led), .6); }
+  50%  { opacity: .6; box-shadow: 0 0 0 4px rgba(var(--led), 0), 0 0 0 rgba(var(--led), 0); }
+  100% { opacity: 1;   box-shadow: 0 0 0 0 rgba(var(--led), 0), 0 0 4px rgba(var(--led), .6); }
+}
+.pp-dot.static { animation: none !important; box-shadow: none !important; }   /* legends / keys don't blink */
+@media (prefers-reduced-motion: reduce) {
+  .pp-dot, .pp-badge::before { animation: none !important; }
+}
+
+/* LED look: traffic-light style (deeper green / red, glossy highlight) and slightly larger dots */
+.pp-dot.ok, .pp-badge.ok::before {
+  --led: 22,163,74;
+  background: radial-gradient(circle at 35% 30%, #86efac 0, #16a34a 20%, #15803d 48%, #14532d 100%);
+}
+.pp-dot.bad, .pp-badge.bad::before {
+  --led: 220,38,38;
+  background: radial-gradient(circle at 35% 30%, #fca5a5 0, #dc2626 20%, #b91c1c 48%, #7f1d1d 100%);
+}
+.pp-dot.ok, .pp-dot.bad { width: 10px; height: 10px; }
+.pp-badge.ok::before, .pp-badge.bad::before { width: 9px; height: 9px; }
+.pp-pill .pp-dot.ok, .pp-pill .pp-dot.bad { width: 11px; height: 11px; }
+.pp-dot.static { width: 7px; height: 7px; }
