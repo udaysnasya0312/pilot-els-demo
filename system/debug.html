@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Debug · Pilot Adoption-ELS</title>
+  <link rel="icon" type="image/png" href="../assets/img/blue-icon.png" />
+  <!-- All local: Bootstrap 4.0.0 + FontAwesome 5.11.2 (same as the real box) + theme -->
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/bootstrap.min.css" />
+  <link rel="stylesheet" href="../assets/vendor/fontawesome/css/all.min.css" />
+  <link rel="stylesheet" href="../assets/pilot-theme.css" />
+</head>
+<body class="shell-pending" data-page="debug">
+<main id="page" class="page">
+
+  <div class="page-head">
+    <div>
+      <p class="page-eyebrow">SetUp</p>
+      <h1 class="page-title">Debug</h1>
+    </div>
+  </div>
+
+  <div id="setup-tabs"></div>
+
+  <section class="pp-card">
+    <div class="pp-card-head justify-content-between">
+      <div id="dacTabs" class="pp-segment">
+        <button data-dac="i">iDAC</button>
+        <button data-dac="v">vDAC</button>
+      </div>
+      <span id="dacUnit" class="mono small-12 text-muted"></span>
+    </div>
+    <div id="dacRows" class="pp-rows"></div>
+    <div class="pp-card-foot">
+      <button type="button" class="btn btn-ghost">Cancel</button>
+      <button type="button" data-toast class="btn btn-primary">Save</button>
+    </div>
+  </section>
+
+  <!-- Footer bar -->
+  <div class="pp-card pp-bar">
+    <div class="d-flex flex-wrap gap-2">
+      <button type="button" data-toast class="btn btn-primary">Save Settings</button>
+      <button type="button" data-toast="Default settings restored" class="btn btn-default">Restore Default Settings</button>
+    </div>
+    <div id="setup-pager"></div>
+  </div>
+</main>
+<script src="../assets/vendor/jquery/jquery-3.4.1.min.js"></script>
+<script src="../assets/vendor/bootstrap/popper.min.js"></script>
+<script src="../assets/vendor/bootstrap/bootstrap.min.js"></script>
+<script src="../assets/shell.js"></script>
+<script src="../assets/setup-tabs.js"></script>
+<script src="../assets/ui.js"></script>
+<script>
+(function () {
+  // Range options exactly as in the real debug.js
+  var RANGES = {
+    i: ["0 to 3.125mA", "0 to 6.25mA", "0 to 12.5mA", "0 to 25mA", "0 to 50mA", "0 to 100mA", "0 to 200mA", "0 to 300mA"],
+    v: ["0V to 5V", "0V to 10V", "-5V to 5V", "-10V to 10V", "-2.5V to 2.5V", "-10V to 0V"],
+  };
+  var COUNT = 4;   // dummy channel count (real: rows from i_dac_data / v_dac_data)
+
+  function bounds(r) { var m = r.match(/(-?[\d.]+)V? to (-?[\d.]+)/); return [parseFloat(m[1]), parseFloat(m[2])]; }
+
+  function render(kind) {
+    var name = kind === "i" ? "iDAC" : "vDAC", unit = kind === "i" ? "mA" : "V";
+    document.getElementById("dacUnit").textContent = name + " · set value in " + unit;
+    var html = "";
+    for (var n = 1; n <= COUNT; n++) {
+      var def = kind === "i" ? RANGES.i[4] : RANGES.v[0], b = bounds(def);
+      html += '<div class="pp-dac-row">' +
+        '<span class="fw-600" style="font-size:13.5px">' + name + (kind === "i" ? "" : " ") + n + "</span>" +
+        '<select data-range="' + kind + n + '" class="form-control sm mono" style="font-size:12.5px">' +
+          RANGES[kind].map(function (r) { return "<option" + (r === def ? " selected" : "") + ">" + r + "</option>"; }).join("") + "</select>" +
+        '<input type="range" class="pp-range" id="sl' + kind + n + '" min="' + b[0] + '" max="' + b[1] + '" step="0.001" value="0" />' +
+        '<label class="pp-setvalue">Set Value <input id="sv' + kind + n + '" type="number" step="0.001" value="0" class="form-control w-num" /> ' + unit + "</label>" +
+        '<label class="pp-switch" title="ON / OFF"><input type="checkbox" /><span class="track"></span><span class="thumb"></span></label>' +
+        "</div>";
+    }
+    document.getElementById("dacRows").innerHTML = html;
+    document.querySelectorAll("#dacTabs button").forEach(function (b) { b.classList.toggle("is-active", b.getAttribute("data-dac") === kind); });
+  }
+
+  document.addEventListener("input", function (e) {
+    var id = e.target.id;
+    if (/^sl/.test(id)) document.getElementById("sv" + id.slice(2)).value = e.target.value;
+    if (/^sv/.test(id)) document.getElementById("sl" + id.slice(2)).value = e.target.value;
+  });
+  document.addEventListener("change", function (e) {
+    var k = e.target.getAttribute("data-range"); if (!k) return;
+    var b = bounds(e.target.value), sl = document.getElementById("sl" + k);
+    sl.min = b[0]; sl.max = b[1];
+  });
+  document.querySelectorAll("#dacTabs button").forEach(function (b) { b.addEventListener("click", function () { render(b.getAttribute("data-dac")); }); });
+  render("i");
+})();
+</script>
+</body>
+</html>

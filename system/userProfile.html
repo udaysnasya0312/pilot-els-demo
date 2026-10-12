@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Profile · Pilot Adoption-ELS</title>
+  <link rel="icon" type="image/png" href="../assets/img/blue-icon.png" />
+  <!-- All local: Bootstrap 4.0.0 + FontAwesome 5.11.2 (same as the real box) + theme -->
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/bootstrap.min.css" />
+  <link rel="stylesheet" href="../assets/vendor/fontawesome/css/all.min.css" />
+  <link rel="stylesheet" href="../assets/pilot-theme.css" />
+</head>
+<body class="shell-pending" data-page="userProfile">
+<main id="page" class="page page-narrow">
+
+  <div class="page-head">
+    <div>
+      <p class="page-eyebrow">Account</p>
+      <h1 class="page-title">My Profile</h1>
+    </div>
+  </div>
+
+  <section class="pp-card">
+    <div class="pp-card-head" style="padding:20px">
+      <span class="app-avatar is-navy" style="width:48px;height:48px;font-size:16px"><i class="fas fa-user"></i></span>
+      <div class="ml-2">
+        <div class="fw-600" style="font-size:15px">admin</div>
+        <div class="text-muted" style="font-size:12.5px">Adoption-ELS</div>
+      </div>
+    </div>
+
+    <div class="pp-rows">
+      <div class="pp-form-row"><label for="txtUserName">User Name</label><input id="txtUserName" class="form-control" value="admin" readonly /></div>
+      <div class="pp-form-row"><label for="txtFirstName">First Name</label><input id="txtFirstName" class="form-control" value="admin" /></div>
+      <div class="pp-form-row"><label for="txtLastName">Last Name</label><input id="txtLastName" class="form-control" value="A" /></div>
+      <div class="pp-form-row"><label for="txtEmail">Email Address</label><input id="txtEmail" type="email" class="form-control" placeholder="Email" readonly /></div>
+      <div class="pp-form-row">
+        <label for="txtPassword">Password</label>
+        <div class="pp-input-reveal">
+          <input id="txtPassword" type="password" class="form-control" value="demo-password" />
+          <button type="button" data-reveal="txtPassword" class="pp-reveal" aria-label="Show password"><i class="far fa-eye"></i></button>
+        </div>
+      </div>
+      <div class="pp-form-row">
+        <label for="txtPhone">Phone</label>
+        <div class="d-flex gap-2">
+          <select class="form-control mono" style="width:112px" aria-label="Country code">
+            <option>+353</option><option selected>+354</option><option>+44</option><option>+91</option><option>+1</option>
+          </select>
+          <input id="txtPhone" type="tel" class="form-control mono" value="674 5654" />
+        </div>
+      </div>
+    </div>
+
+    <div class="pp-card-foot">
+      <button type="button" data-toast="Updated Successfully!" class="btn btn-primary">Save</button>
+    </div>
+  </section>
+</main>
+<script src="../assets/vendor/jquery/jquery-3.4.1.min.js"></script>
+<script src="../assets/vendor/bootstrap/popper.min.js"></script>
+<script src="../assets/vendor/bootstrap/bootstrap.min.js"></script>
+<script src="../assets/shell.js"></script>
+<script src="../assets/ui.js"></script>
+</body>
+</html>

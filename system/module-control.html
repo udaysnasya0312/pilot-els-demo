@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Module Control · Pilot Adoption-ELS</title>
+  <link rel="icon" type="image/png" href="../assets/img/blue-icon.png" />
+  <!-- All local: Bootstrap 4.0.0 + FontAwesome 5.11.2 (same as the real box) + theme -->
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/bootstrap.min.css" />
+  <link rel="stylesheet" href="../assets/vendor/fontawesome/css/all.min.css" />
+  <link rel="stylesheet" href="../assets/pilot-theme.css" />
+</head>
+<body class="shell-pending" data-page="module-control">
+<main id="page" class="page">
+
+  <div class="page-head">
+    <div>
+      <p class="page-eyebrow">SetUp</p>
+      <h1 class="page-title">Module Control</h1>
+    </div>
+  </div>
+
+  <div id="setup-tabs"></div>
+
+  <!-- Top controls (real: TEC Test | Rocker Key : Off | Key Switch : Off | Turn Off All Lasers & TECs) -->
+  <div class="pp-card pp-bar mb-4">
+    <label class="d-flex align-items-center gap-3 m-0" style="cursor:pointer">
+      <span class="small-13 fw-500">TEC Test</span>
+      <span class="pp-switch brand"><input type="checkbox" id="tecTestInput" /><span class="track"></span><span class="thumb"></span></span>
+    </label>
+    <div class="d-flex align-items-center gap-3 small-13">
+      <span class="fw-500">Rocker Key</span><span class="pp-badge bad sm">Off</span>
+      <span style="width:1px;height:16px;background:var(--line)"></span>
+      <span class="fw-500">Key Switch</span><span class="pp-badge bad sm">Off</span>
+    </div>
+    <label class="d-flex align-items-center gap-3 m-0" style="cursor:pointer">
+      <span class="small-13 fw-500">Turn Off All Lasers &amp; TECs</span>
+      <span class="pp-switch danger"><input type="checkbox" id="tecOffInput" /><span class="track"></span><span class="thumb"></span></span>
+    </label>
+  </div>
+
+  <!-- General + Current Controller clubbed: one accordion per channel (TEC n + Laser n) -->
+  <section class="pp-card">
+    <div class="pp-card-head flex-wrap">
+      <span class="pp-icon"><i class="fas fa-layer-group"></i></span>
+      <h2 class="pp-card-title">General <span class="light">&amp;</span> Current Controller</h2>
+      <button type="button" id="expandAll" class="btn btn-ghost btn-sm text-brand">Expand all</button>
+      <span class="d-none d-sm-inline text-muted" style="font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase">Status</span>
+    </div>
+    <div id="channels" class="pp-rows"></div>
+  </section>
+
+  <!-- Footer bar -->
+  <div class="pp-card pp-bar">
+    <div class="d-flex flex-wrap gap-2">
+      <button type="button" data-toast class="btn btn-primary">Save Settings</button>
+      <button type="button" data-toast="Default settings restored" class="btn btn-default">Restore Default Settings</button>
+    </div>
+    <div id="setup-pager"></div>
+  </div>
+</main>
+<script src="../assets/vendor/jquery/jquery-3.4.1.min.js"></script>
+<script src="../assets/vendor/bootstrap/popper.min.js"></script>
+<script src="../assets/vendor/bootstrap/bootstrap.min.js"></script>
+<script src="../assets/shell.js"></script>
+<script src="../assets/setup-tabs.js"></script>
+<script src="../assets/ui.js"></script>
+<script>
+(function () {
+  var N = 16;   // one TEC per laser channel
+  // Ranges from the real Module Control screen
+  var TEMP = { min: 10, max: 60, set: 25 };   // Temperature Control (°C)
+  var CURR = { min: 0, max: 210 };            // Current Control (mA)
+
+  function badge(ok, text) { return '<span class="pp-badge sm ' + (ok ? "ok" : "bad") + '">' + text + "</span>"; }
+  function sw(id) { return '<label class="pp-switch" title="ON / OFF"><input type="checkbox" id="' + id + '" /><span class="track"></span><span class="thumb"></span></label>'; }
+  function control(label, icon, key, r, val, step, unit) {
+    return '<div class="pp-control">' +
+      '<span class="pp-control-label"><i class="fas ' + icon + ' text-brand"></i>' + label + "</span>" +
+      '<div><input type="range" class="pp-range" data-sync="' + key + '" min="' + r.min + '" max="' + r.max + '" step="' + step + '" value="' + val + '" />' +
+        '<div class="pp-range-scale"><span>' + r.min + "</span><span>" + r.max + "</span></div></div>" +
+      '<label class="pp-setvalue">Set Value <input id="' + key + '" type="number" min="' + r.min + '" max="' + r.max + '" step="' + step + '" value="' + val + '" class="form-control w-num" /> ' + unit + "</label>" +
+      sw(key + "-sw") + "</div>";
+  }
+
+  var html = "";
+  for (var i = 1; i <= N; i++) {
+    var temp = (24.6 + ((i * 7) % 10) / 10).toFixed(1);   // Temperature Reading (°C)
+    var prev = 150 + ((i * 13) % 6) * 10;                  // Prev Laser Value (mA)
+    html += '<details class="pp-acc pp-channel">' +
+      // Header: TEC n line + Laser n Current line (real labels unchanged)
+      "<summary>" +
+        '<span class="pp-channel-no">' + i + "</span>" +
+        '<div class="flex-1 min-w-0">' +
+          '<div class="pp-channel-line">' +
+            '<span class="pp-channel-name">TEC ' + i + "</span>" + badge(true, "TEC Connected") + badge(true, "Laser Connected") +
+            '<span class="pp-channel-meta"><b class="text-ok">Ok</b> &nbsp;|&nbsp; Temperature Reading : <b class="mono text-ink">' + temp + " °C</b></span>" +
+          "</div>" +
+          '<div class="pp-channel-line">' +
+            '<span class="pp-channel-name">Laser' + i + " Current</span>" + badge(true, "Laser Connected") + badge(true, "TEC Connected") +
+            '<span class="pp-channel-meta"><b class="text-ok">Ok</b> &nbsp;|&nbsp; Prev Laser Value : <b class="mono text-ink">' + prev + " mA</b></span>" +
+          "</div>" +
+        "</div>" +
+        '<i class="fas fa-chevron-down chev" style="margin-top:8px"></i>' +
+      "</summary>" +
+      // Body: TEC block + Laser block, one Save for both
+      '<div class="pp-channel-body">' +
+        '<div class="pp-subcard">' +
+          '<div class="pp-subcard-title">TEC ' + i +
+            '<span class="pp-pill"><span class="pp-dot ok"></span>TEC ON</span>' +
+            '<span class="pp-pill"><span class="pp-dot ok"></span>Temperature Sensor</span>' +
+          "</div>" +
+          control("Temperature Control (°C)", "fa-thermometer-half", "tc" + i, TEMP, TEMP.set.toFixed(2), 0.01, "°C") +
+        "</div>" +
+        '<div class="pp-subcard">' +
+          '<div class="pp-subcard-title">Laser' + i + " Current</div>" +
+          control("Current Control (mA)", "fa-bolt", "cc" + i, CURR, prev, 1, "mA") +
+        "</div>" +
+        '<div class="d-flex justify-content-end gap-2">' +
+          '<button type="button" class="btn btn-ghost">Cancel</button>' +
+          '<button type="button" class="btn btn-primary" data-toast="TEC ' + i + " &amp; Laser" + i + ' updated">Save</button>' +
+        "</div>" +
+      "</div></details>";
+  }
+  document.getElementById("channels").innerHTML = html;
+
+  // slider <-> Set Value
+  document.addEventListener("input", function (e) {
+    var key = e.target.getAttribute("data-sync");
+    if (key) { document.getElementById(key).value = e.target.value; return; }
+    var r = e.target.id ? document.querySelector('[data-sync="' + e.target.id + '"]') : null;
+    if (r) r.value = e.target.value;
+  });
+
+  // Expand / collapse all
+  var exp = document.getElementById("expandAll"), allOpen = false;
+  exp.addEventListener("click", function () {
+    allOpen = !allOpen;
+    document.querySelectorAll("#channels details").forEach(function (d) { d.open = allOpen; });
+    exp.textContent = allOpen ? "Collapse all" : "Expand all";
+  });
+  document.querySelector("#channels details").open = true;   // first channel open by default
+})();
+</script>
+</body>
+</html>

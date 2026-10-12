@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard · Pilot Adoption-ELS</title>
+  <link rel="icon" type="image/png" href="../assets/img/blue-icon.png" />
+  <!-- All local: Bootstrap 4.0.0 + FontAwesome 5.11.2 (same as the real box) + theme -->
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/bootstrap.min.css" />
+  <link rel="stylesheet" href="../assets/vendor/fontawesome/css/all.min.css" />
+  <link rel="stylesheet" href="../assets/pilot-theme.css" />
+</head>
+<body class="shell-pending" data-page="dashboard">
+<main id="page" class="page">
+
+  <!-- Page header -->
+  <div class="page-head">
+    <div>
+      <p class="page-eyebrow">Dashboard</p>
+      <h1 class="page-title">Adoption-ELS</h1>
+      <p class="page-sub">Lyra-ELS &middot; WDM External Laser Source</p>
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+      <span class="pp-badge ok">Health OK</span>
+      <span class="pp-badge ok">Software OK</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Appliance image -->
+    <div class="col-lg-5 mb-4 mb-lg-0 d-flex">
+      <section class="pp-card d-flex flex-column w-100">
+        <div class="pp-card-head">
+          <h2 class="pp-card-title">Appliance</h2>
+          <span class="mono small-12 text-muted">Adoption-ELS</span>
+        </div>
+        <div class="d-flex flex-1 align-items-center justify-content-center p-4" style="background:linear-gradient(#fff,var(--canvas));border-radius:0 0 12px 12px">
+          <img src="../assets/img/adoption.png" alt="Adoption-ELS appliance front panel" class="img-fluid" style="max-height:300px;object-fit:contain" />
+        </div>
+      </section>
+    </div>
+
+    <!-- System information (real fields from cgi_Index) -->
+    <div class="col-lg-7">
+      <section class="pp-card">
+        <div class="pp-card-head">
+          <h2 class="pp-card-title">System Information</h2>
+          <i class="fas fa-microchip text-muted"></i>
+        </div>
+        <dl class="pp-kv">
+          <div class="pp-kv-row"><dt>Software Version</dt><dd class="mono">2.05</dd></div>
+          <div class="pp-kv-row"><dt>Build Version</dt><dd class="mono">fw110126</dd></div>
+          <div class="pp-kv-row">
+            <dt>System</dt>
+            <dd>
+              <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
+                <span class="text-muted">Uptime</span>
+                <span class="mono">up 10 wk(s) 2 day(s) 4 hr(s) 27 min(s)</span>
+              </div>
+              <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+                <span class="text-muted">Boot Time</span>
+                <span class="pp-badge bad no-dot"><i class="fas fa-exclamation-triangle" style="font-size:10px"></i>Not Available !!</span>
+              </div>
+            </dd>
+          </div>
+          <div class="pp-kv-row">
+            <dt>Free Space</dt>
+            <dd>
+              <div class="row">
+                <div class="col-6"><div class="pp-tile"><div class="pp-tile-label">Data</div><div class="pp-tile-value">10.98 GB</div></div></div>
+                <div class="col-6"><div class="pp-tile"><div class="pp-tile-label">xData</div><div class="pp-tile-value">10.98 GB</div></div></div>
+              </div>
+            </dd>
+          </div>
+          <div class="pp-kv-row">
+            <dt>Memory</dt>
+            <dd>
+              <div class="d-flex flex-wrap justify-content-between gap-2 mb-2 mono small-12">
+                <span class="text-muted">Total <span class="text-ink">4 GB</span></span>
+                <span class="text-muted">Used <span class="text-brand">1.02 GB</span></span>
+                <span class="text-muted">Free <span class="text-ink">2.8 GB</span></span>
+              </div>
+              <!-- bar width = Used / Total = 1.02 / 4 -->
+              <div class="pp-meter"><span style="width:25.5%"></span></div>
+            </dd>
+          </div>
+        </dl>
+
+        <!-- Name / Health / Software (real status table) -->
+        <div class="p-4" style="border-top:1px solid var(--line)">
+          <table class="pp-table">
+            <thead><tr><th>Name</th><th class="center">Health</th><th class="center">Software</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="fw-500">Status</td>
+                <td class="center"><i class="fas fa-check-circle" style="font-size:20px;color:var(--ok)" title="Healthy"></i></td>
+                <td class="center"><i class="fas fa-check-circle" style="font-size:20px;color:var(--ok)" title="Software OK"></i></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Quick access to the real screens -->
+  <h2 class="section-label">Go to</h2>
+  <div class="row">
+    <div class="col-sm-6 col-xl-3 mb-3">
+      <a href="status.html" class="pp-link-card">
+        <div class="d-flex align-items-center gap-3"><span class="pp-icon lg"><i class="fas fa-tachometer-alt"></i></span><span class="fw-600">Status</span><i class="fas fa-arrow-right arrow"></i></div>
+        <p>Current Settings, laser currents, Temp / PSU / Ethernet / Disk charts</p>
+      </a>
+    </div>
+    <div class="col-sm-6 col-xl-3 mb-3">
+      <a href="setup.html" class="pp-link-card">
+        <div class="d-flex align-items-center gap-3"><span class="pp-icon lg"><i class="fas fa-tools"></i></span><span class="fw-600">SetUp</span><i class="fas fa-arrow-right arrow"></i></div>
+        <p>Connection, Module Control, Calibration, Debug</p>
+      </a>
+    </div>
+    <div class="col-sm-6 col-xl-3 mb-3">
+      <a href="administration.html" class="pp-link-card">
+        <div class="d-flex align-items-center gap-3"><span class="pp-icon lg"><i class="fas fa-server"></i></span><span class="fw-600">Administration</span><i class="fas fa-arrow-right arrow"></i></div>
+        <p>Upload OS Package, Firmware Boot Image, Factory Reset</p>
+      </a>
+    </div>
+    <div class="col-sm-6 col-xl-3 mb-3">
+      <a href="support.html" class="pp-link-card">
+        <div class="d-flex align-items-center gap-3"><span class="pp-icon lg"><i class="fas fa-life-ring"></i></span><span class="fw-600">Support</span><i class="fas fa-arrow-right arrow"></i></div>
+        <p>Self Test, Remote Diagnostic, Manual, Send Logs</p>
+      </a>
+    </div>
+  </div>
+
+</main>
+<script src="../assets/vendor/jquery/jquery-3.4.1.min.js"></script>
+<script src="../assets/vendor/bootstrap/popper.min.js"></script>
+<script src="../assets/vendor/bootstrap/bootstrap.min.js"></script>
+<script src="../assets/shell.js"></script>
+</body>
+</html>

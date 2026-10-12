@@ -1,252 +1,99 @@
 <!DOCTYPE html>
-
-<html lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="web_blank" name="shell-type"/>
-<title>Pilot Photonics - Lyra-ELS Sign In</title>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
-<style>
-    @layer base {
-      html, body { margin: 0; padding: 0; }
-      body { overscroll-behavior: none; }
-    }
-    ::-webkit-scrollbar { display: none; }
-    .laser-glow {
-      filter: drop-shadow(0 0 12px rgba(96, 165, 250, 0.35));
-    }
-  </style>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script id="tailwind-config">
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            "surface-container-highest": "#d9e2fc",
-            "primary-fixed-dim": "#b0c6ff",
-            "on-primary-container": "#7d93cb",
-            "inverse-on-surface": "#edf0ff",
-            "on-tertiary": "#ffffff",
-            "on-surface": "#121b2e",
-            "primary-fixed": "#d9e2ff",
-            "on-primary-fixed": "#001945",
-            "on-surface-variant": "#44464f",
-            "surface-tint": "#475d92",
-            "surface-bright": "#f9f9ff",
-            "background": "#070d19",
-            "secondary": "#0057c2",
-            "tertiary": "#101821",
-            "on-primary": "#ffffff",
-            "on-secondary-fixed-variant": "#004398",
-            "surface-container-lowest": "#ffffff",
-            "tertiary-fixed-dim": "#bec7d3",
-            "primary": "#00153e",
-            "surface-container-high": "#e1e8ff",
-            "on-tertiary-fixed": "#141c25",
-            "inverse-primary": "#b0c6ff",
-            "tertiary-fixed": "#dae3ef",
-            "surface": "#f9f9ff",
-            "primary-container": "#102a5c",
-            "on-secondary-container": "#fefcff",
-            "surface-container-low": "#f1f3ff",
-            "on-background": "#121b2e",
-            "surface-container": "#e9edff",
-            "secondary-fixed": "#d9e2ff",
-            "on-error": "#ffffff",
-            "secondary-container": "#1677ff",
-            "outline-variant": "#c5c6d0",
-            "error": "#ba1a1a",
-            "outline": "#757780",
-            "error-container": "#ffdad6",
-            "on-error-container": "#93000a",
-            "on-primary-fixed-variant": "#2f4578",
-            "on-secondary": "#ffffff",
-            "on-tertiary-fixed-variant": "#3f4851",
-            "secondary-fixed-dim": "#afc6ff",
-            "tertiary-container": "#242d36",
-            "inverse-surface": "#273044",
-            "on-secondary-fixed": "#001a43",
-            "on-tertiary-container": "#8b949f",
-            "surface-dim": "#d1daf4",
-            "surface-variant": "#d9e2fc"
-          },
-          fontFamily: {
-            "body-md": ["Inter", "sans-serif"],
-            "headline-lg": ["Inter", "sans-serif"],
-            "headline-md": ["Inter", "sans-serif"],
-            "headline-sm": ["Inter", "sans-serif"],
-            "label-md": ["Inter", "sans-serif"],
-            "label-sm": ["Inter", "sans-serif"],
-            "telemetry-md": ["JetBrains Mono", "monospace"],
-            "telemetry-sm": ["JetBrains Mono", "monospace"]
-          }
-        }
-      }
-    };
-  </script>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pilot Login</title>
+  <link rel="icon" type="image/png" href="assets/img/blue-icon.png" />
+  <!-- All local: Bootstrap 4.0.0 + FontAwesome 5.11.2 (same as the real box) + theme -->
+  <link rel="stylesheet" href="assets/vendor/bootstrap/bootstrap.min.css" />
+  <link rel="stylesheet" href="assets/vendor/fontawesome/css/all.min.css" />
+  <link rel="stylesheet" href="assets/pilot-theme.css" />
 </head>
-<body class="bg-[#070e1b] font-body-md text-on-surface antialiased min-h-screen relative flex flex-col justify-between items-center selection:bg-blue-600 selection:text-white overflow-x-hidden">
-<!-- Layer 1: Ambient High-Tech Photonics Background -->
-<div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
-<!-- Radial ambient glows -->
-<div class="absolute -top-[25%] left-1/2 -translate-x-1/2 w-[900px] h-[750px] bg-gradient-to-b from-[#1677ff]/20 via-[#102a5c]/25 to-transparent blur-[120px] rounded-full"></div>
-<div class="absolute -bottom-[20%] left-1/4 w-[600px] h-[550px] bg-[#0057c2]/15 blur-[130px] rounded-full"></div>
-<div class="absolute top-1/3 -right-[15%] w-[550px] h-[550px] bg-[#102a5c]/35 blur-[140px] rounded-full"></div>
-<!-- Micro Tech Optical Grid -->
-<div class="absolute inset-0 opacity-[0.035]" style="background-image: linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px); background-size: 48px 48px;"></div>
-<!-- Photonics Laser Waveforms & Concentric Optical Geometry -->
-<svg class="absolute inset-0 w-full h-full opacity-30 laser-glow" fill="none" preserveaspectratio="none" viewbox="0 0 1440 900" xmlns="http://www.w3.org/2000/svg">
-<defs>
-<lineargradient id="laserBeam" x1="0%" x2="100%" y1="30%" y2="70%">
-<stop offset="0%" stop-color="#38bdf8" stop-opacity="0.1"></stop>
-<stop offset="35%" stop-color="#60a5fa" stop-opacity="0.75"></stop>
-<stop offset="65%" stop-color="#2563eb" stop-opacity="0.5"></stop>
-<stop offset="100%" stop-color="#1e3a8a" stop-opacity="0.05"></stop>
-</lineargradient>
-<lineargradient id="secBeam" x1="100%" x2="0%" y1="20%" y2="80%">
-<stop offset="0%" stop-color="#60a5fa" stop-opacity="0.5"></stop>
-<stop offset="50%" stop-color="#1d4ed8" stop-opacity="0.3"></stop>
-<stop offset="100%" stop-color="#0284c7" stop-opacity="0"></stop>
-</lineargradient>
-</defs>
-<!-- Coherent Laser Paths -->
-<path d="M-100 240 C 350 160, 680 430, 1540 210" stroke="url(#laserBeam)" stroke-width="1.75"></path>
-<path d="M-100 290 C 380 210, 720 480, 1540 260" stroke="url(#laserBeam)" stroke-dasharray="6 4" stroke-width="0.75"></path>
-<path d="M-100 340 C 420 270, 760 520, 1540 310" stroke="url(#secBeam)" stroke-width="1"></path>
-<path d="M-100 480 C 460 380, 900 660, 1540 440" stroke="url(#laserBeam)" stroke-width="0.75"></path>
-<!-- Optical Ring Resonator / Reticle Circles -->
-<circle cx="240" cy="220" r="130" stroke="#60a5fa" stroke-dasharray="4 6" stroke-opacity="0.12" stroke-width="1"></circle>
-<circle cx="240" cy="220" r="210" stroke="#60a5fa" stroke-opacity="0.07" stroke-width="1"></circle>
-<circle cx="1200" cy="650" r="160" stroke="#93c5fd" stroke-dasharray="3 5" stroke-opacity="0.1" stroke-width="1"></circle>
-<circle cx="1200" cy="650" r="240" stroke="#93c5fd" stroke-opacity="0.05" stroke-width="1"></circle>
-<!-- Geometric Alignment Crosshairs -->
-<path d="M230 220 H250 M240 210 V230" stroke="#93c5fd" stroke-opacity="0.4" stroke-width="1"></path>
-<path d="M1190 650 H1210 M1200 640 V660" stroke="#93c5fd" stroke-opacity="0.4" stroke-width="1"></path>
-<path d="M720 40 H740 M730 30 V50" stroke="#93c5fd" stroke-opacity="0.25" stroke-width="1"></path>
-<path d="M720 860 H740 M730 850 V870" stroke="#93c5fd" stroke-opacity="0.25" stroke-width="1"></path>
-</svg>
-</div>
-<!-- Top Subtle Status Watermark Header -->
-<header class="w-full max-w-7xl mx-auto px-6 py-6 relative z-10 flex items-center justify-between pointer-events-none">
-<div class="flex items-center gap-2.5">
-<div class="w-8 h-8 rounded-lg bg-white/[0.06] border border-white/10 backdrop-blur-md flex items-center justify-center text-[#93c5fd]">
-<span class="material-symbols-outlined text-lg">lens_blur</span>
-</div>
-<div class="flex flex-col">
-<span class="font-headline-sm text-xs font-semibold tracking-wide text-white/90">PILOT PHOTONICS</span>
-<span class="font-telemetry-sm text-[10px] text-white/40 uppercase tracking-widest">Optical Systems</span>
-</div>
-</div>
-<!-- Active Hardware Node Badge -->
-<div class="hidden sm:inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 backdrop-blur-md text-white/80">
-<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-<span class="font-telemetry-sm text-[11px] tracking-wide text-white/70">ELS Chassis Online • Node #01</span>
-</div>
-</header>
-<!-- Centered Login Viewport Anchor -->
-<main class="w-full relative z-10 flex flex-1 items-center justify-center px-4 py-8">
-<div class="w-full max-w-[450px]">
-<!-- Hardware Appliance Reference Pill -->
-<div class="flex items-center justify-center mb-5">
-<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-400/25 backdrop-blur-md text-[#b0c6ff] shadow-sm">
-<span class="material-symbols-outlined text-xs text-blue-300">developer_board</span>
-<span class="font-telemetry-sm text-[11px] tracking-wider uppercase font-medium">Adoption-ELS Rack Appliance</span>
-<span class="text-white/20">•</span>
-<span class="font-telemetry-sm text-[11px] text-blue-200/80">Lyra-ELS</span>
-</div>
-</div>
-<!-- Centered Modern Enterprise Authentication Card -->
-<div class="bg-surface-container-lowest rounded-2xl p-8 sm:p-10 shadow-[0_24px_50px_-12px_rgba(0,10,35,0.7),0_0_0_1px_rgba(255,255,255,0.15)] backdrop-blur-sm transition-all relative">
-<!-- Card Header & Identity -->
-<div class="flex flex-col items-center text-center mb-7">
-<div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-[#0057c2] to-[#1677ff] flex items-center justify-center text-white shadow-lg shadow-blue-500/25 mb-4">
-<span class="material-symbols-outlined text-2xl">hub</span>
-</div>
-<h1 class="font-headline-lg text-[22px] font-bold text-on-surface tracking-tight">
-            Welcome to Pilot
-          </h1>
-<p class="font-body-md text-sm text-on-surface-variant mt-1.5 max-w-[340px]">
-            WDM External Laser Source Control Plane
-          </p>
-</div>
-<!-- Credential Form -->
-<form class="space-y-4" onsubmit="event.preventDefault();">
-<!-- Username Input -->
-<div class="space-y-1.5 text-left">
-<label class="block font-label-md text-xs font-semibold text-on-surface uppercase tracking-wider" for="username">
-              Username
-            </label>
-<div class="relative flex items-center">
-<span class="material-symbols-outlined absolute left-3.5 text-outline text-lg pointer-events-none">
-                person
-              </span>
-<input class="w-full h-11 pl-10 pr-4 rounded-lg bg-surface-container-low/70 border border-outline-variant/60 text-on-surface placeholder:text-outline text-body-md font-body-md shadow-sm transition-all focus:outline-none focus:border-[#1677ff] focus:ring-2 focus:ring-[#1677ff]/20 focus:bg-surface-container-lowest" id="username" name="username" placeholder="Enter username" required="" type="text" value="admin"/>
-</div>
-</div>
-<!-- Password Input -->
-<div class="space-y-1.5 text-left">
-<label class="block font-label-md text-xs font-semibold text-on-surface uppercase tracking-wider" for="password">
-              Password
-            </label>
-<div class="relative flex items-center">
-<span class="material-symbols-outlined absolute left-3.5 text-outline text-lg pointer-events-none">
-                lock
-              </span>
-<input class="w-full h-11 pl-10 pr-11 rounded-lg bg-surface-container-low/70 border border-outline-variant/60 text-on-surface placeholder:text-outline text-body-md font-body-md shadow-sm transition-all focus:outline-none focus:border-[#1677ff] focus:ring-2 focus:ring-[#1677ff]/20 focus:bg-surface-container-lowest" id="password" name="password" placeholder="••••••••" required="" type="password" value="photonicSecure2026"/>
-<button aria-label="Toggle password visibility" class="absolute right-3 p-1 rounded-md hover:bg-surface-container-high text-outline hover:text-on-surface transition-colors flex items-center justify-center focus:outline-none focus:ring-1 focus:ring-[#1677ff]" id="togglePassword" type="button">
-<span class="material-symbols-outlined text-lg" id="eyeIcon">visibility</span>
-</button>
-</div>
-</div>
-<!-- Primary Submit Action -->
-<div class="pt-2">
-<button class="w-full h-11 bg-[#1677ff] hover:bg-[#0057c2] active:bg-[#004398] text-white font-label-md text-sm font-semibold rounded-lg shadow-md shadow-blue-600/30 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-[#1677ff]/50" type="submit">
-<span>Sign In to Appliance</span>
-<span class="material-symbols-outlined text-base">arrow_forward</span>
-</button>
-</div>
-</form>
-<!-- Card Footer Telemetry & Compliance Stamp -->
-<div class="mt-6 pt-5 border-t border-outline-variant/40 flex items-center justify-between text-on-surface-variant font-telemetry-sm text-xs">
-<span class="inline-flex items-center gap-1.5 text-on-surface-variant">
-<span class="w-1.5 h-1.5 rounded-full bg-[#1677ff]"></span>
-            TLS 1.3 Certified
-          </span>
-<span class="text-on-surface-variant/80 font-medium">SysID: #ELS-90412</span>
-</div>
-</div>
-<!-- Quick Session Hardware Telemetry Beneath Card -->
-<div class="mt-4 flex items-center justify-center gap-4 text-white/50 font-telemetry-sm text-[11px]">
-<span>Control Plane: <strong class="text-white/80 font-normal">v4.2.1-rc</strong></span>
-<span class="text-white/20">•</span>
-<span>Multi-Channel CW-WDM</span>
-</div>
-</div>
-</main>
-<!-- Screen Footer Baseline -->
-<footer class="w-full max-w-7xl mx-auto px-6 py-5 relative z-10 text-center">
-<p class="font-telemetry-sm text-xs text-white/45 tracking-wide">
-      Pilot Photonics © 2026 • Deterministic Optical Security Layer • Adoption-ELS Core
-    </p>
-</footer>
-<!-- Password Visibility Toggle Script -->
-<script>
-    (function () {
-      const passwordInput = document.getElementById('password');
-      const toggleButton = document.getElementById('togglePassword');
-      const eyeIcon = document.getElementById('eyeIcon');
+<body class="login-body">
 
-      if (toggleButton && passwordInput && eyeIcon) {
-        toggleButton.addEventListener('click', function () {
-          const isPassword = passwordInput.getAttribute('type') === 'password';
-          passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
-          eyeIcon.textContent = isPassword ? 'visibility_off' : 'visibility';
-        });
-      }
-    })();
-  </script>
-<script>document.addEventListener("submit",function(e){e.preventDefault();location.href="status.html";});document.addEventListener("click",function(e){var b=e.target.closest("button[type=submit]");if(b){e.preventDefault();location.href="status.html";}});</script></body></html>
+  <!-- Decorative background: glows, grid, laser paths -->
+  <div class="login-bg" aria-hidden="true">
+    <div class="login-glow-1"></div>
+    <div class="login-glow-2"></div>
+    <div class="login-grid"></div>
+    <svg class="login-beams" fill="none" preserveAspectRatio="none" viewBox="0 0 1440 900">
+      <defs>
+        <linearGradient id="beam" x1="0%" x2="100%" y1="30%" y2="70%">
+          <stop offset="0%" stop-color="#38bdf8" stop-opacity=".1" /><stop offset="35%" stop-color="#60a5fa" stop-opacity=".75" />
+          <stop offset="65%" stop-color="#2563eb" stop-opacity=".5" /><stop offset="100%" stop-color="#1e3a8a" stop-opacity=".05" />
+        </linearGradient>
+      </defs>
+      <path d="M-100 240 C 350 160, 680 430, 1540 210" stroke="url(#beam)" stroke-width="1.75" />
+      <path d="M-100 290 C 380 210, 720 480, 1540 260" stroke="url(#beam)" stroke-dasharray="6 4" stroke-width=".75" />
+      <path d="M-100 480 C 460 380, 900 660, 1540 440" stroke="url(#beam)" stroke-width=".75" />
+      <circle cx="240" cy="220" r="130" stroke="#60a5fa" stroke-dasharray="4 6" stroke-opacity=".12" />
+      <circle cx="1200" cy="650" r="160" stroke="#93c5fd" stroke-dasharray="3 5" stroke-opacity=".1" />
+    </svg>
+  </div>
+
+  <header class="login-header">
+    <img src="assets/img/logo-home.svg" alt="Pilot Photonics" />
+  </header>
+
+  <main class="login-main">
+    <div class="login-box">
+      <div class="text-center mb-3">
+        <span class="login-pill">Lyra-ELS <span>&bull;</span> WDM External Laser Source</span>
+      </div>
+
+      <div class="login-card">
+        <div class="text-center mb-4">
+          <h1>Welcome to Pilot</h1>
+          <p class="lead-sub">Sign in to your account and enjoy.</p>
+        </div>
+
+        <form id="loginForm" novalidate>
+          <div class="form-group mb-3">
+            <label for="txtUserName" class="login-label">User Name</label>
+            <div class="pp-input-icon">
+              <i class="fas fa-user"></i>
+              <input id="txtUserName" type="text" class="form-control" autocomplete="username" placeholder="User Name" />
+            </div>
+          </div>
+          <div class="form-group mb-3">
+            <label for="txtPassword" class="login-label">Password</label>
+            <div class="pp-input-icon pp-input-reveal">
+              <i class="fas fa-lock"></i>
+              <input id="txtPassword" type="password" class="form-control" autocomplete="current-password" placeholder="Password" />
+              <button type="button" id="togglePassword" class="pp-reveal" aria-label="Show password"><i class="far fa-eye"></i></button>
+            </div>
+          </div>
+
+          <p id="systemError" class="login-error mb-3"></p>
+
+          <button type="submit" id="btnLogin" class="btn btn-primary btn-lg btn-block">Login <i class="fas fa-arrow-right"></i></button>
+        </form>
+      </div>
+
+      <p class="login-note">Pilot Photonics offers unique Laser Engines, Optical Comb Source and Photonics Integrated Circuit Solutions.</p>
+    </div>
+  </main>
+
+  <footer class="login-footer">&copy; Pilot Photonics</footer>
+
+<script>
+  (function () {
+    var pwd = document.getElementById("txtPassword");
+    document.getElementById("togglePassword").addEventListener("click", function () {
+      var show = pwd.type === "password";
+      pwd.type = show ? "text" : "password";
+      this.querySelector("i").className = show ? "far fa-eye-slash" : "far fa-eye";
+    });
+    // DEMO: no CGI auth — any non-empty credentials open the dashboard.
+    document.getElementById("loginForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var u = document.getElementById("txtUserName").value.trim();
+      var err = document.getElementById("systemError");
+      if (!u || !pwd.value) { err.textContent = "Please enter User Name and Password."; return; }
+      location.href = "system/index.html";
+    });
+  })();
+</script>
+</body>
+</html>

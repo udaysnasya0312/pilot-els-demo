@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Support · Pilot Adoption-ELS</title>
+  <link rel="icon" type="image/png" href="../assets/img/blue-icon.png" />
+  <!-- All local: Bootstrap 4.0.0 + FontAwesome 5.11.2 (same as the real box) + theme -->
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/bootstrap.min.css" />
+  <link rel="stylesheet" href="../assets/vendor/fontawesome/css/all.min.css" />
+  <link rel="stylesheet" href="../assets/pilot-theme.css" />
+</head>
+<body class="shell-pending" data-page="support">
+<main id="page" class="page page-narrow">
+
+  <div class="page-head">
+    <div>
+      <p class="page-eyebrow">Support</p>
+      <h1 class="page-title">Support</h1>
+    </div>
+  </div>
+
+  <section class="pp-card pp-rows">
+    <div class="pp-action-row">
+      <span class="pp-icon lg"><i class="fas fa-vial"></i></span>
+      <span class="flex-1 fw-600">Self Test</span>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#selfTest"><i class="fas fa-play"></i>Start Self test</button>
+    </div>
+    <div class="pp-action-row">
+      <span class="pp-icon lg"><i class="fas fa-stethoscope"></i></span>
+      <span class="flex-1 fw-600">Request Remote Diagnostic</span>
+      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#remoteDiag">Request Remote Diagnostic</button>
+    </div>
+    <div class="pp-action-row">
+      <span class="pp-icon lg"><i class="fas fa-book"></i></span>
+      <span class="flex-1 fw-600">Manual</span>
+      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#notImpl">Open Manual</button>
+    </div>
+    <div class="pp-action-row">
+      <span class="pp-icon lg"><i class="fas fa-code"></i></span>
+      <span class="flex-1 fw-600">API Command List</span>
+      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#notImpl">Open API Command List</button>
+    </div>
+    <div class="pp-action-row">
+      <span class="pp-icon lg"><i class="fas fa-paper-plane"></i></span>
+      <span class="flex-1 fw-600">Send Logs</span>
+      <button type="button" class="btn btn-default" data-toast="Logs sent">Send logs</button>
+    </div>
+  </section>
+
+  <div class="pp-callout info mt-4">
+    <i class="fas fa-envelope text-brand"></i>
+    <span>For further support, please send an email to <a href="mailto:support@pilotphotonics.com" class="fw-500">support@pilotphotonics.com</a></span>
+  </div>
+
+  <!-- Real dialogs -->
+  <div class="modal fade" id="selfTest" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header"><h4 class="modal-title">Self Test</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+        <div class="modal-body"><i class="fas fa-circle-notch fa-spin text-brand mr-2"></i>In progress...</div>
+        <div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="remoteDiag" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:400px">
+      <div class="modal-content">
+        <div class="modal-header"><h4 class="modal-title">Remote Diagnostic Request</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+        <div class="modal-body">Send email to request a remote diagnostic ?</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" data-toast="Email sent">Send Email</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="notImpl" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header"><h4 class="modal-title">Success</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+        <div class="modal-body">Not Implemented</div>
+        <div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div>
+      </div>
+    </div>
+  </div>
+</main>
+<script src="../assets/vendor/jquery/jquery-3.4.1.min.js"></script>
+<script src="../assets/vendor/bootstrap/popper.min.js"></script>
+<script src="../assets/vendor/bootstrap/bootstrap.min.js"></script>
+<script src="../assets/shell.js"></script>
+<script src="../assets/ui.js"></script>
+</body>
+</html>

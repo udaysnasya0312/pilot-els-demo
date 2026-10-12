@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Calibration · Pilot Adoption-ELS</title>
+  <link rel="icon" type="image/png" href="../assets/img/blue-icon.png" />
+  <!-- All local: Bootstrap 4.0.0 + FontAwesome 5.11.2 (same as the real box) + theme -->
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/bootstrap.min.css" />
+  <link rel="stylesheet" href="../assets/vendor/fontawesome/css/all.min.css" />
+  <link rel="stylesheet" href="../assets/pilot-theme.css" />
+</head>
+<body class="shell-pending" data-page="calibration">
+<main id="page" class="page">
+
+  <div class="page-head">
+    <div>
+      <p class="page-eyebrow">SetUp</p>
+      <h1 class="page-title">Calibration</h1>
+    </div>
+    <span id="calState" class="pp-badge muted">Idle</span>
+  </div>
+
+  <div id="setup-tabs"></div>
+
+  <div id="groups" class="row"></div>
+
+  <div class="row">
+    <div class="col-lg-6 mb-4">
+      <section class="pp-card h-100">
+        <div class="pp-card-head"><span class="pp-icon"><i class="fas fa-wave-square"></i></span><h2 class="pp-card-title">Wavelength Detector</h2></div>
+        <div class="pp-card-body"><label class="pp-label muted" for="detector">Detector</label>
+          <select id="detector" class="form-control"><option>Select Detector</option><option>Test 1</option><option>Test 2</option><option>Test 3</option><option>Test 4</option></select></div>
+      </section>
+    </div>
+    <div class="col-lg-6 mb-4">
+      <section class="pp-card h-100">
+        <div class="pp-card-head"><span class="pp-icon"><i class="fas fa-file"></i></span><h2 class="pp-card-title">File</h2></div>
+        <div class="pp-card-body"><label class="pp-label muted" for="location">Location</label><input id="location" class="form-control mono" /></div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Footer bar -->
+  <div class="pp-card pp-bar">
+    <div class="d-flex flex-wrap gap-2">
+      <button type="button" id="btnStart" class="btn btn-success"><i class="fas fa-play"></i>Start</button>
+      <button type="button" id="btnStop" class="btn btn-danger"><i class="fas fa-stop"></i>Stop</button>
+      <button type="button" data-toast class="btn btn-primary">Save Settings</button>
+      <button type="button" data-toast="Default settings restored" class="btn btn-default">Restore Default Settings</button>
+      <button type="button" class="btn btn-ghost">Cancel</button>
+    </div>
+    <div id="setup-pager"></div>
+  </div>
+</main>
+<script src="../assets/vendor/jquery/jquery-3.4.1.min.js"></script>
+<script src="../assets/vendor/bootstrap/popper.min.js"></script>
+<script src="../assets/vendor/bootstrap/bootstrap.min.js"></script>
+<script src="../assets/shell.js"></script>
+<script src="../assets/setup-tabs.js"></script>
+<script src="../assets/ui.js"></script>
+<script>
+(function () {
+  // Real groups + labels from calibration.html (values = real defaults: 0)
+  var G = [
+    { t: "Ring - 1", icon: "fa-circle-notch", f: ["Start Voltage (V)", "Stop Voltage (V)", "Increment Step (V)", "Current value"] },
+    { t: "Ring - 2", icon: "fa-circle-notch", f: ["Start Voltage (V)", "Stop Voltage (V)", "Increment Step (V)", "Current value"] },
+    { t: "Phase", icon: "fa-wave-square", f: ["Start Voltage (V)", "Stop Voltage (V)", "Increment Step (V)", "Current value"] },
+    { t: "Gain Current", icon: "fa-bolt", f: ["Start Current (mA)", "Stop Current (mA)", "Increment Step (V)", "Current value"] },
+    { t: "Temperature", icon: "fa-thermometer-half", f: ["Start Temperature (°C)", "Stop Temperature (°C)", "Increment Step (V)", "Current value"] },
+    { t: "SOA", icon: "fa-signal", f: ["Start", "Stop", "Increment", "Current value"] },
+  ];
+  var PH = ["eg: 0 to -10", "eg: 0 to -10", "eg: 1 to 100", "eg: 1 to 100"];
+  document.getElementById("groups").innerHTML = G.map(function (g) {
+    return '<div class="col-lg-6 mb-4"><section class="pp-card h-100">' +
+      '<div class="pp-card-head"><span class="pp-icon"><i class="fas ' + g.icon + '"></i></span><h2 class="pp-card-title">' + g.t + "</h2></div>" +
+      '<div class="pp-card-body"><div class="row">' + g.f.map(function (f, k) {
+        return '<div class="col-6 col-sm-3 mb-2"><label class="pp-label muted two-line">' + f + "</label>" +
+          '<input type="number" value="0" placeholder="' + PH[k] + '" class="form-control mono"' + (k === 3 ? ' style="background:var(--canvas)"' : "") + " /></div>";
+      }).join("") + "</div></div></section></div>";
+  }).join("");
+
+  var st = document.getElementById("calState");
+  function set(on) { st.className = "pp-badge " + (on ? "warn" : "muted"); st.textContent = on ? "Calibrating…" : "Idle"; }
+  document.getElementById("btnStart").addEventListener("click", function () { set(true); });
+  document.getElementById("btnStop").addEventListener("click", function () { set(false); });
+})();
+</script>
+</body>
+</html>

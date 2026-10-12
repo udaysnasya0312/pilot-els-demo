@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>View Logs · Pilot Adoption-ELS</title>
+  <link rel="icon" type="image/png" href="../assets/img/blue-icon.png" />
+  <!-- All local: Bootstrap 4.0.0 + FontAwesome 5.11.2 (same as the real box) + theme -->
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/bootstrap.min.css" />
+  <link rel="stylesheet" href="../assets/vendor/fontawesome/css/all.min.css" />
+  <link rel="stylesheet" href="../assets/pilot-theme.css" />
+</head>
+<body class="shell-pending" data-page="view-logs">
+<main id="page" class="page page-wide">
+
+  <div class="page-head">
+    <div>
+      <p class="page-eyebrow">Status</p>
+      <h1 class="page-title">View Logs</h1>
+    </div>
+    <a href="status.html" class="btn btn-default"><i class="fas fa-arrow-left"></i>Back to Status</a>
+  </div>
+
+  <!-- Tabs (real: Logs / Console Logs / Tec Results) -->
+  <div class="pp-tabs-wrap">
+    <nav id="logTabs" class="pp-tabs">
+      <button data-tab="logs"><i class="fas fa-list"></i>Logs</button>
+      <button data-tab="console"><i class="fas fa-terminal"></i>Console Logs</button>
+      <button data-tab="tec"><i class="fas fa-snowflake"></i>Tec Results</button>
+    </nav>
+  </div>
+
+  <!-- Logs -->
+  <section data-panel="logs" class="pp-card">
+    <div class="pp-card-body" style="border-bottom:1px solid var(--line)">
+      <div class="row">
+        <div class="col-sm-6 col-lg mb-3 mb-lg-0"><label class="pp-label" for="txtStartDate">Start Date</label><input id="txtStartDate" type="date" class="form-control" value="2026-10-01" /></div>
+        <div class="col-sm-6 col-lg mb-3 mb-lg-0"><label class="pp-label" for="txtEndDate">End Date</label><input id="txtEndDate" type="date" class="form-control" value="2026-10-12" /></div>
+        <div class="col-sm-6 col-lg mb-3 mb-lg-0"><label class="pp-label" for="txtLogLevel">Max Log Level</label><input id="txtLogLevel" type="number" class="form-control" placeholder="eg: 1 to 100" /></div>
+        <div class="col-sm-6 col-lg mb-3 mb-lg-0"><label class="pp-label" for="ddlLogType">Log Type</label>
+          <select id="ddlLogType" class="form-control"><option>All</option><option>Info</option><option>Warning</option><option>Debug</option><option>Error</option></select></div>
+        <div class="col-lg-auto d-flex align-items-end gap-2">
+          <button type="button" id="btnSearch" class="btn btn-primary" style="height:40px"><i class="fas fa-search"></i>Search</button>
+          <button type="button" data-toast="Download started" class="btn btn-default" style="height:40px"><i class="fas fa-download"></i>Download</button>
+        </div>
+      </div>
+    </div>
+    <div class="pp-table-wrap">
+      <table class="pp-table flush" style="min-width:900px">
+        <thead><tr><th>Date Time</th><th>Element</th><th>Element Name</th><th>Log Level</th><th>State</th><th>Action</th><th>Message</th></tr></thead>
+        <tbody id="logRows"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Console Logs -->
+  <section data-panel="console" class="pp-card d-none">
+    <div class="pp-card-body" style="border-bottom:1px solid var(--line)">
+      <div class="row">
+        <div class="col-sm mb-3 mb-sm-0"><label class="pp-label" for="StartDate">Start Date</label><input id="StartDate" type="date" class="form-control" value="2026-10-01" /></div>
+        <div class="col-sm mb-3 mb-sm-0"><label class="pp-label" for="EndDate">End Date</label><input id="EndDate" type="date" class="form-control" value="2026-10-12" /></div>
+        <div class="col-sm-auto d-flex align-items-end gap-2">
+          <button type="button" class="btn btn-primary" style="height:40px"><i class="fas fa-search"></i>Search</button>
+          <button type="button" data-toast="Download started" class="btn btn-default" style="height:40px"><i class="fas fa-download"></i>Download</button>
+        </div>
+      </div>
+    </div>
+    <div class="pp-table-wrap">
+      <table class="pp-table flush" style="min-width:600px">
+        <thead><tr><th style="width:220px">Date Time</th><th>Message</th></tr></thead>
+        <tbody id="consoleRows" class="mono" style="font-size:12.5px"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Tec Results -->
+  <section data-panel="tec" class="pp-card d-none">
+    <div class="pp-card-head">
+      <h2 class="pp-card-title">Tec Results</h2>
+      <span class="mono small-12 text-muted">tec results log</span>
+    </div>
+    <pre id="tecResults" class="pp-console"></pre>
+  </section>
+</main>
+<script src="../assets/vendor/jquery/jquery-3.4.1.min.js"></script>
+<script src="../assets/vendor/bootstrap/popper.min.js"></script>
+<script src="../assets/vendor/bootstrap/bootstrap.min.js"></script>
+<script src="../assets/shell.js"></script>
+<script src="../assets/ui.js"></script>
+<script>
+(function () {
+  /* Dummy rows — same columns as cgi_CCMLogs.py read_CCMLogs():
+     Date Time, Element, Element Name, Log Level, State, Action, Message */
+  var LOGS = [
+    ["Oct 12, 2026, 14:32:10", "TEC", "TEC 1", "Info", "On", "get", "Temperature reading OK"],
+    ["Oct 12, 2026, 14:31:55", "I_DRIVE", "Laser1 Current", "Info", "Off", "set", "Set current 0 mA"],
+    ["Oct 12, 2026, 14:31:55", "I_DRIVE", "Laser2 Current", "Info", "Off", "set", "Set current 0 mA"],
+    ["Oct 12, 2026, 14:30:02", "SYSTEM", "Rocker Switch", "Warning", "Off", "get", "Rocker switch is OFF"],
+    ["Oct 12, 2026, 14:30:02", "SYSTEM", "Key Switch", "Warning", "Off", "get", "Key switch is OFF"],
+    ["Oct 12, 2026, 14:12:47", "SYSTEM", "Boot Time", "Error", "-", "get", "Boot time not available"],
+    ["Oct 12, 2026, 13:58:21", "ETHERNET", "eth0", "Info", "Up", "get", "Link up"],
+    ["Oct 12, 2026, 13:45:09", "TEC", "TEC 2", "Debug", "On", "get", "Read temperature status"],
+    ["Oct 11, 2026, 18:20:33", "SYSTEM", "Firmware", "Info", "-", "set", "Activated AdopELS_110126"],
+  ];
+  var BADGE = { Info: "info", Warning: "warn", Error: "bad", Debug: "muted" };
+
+  function renderLogs() {
+    var type = document.getElementById("ddlLogType").value;
+    var rows = LOGS.filter(function (r) { return type === "All" || r[3] === type; });
+    document.getElementById("logRows").innerHTML = rows.length ? rows.map(function (r) {
+      return "<tr>" +
+        '<td class="mono text-muted" style="white-space:nowrap;font-size:12.5px">' + r[0] + "</td>" +
+        '<td class="mono" style="font-size:12px">' + r[1] + "</td>" +
+        "<td>" + r[2] + "</td>" +
+        '<td><span class="pp-badge no-dot sm ' + BADGE[r[3]] + '">' + r[3] + "</span></td>" +
+        '<td class="text-muted">' + r[4] + "</td>" +
+        '<td class="mono text-muted" style="font-size:12px">' + r[5] + "</td>" +
+        "<td>" + r[6] + "</td></tr>";
+    }).join("") : '<tr><td colspan="7" class="center text-muted" style="padding:32px">No Record</td></tr>';
+  }
+  document.getElementById("btnSearch").addEventListener("click", renderLogs);
+  renderLogs();
+
+  // Console logs (real columns: Date Time, Message)
+  var CONSOLE = [
+    ["Oct 12, 2026, 14:32:10", "cgi_statusPageManager: status read ok"],
+    ["Oct 12, 2026, 14:30:02", "read_temp_status: rocker_key=Off key_switch=Off"],
+    ["Oct 12, 2026, 13:58:21", "eth0: link up"],
+    ["Oct 12, 2026, 13:57:40", "system boot completed"],
+  ];
+  document.getElementById("consoleRows").innerHTML = CONSOLE.map(function (r) {
+    return '<tr><td class="text-muted" style="white-space:nowrap">' + r[0] + "</td><td>" + r[1] + "</td></tr>";
+  }).join("");
+
+  document.getElementById("tecResults").textContent =
+    "TEC 1   state: Connected   temp: 25.1 °C   status: Ok\n" +
+    "TEC 2   state: Connected   temp: 25.0 °C   status: Ok\n";
+
+  // Tabs
+  var btns = document.querySelectorAll("#logTabs button");
+  function show(tab) {
+    btns.forEach(function (b) { b.classList.toggle("is-active", b.getAttribute("data-tab") === tab); });
+    document.querySelectorAll("[data-panel]").forEach(function (p) { p.classList.toggle("d-none", p.getAttribute("data-panel") !== tab); });
+  }
+  btns.forEach(function (b) { b.addEventListener("click", function () { show(b.getAttribute("data-tab")); }); });
+  show("logs");
+})();
+</script>
+</body>
+</html>
