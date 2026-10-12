@@ -20,8 +20,8 @@
       <h1 class="page-title">Current Settings</h1>
     </div>
     <div class="d-flex flex-wrap gap-2">
-      <div class="pp-chip"><span>Rocker Switch</span><span class="pp-badge bad sm">OFF</span></div>
-      <div class="pp-chip"><span>Key Switch</span><span class="pp-badge bad sm">OFF</span></div>
+      <div class="pp-chip"><span>Rocker Switch</span><label class="pp-switch labeled is-readonly" title="Rocker Switch on the appliance (read-only)"><input type="checkbox" id="rockerSwitch" disabled /><span class="track"><span class="on">ON</span><span class="off">OFF</span></span><span class="thumb"></span></label></div>
+      <div class="pp-chip"><span>Key Switch</span><label class="pp-switch labeled is-readonly" title="Key Switch on the appliance (read-only)"><input type="checkbox" id="keySwitch" disabled /><span class="track"><span class="on">ON</span><span class="off">OFF</span></span><span class="thumb"></span></label></div>
     </div>
   </div>
 
@@ -91,7 +91,7 @@
 
     <!-- Status panel (real groups from cgi_statusPageManager.py) -->
     <aside class="col-xl-3 min-w-0">
-      <section class="pp-card pp-sticky">
+      <section class="pp-card pp-sticky pp-side-panel">
         <div class="pp-card-head">
           <h2 class="pp-card-title">Status</h2>
           <div class="d-flex gap-3 text-muted" style="font-size:11px">
@@ -100,7 +100,7 @@
             <span class="d-flex align-items-center gap-2"><span class="pp-dot"></span>N/A</span>
           </div>
         </div>
-        <div id="statusPanel" class="pp-rows"></div>
+        <div id="statusPanel" class="pp-rows pp-side-scroll"></div>
       </section>
     </aside>
   </div>
@@ -151,6 +151,21 @@
           (x.detail ? '<span class="mono text-muted">' + x.detail + "</span>" : "") + "</li>";
       }).join("") + "</ul></details>";
   }).join("");
+
+  /* ---------- Status panel height: always ends at the bottom of the screen (like the sidebar) ---------- */
+  var sidePanel = document.querySelector(".pp-side-panel");
+  function fitPanel() {
+    if (window.innerWidth < 1200) { sidePanel.style.height = ""; return; }
+    var top = Math.max(sidePanel.getBoundingClientRect().top, 76);   // 76 = sticky offset (below the top bar)
+    var colBottom = sidePanel.parentElement.getBoundingClientRect().bottom;   // never run past its column
+    var bottom = Math.min(window.innerHeight - 20, colBottom);
+    sidePanel.style.height = Math.max(bottom - top, 240) + "px";
+  }
+  var fitQueued = false;
+  function queueFit() { if (!fitQueued) { fitQueued = true; requestAnimationFrame(function () { fitQueued = false; fitPanel(); }); } }
+  window.addEventListener("scroll", queueFit, { passive: true });
+  window.addEventListener("resize", queueFit);
+  fitPanel();
 
   /* ---------- Chart (dummy series; real page uses local Highcharts + RRD data) ---------- */
   var Y_TITLES = { T: "Temperature (°C)", P: "Voltage (V)", E: "Network Rate (packets/s, MB/s)", D: "Disk Used (GB)" };

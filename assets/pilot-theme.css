@@ -123,7 +123,7 @@ a:hover { color: var(--brand-hover); text-decoration: none; }
 @media (min-width: 992px) {
   .app-sidebar { transform: none; }
   .app-wrap { padding-left: var(--sidebar-w); }
-  .app-burger, .app-backdrop { display: none !important; }
+  .app-backdrop { display: none !important; }
 }
 
 /* ---------- Page ---------- */
@@ -400,3 +400,84 @@ details.pp-card > summary { border-radius: var(--radius-lg); }
 .pp-form-row > :not(label) { max-width: 448px; }
 @media (min-width: 576px) { .pp-form-row { grid-template-columns: 1fr 2fr; } }
 .pp-label.two-line { display: flex; align-items: flex-end; min-height: 38px; }
+
+/* ---------- Sidebar open / close (desktop: 240px <-> 64px icon rail) ---------- */
+.app-nav { overflow-x: hidden; }
+.app-nav a .app-label, .app-user-name, .app-user-sub { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.app-user-text { flex: 1; min-width: 0; }
+.app-user-more { font-size: 12px; color: rgba(191,219,254,.5); }
+.app-brand img { transition: height .22s ease; }
+.sidebar-anim .app-sidebar { transition: transform .2s ease, width .22s ease; }
+.sidebar-anim .app-wrap { transition: padding-left .22s ease; }
+@media (min-width: 992px) {
+  .sidebar-collapsed .app-sidebar { width: 64px; }
+  .sidebar-collapsed .app-wrap { padding-left: 64px; }
+  .sidebar-collapsed .app-brand { padding: 18px 8px; }
+  .sidebar-collapsed .app-brand img { height: 34px; }
+  .sidebar-collapsed .app-nav { padding: 20px 8px 0; }
+  .sidebar-collapsed .app-nav a { justify-content: center; gap: 0; padding: 10px 0; }
+  .sidebar-collapsed .app-nav a i { font-size: 15px; }
+  .sidebar-collapsed .app-nav a .app-label,
+  .sidebar-collapsed .app-user-text,
+  .sidebar-collapsed .app-user-more { display: none; }
+  .sidebar-collapsed .app-nav a.is-active::before { left: -8px; }
+  .sidebar-collapsed .app-user { padding: 12px 8px; }
+  .sidebar-collapsed .app-user-btn { justify-content: center; padding: 8px 0; }
+  .sidebar-collapsed .app-menu.menu-up { left: 8px; right: auto; width: 192px; }
+}
+
+/* ---------- Login background animation (telemetry) ---------- */
+.login-glow-1 { animation: pp-drift-1 22s ease-in-out infinite alternate; }
+.login-glow-2 { animation: pp-drift-2 26s ease-in-out infinite alternate; }
+.login-glow-3 { position: absolute; top: 30%; right: -15%; width: 550px; height: 550px; border-radius: 50%;
+  background: rgba(16,42,92,.35); filter: blur(140px); animation: pp-drift-3 30s ease-in-out infinite alternate; }
+@keyframes pp-drift-1 { from { transform: translate(-50%, 0) scale(1); } to { transform: translate(-44%, 5%) scale(1.12); } }
+@keyframes pp-drift-2 { from { transform: translate(0, 0) scale(1); } to { transform: translate(8%, -6%) scale(1.1); } }
+@keyframes pp-drift-3 { from { transform: translate(0, 0); } to { transform: translate(-10%, 8%); } }
+.login-grid { animation: pp-grid-pan 40s linear infinite; }
+@keyframes pp-grid-pan { to { background-position: 48px 48px, 48px 48px; } }
+.login-scan { position: absolute; left: 0; right: 0; top: -30%; height: 30%;
+  background: linear-gradient(to bottom, transparent, rgba(96,165,250,.07) 60%, rgba(147,197,253,.10) 70%, transparent);
+  animation: pp-scan 10s ease-in-out infinite; }
+@keyframes pp-scan { 0% { transform: translateY(0); opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { transform: translateY(470%); opacity: 0; } }
+.login-beams .pulse { stroke: #bfdbfe; stroke-width: 2.2; stroke-linecap: round; fill: none; stroke-dasharray: 70 1900;
+  stroke-dashoffset: 1970; animation: pp-beam-flow 8s linear infinite; filter: drop-shadow(0 0 6px rgba(147,197,253,.9)); }
+.login-beams .pulse.thin { stroke-width: 1.4; stroke-dasharray: 40 1930; }
+@keyframes pp-beam-flow { to { stroke-dashoffset: 0; } }
+.login-beams .ring-spin { transform-box: fill-box; transform-origin: center; animation: pp-spin 90s linear infinite; }
+.login-beams .ring-spin.rev { animation-direction: reverse; animation-duration: 120s; }
+@keyframes pp-spin { to { transform: rotate(360deg); } }
+.login-beams .nodes .core { fill: #bfdbfe; filter: drop-shadow(0 0 4px rgba(147,197,253,.9)); }
+.login-beams .nodes .ping { fill: none; stroke: #93c5fd; stroke-width: 1; transform-box: fill-box; transform-origin: center;
+  animation: pp-ping 3.2s ease-out infinite; }
+@keyframes pp-ping { 0% { transform: scale(1); opacity: .8; } 100% { transform: scale(6); opacity: 0; } }
+.login-box { animation: pp-rise .7s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes pp-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .login-bg *, .login-box { animation: none !important; }
+  .login-scan, .login-beams .pulse { display: none; }
+}
+
+/* Labelled ON/OFF toggle (real UI .toggleSwitch: red OFF / green ON) */
+.pp-switch.labeled .track { position: relative; width: 56px; height: 24px; background: var(--bad); }
+.pp-switch.labeled .track span { position: absolute; top: 50%; transform: translateY(-50%); font-size: 10.5px; font-weight: 700;
+  letter-spacing: .03em; color: #fff; transition: opacity .15s; }
+.pp-switch.labeled .track .on { left: 8px; opacity: 0; }
+.pp-switch.labeled .track .off { right: 7px; }
+.pp-switch.labeled .thumb { width: 20px; height: 20px; }
+.pp-switch.labeled input:checked ~ .track { background: var(--ok); }
+.pp-switch.labeled input:checked ~ .track .on { opacity: 1; }
+.pp-switch.labeled input:checked ~ .track .off { opacity: 0; }
+.pp-switch.labeled input:checked ~ .thumb { transform: translateX(32px); }
+.pp-switch.is-readonly { cursor: default; }
+
+/* Status side panel: full-height column with its own vertical scrollbar (like the left sidebar) */
+@media (min-width: 1200px) {
+  .pp-side-panel { display: flex; flex-direction: column; height: calc(100vh - 178px); }   /* exact height set by JS */
+  .pp-side-panel > .pp-card-head { flex-shrink: 0; }
+  .pp-side-scroll { flex: 1; min-height: 0; overflow-y: auto; border-radius: 0 0 var(--radius-lg) var(--radius-lg); }
+}
+.pp-side-scroll { scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; }
+.pp-side-scroll::-webkit-scrollbar { width: 8px; }
+.pp-side-scroll::-webkit-scrollbar-thumb { border-radius: 8px; background: var(--line-strong); }
+.pp-side-scroll::-webkit-scrollbar-thumb:hover { background: var(--faint); }

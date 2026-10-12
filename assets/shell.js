@@ -37,8 +37,8 @@
 
   var nav = NAV.map(function (i) {
     var active = i.id === current || (i.children || []).indexOf(current) !== -1;
-    return '<a href="' + i.href + '"' + (active ? ' class="is-active" aria-current="page"' : "") + '>' +
-      '<i class="fas ' + i.icon + '"></i><span>' + i.label + "</span></a>";
+    return '<a href="' + i.href + '" title="' + i.label + '"' + (active ? ' class="is-active" aria-current="page"' : "") + '>' +
+      '<i class="fas ' + i.icon + '"></i><span class="app-label">' + i.label + "</span></a>";
   }).join("");
 
   function userMenuItems() {
@@ -51,10 +51,10 @@
       '<a href="index.html" class="app-brand"><img src="../assets/img/logo-home.svg" alt="Pilot Photonics"></a>' +
       '<nav class="app-nav">' + nav + "</nav>" +
       '<div class="app-user">' +
-        '<button type="button" data-menu="user-menu-side" class="app-user-btn">' +
+        '<button type="button" data-menu="user-menu-side" class="app-user-btn" title="admin">' +
           '<span class="app-avatar"><i class="fas fa-user"></i></span>' +
-          '<span style="flex:1"><span class="app-user-name">admin</span><span class="app-user-sub">Adoption-ELS</span></span>' +
-          '<i class="fas fa-ellipsis-v" style="font-size:12px;color:rgba(191,219,254,.5)"></i></button>' +
+          '<span class="app-user-text"><span class="app-user-name">admin</span><span class="app-user-sub">Adoption-ELS</span></span>' +
+          '<i class="fas fa-ellipsis-v app-user-more"></i></button>' +
         '<div id="user-menu-side" class="app-menu menu-up">' + userMenuItems() + "</div>" +
       "</div>" +
     "</aside>" +
@@ -68,7 +68,7 @@
   var ZONES = ["Asia/Calcutta", "Europe/Dublin", "UTC", "America/New_York"];
   var topbar =
     '<header class="app-topbar">' +
-      '<button type="button" id="app-burger" class="app-burger" aria-label="Open menu"><i class="fas fa-bars"></i></button>' +
+      '<button type="button" id="app-burger" class="app-burger" aria-label="Toggle sidebar" title="Toggle sidebar"><i class="fas fa-bars"></i></button>' +
       '<div class="app-crumb">' + crumb + "</div>" +
       '<div class="app-tools">' +
         '<div class="app-tool">' +
@@ -106,12 +106,28 @@
   if (page) wrap.appendChild(page);
   wrap.insertAdjacentHTML("beforeend", footer);
 
-  // Mobile sidebar
+  // Sidebar open / close
+  //   desktop (>= 992px): full 240px <-> 64px icon rail; choice remembered per browser
+  //   mobile: slides in over the page with a backdrop
   var side = document.getElementById("app-sidebar");
   var backdrop = document.getElementById("app-backdrop");
-  function toggleSide(open) { side.classList.toggle("is-open", open); backdrop.classList.toggle("is-open", open); }
-  document.getElementById("app-burger").addEventListener("click", function () { toggleSide(true); });
-  backdrop.addEventListener("click", function () { toggleSide(false); });
+  var desktop = window.matchMedia("(min-width: 992px)");
+  var KEY = "pp-sidebar-collapsed";
+  function setCollapsed(on) {
+    body.classList.toggle("sidebar-collapsed", on);
+    try { localStorage.setItem(KEY, on ? "1" : "0"); } catch (e) {}
+  }
+  function setMobileOpen(open) { side.classList.toggle("is-open", open); backdrop.classList.toggle("is-open", open); }
+  try { if (localStorage.getItem(KEY) === "1") body.classList.add("sidebar-collapsed"); } catch (e) {}
+  document.getElementById("app-burger").addEventListener("click", function () {
+    if (desktop.matches) setCollapsed(!body.classList.contains("sidebar-collapsed"));
+    else setMobileOpen(!side.classList.contains("is-open"));
+  });
+  backdrop.addEventListener("click", function () { setMobileOpen(false); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") setMobileOpen(false); });
+  desktop.addListener(function () { setMobileOpen(false); });
+  // enable the width animation only after first paint (no slide-in on page load)
+  requestAnimationFrame(function () { requestAnimationFrame(function () { body.classList.add("sidebar-anim"); }); });
 
   // Dropdowns (data-menu="<id>")
   document.addEventListener("click", function (e) {

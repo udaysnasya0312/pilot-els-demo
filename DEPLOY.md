@@ -71,3 +71,10 @@ Keep the GitHub repo private.
 | P7 | Debug | 4 iDAC + 4 vDAC rows (count assumed); range dropdown = real option list | Rows from `i_dac_data` / `v_dac_data` | Bind real data |
 | P9 | View Logs | Dummy log rows; Log Type filter works client-side | `cgi_CCMLogs.py` (same columns) | Bind real data |
 | P10 | Support | Same dialogs/texts as real ("In progress...", "Not Implemented") | Same | — |
+
+### UI additions (not on the real site)
+| # | Item | Notes |
+|---|------|-------|
+| U1 | Sidebar open/close: desktop 240px <-> 64px icon rail (tooltips), mobile slide-in | `assets/shell.js` + theme; state in `localStorage` key `pp-sidebar-collapsed` (per browser) |
+| U2 | Login background animation (light pulses on laser paths, pinging sensor nodes, scan sweep, drifting glows) | Pure CSS/SVG, local; off for `prefers-reduced-motion` |
+
