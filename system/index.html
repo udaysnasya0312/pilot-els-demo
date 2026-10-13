@@ -180,8 +180,8 @@
     var t = S.tec[k], on = l.current > 0;
     return '<a href="module-control.html#channel-' + (k + 1) + '" class="db-ch" title="TEC ' + (k + 1) + " " + (t.connected ? "connected" : "disconnected") + " · Laser" + (k + 1) + " " + l.current + ' mA">' +
       '<span class="db-ch-no">' + (k + 1) + "</span>" +
-      '<span class="db-ch-row"><span class="pp-dot ' + (t.connected ? "ok" : "bad") + '"></span>TEC</span>' +
-      '<span class="db-ch-row"><span class="pp-dot' + (on ? " ok" : "") + '"></span>Laser <b class="mono">' + l.current + "</b></span></a>";
+      '<span class="db-ch-row"><span class="pp-dot ' + (t.connected ? "ok" : "bad") + '"></span>TEC <b class="mono' + (t.connected ? "" : " text-bad") + '">' + (t.connected ? t.temp.toFixed(1) + " °C" : "N/A") + "</b></span>" +
+      '<span class="db-ch-row"><span class="pp-dot' + (on ? " ok" : "") + '"></span>Laser <b class="mono">' + l.current + " mA</b></span></a>";
   }).join("");
 })();
 </script>

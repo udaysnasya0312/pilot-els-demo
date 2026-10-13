@@ -39,24 +39,6 @@
     </label>
   </div>
 
-  <!-- Outputs (moved here from the old Status page: Turn All Outputs OFF / Turn Module OFF) -->
-  <div id="outputs" class="row">
-    <div class="col-sm-6 mb-4">
-      <div class="pp-link-card d-flex align-items-center gap-3">
-        <span class="pp-icon lg muted"><i class="fas fa-power-off"></i></span>
-        <span class="flex-1"><span class="d-block fw-600">Turn All Outputs OFF</span><span class="d-block small-12 text-muted">Outputs <b data-state-for="switch_output" class="text-ok">ON</b></span></span>
-        <label class="pp-switch" title="Turn off"><input type="checkbox" id="switch_output" checked data-no-track data-confirm-when="off" data-confirm-title="Are you sure?" data-confirm-text="This will turn off all outputs." data-confirm-ok="Yes, Turn Off" /><span class="track"></span><span class="thumb"></span></label>
-      </div>
-    </div>
-    <div class="col-sm-6 mb-4">
-      <div class="pp-link-card d-flex align-items-center gap-3">
-        <span class="pp-icon lg muted"><i class="fas fa-microchip"></i></span>
-        <span class="flex-1"><span class="d-block fw-600">Turn Module OFF</span><span class="d-block small-12 text-muted">Module <b data-state-for="switch_module" class="text-ok">ON</b></span></span>
-        <label class="pp-switch" title="Turn off"><input type="checkbox" id="switch_module" checked data-no-track data-confirm-when="off" data-confirm-title="Are you sure?" data-confirm-text="This will turn off the module." data-confirm-ok="Yes, Turn Off" /><span class="track"></span><span class="thumb"></span></label>
-      </div>
-    </div>
-  </div>
-
   <!-- General + Current Controller clubbed: one accordion per channel (TEC n + Laser n) -->
   <section class="pp-card">
     <div class="pp-card-head flex-wrap">
@@ -93,6 +75,13 @@
   function badge(ok, text) { return '<span class="pp-badge sm ' + (ok ? "ok" : "bad") + '">' + text + "</span>"; }
   // Header line, real pattern: "<name> - <status> | <status>   <Ok> | <Reading> : <value>" in aligned columns
   function conn(ok, text) { return '<span class="mc-conn' + (ok ? "" : " is-bad") + '"><span class="pp-dot ' + (ok ? "ok" : "bad") + '"></span>' + text + "</span>"; }
+  // One strip per channel: "<TEC Laser Current n>  |  TEC: status · Ok · reading  |  Laser: status · Ok · reading"
+  function half(title, icon, status, okTxt, label, value) {
+    return '<div class="mc-half">' +
+      '<span class="mc-half-title"><i class="fas ' + icon + '"></i>' + title + "</span>" + status +
+      '<span class="mc-ok">' + okTxt + "</span>" +
+      '<span class="mc-read"><small>' + label + '</small><b class="mono">' + value + "</b></span></div>";
+  }
   function line(name, a, b, okTxt, label, value) {
     return '<div class="mc-line">' +
       '<span class="mc-name">' + name + "</span>" +
@@ -121,10 +110,10 @@
     html += '<details id="channel-' + i + '" class="pp-acc pp-channel">' +
       // Header: TEC n line + Laser n Current line (real labels unchanged)
       "<summary>" +
-        '<span class="pp-channel-no">' + i + "</span>" +
-        '<div class="flex-1 min-w-0">' +
-          line("TEC " + i, conn(true, "TEC Connected"), conn(true, "Laser Connected"), "Ok", "Temperature Reading", temp + " °C") +
-          line("Laser" + i + " Current", conn(true, "Laser Connected"), conn(true, "TEC Connected"), "Ok", "Prev Laser Value", prev + " mA") +
+        '<div class="flex-1 min-w-0 mc-row">' +
+          '<span class="mc-name">TEC Laser Current ' + i + "</span>" +
+          half("TEC", "fa-snowflake", conn(true, "Connected"), "Ok", "Temperature Reading", temp + " °C") +
+          half("Laser", "fa-bolt", conn(true, "Connected"), "Ok", "Prev Laser Value", prev + " mA") +
         "</div>" +
         '<span class="pp-unsaved" data-dirty-flag hidden>Unsaved</span>' +
         '<i class="fas fa-chevron-down chev" style="margin-top:8px"></i>' +
@@ -172,16 +161,6 @@
   });
   document.querySelector("#channels details").open = true;   // first channel open by default
   document.addEventListener("pp:section", function (e) { var d = document.getElementById(e.detail); if (d && d.tagName === "DETAILS") d.open = true; });   // #channel-N from Dashboard
-
-  /* ---------- Output / module switches (demo: visual only, no CGI call; confirmed first) ---------- */
-  ["switch_output", "switch_module"].forEach(function (id) {
-    var el = document.getElementById(id), label = document.querySelector('[data-state-for="' + id + '"]');
-    el.addEventListener("change", function () {
-      label.textContent = el.checked ? "ON" : "OFF";
-      label.className = el.checked ? "text-ok" : "text-bad";
-    });
-  });
-
 })();
 </script>
 </body>

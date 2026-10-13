@@ -97,9 +97,9 @@
       '<div class="app-tools">' +
         '<div class="app-tool">' +
           '<button type="button" data-menu="tz-menu" class="app-clock"><i class="far fa-clock text-muted"></i><span id="app-clock" class="app-clock-text"></span><i class="fas fa-caret-down text-muted"></i></button>' +
-          '<div id="tz-menu" class="app-menu menu-down"><div class="app-menu-body">' +
-            '<label class="pp-label muted" for="app-tz" style="text-transform:uppercase;letter-spacing:.05em;font-size:11px;font-weight:600">Time zone</label>' +
-            '<select id="app-tz" class="form-control sm">' + ZONES.map(function (z) { return "<option>" + z + "</option>"; }).join("") + "</select>" +
+          '<div id="tz-menu" class="app-menu menu-down tz-menu"><div class="tz-head">Select Timezone</div>' +
+            '<div class="tz-search"><i class="fas fa-search"></i><input id="tz-q" type="text" placeholder="Search Timezone" autocomplete="off" /></div>' +
+            '<div id="tz-list" class="tz-list"></div>' +
           "</div></div></div>" +
         '<button type="button" id="app-jump-btn" class="app-jump-btn" title="Quick jump (Ctrl+K)"><i class="fas fa-search"></i><span class="app-jump-text">Jump to…</span><kbd>Ctrl K</kbd></button>' +
         '<div class="app-tool">' +
@@ -180,16 +180,40 @@
   });
 
   // Live clock — same format as the real header: "Oct 12, 2026, 15:46 Asia/Calcutta"
-  var tzSel = document.getElementById("app-tz");
+  // Time zone picker: one panel — search + every zone with its current time (as in the real app)
+  var ALL_TZ = (Intl.supportedValuesOf ? Intl.supportedValuesOf("timeZone") : ZONES).slice();
+  if (ALL_TZ.indexOf("Asia/Calcutta") === -1) ALL_TZ.push("Asia/Calcutta");
+  ALL_TZ.sort();
+  var currentTz = "Asia/Calcutta";
+  try { currentTz = localStorage.getItem("pp-tz") || currentTz; } catch (e) {}
+  var tzQ = document.getElementById("tz-q"), tzList = document.getElementById("tz-list");
+  function hm(tz) { try { return new Intl.DateTimeFormat("en-GB", { timeZone: tz, hour: "2-digit", minute: "2-digit" }).format(new Date()); } catch (e) { return ""; } }
+  function renderTz() {
+    var q = tzQ.value.trim().toLowerCase();
+    var list = ALL_TZ.filter(function (z) { return !q || z.toLowerCase().indexOf(q) !== -1; });
+    tzList.innerHTML = list.length ? list.map(function (z) {
+      return '<button type="button" class="tz-item' + (z === currentTz ? " is-sel" : "") + '" data-tz="' + z + '"><span>' + z.replace(/_/g, " ") + '</span><span class="mono">' + hm(z) + "</span></button>";
+    }).join("") : '<div class="tz-empty">No matching timezone</div>';
+  }
+  tzQ.addEventListener("input", renderTz);
+  tzList.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-tz]"); if (!b) return;
+    currentTz = b.getAttribute("data-tz");
+    try { localStorage.setItem("pp-tz", currentTz); } catch (err) {}
+    document.getElementById("tz-menu").classList.remove("is-open"); tick();
+  });
+  document.querySelector('[data-menu="tz-menu"]').addEventListener("click", function () {
+    tzQ.value = ""; renderTz();
+    setTimeout(function () { tzQ.focus(); var sel = tzList.querySelector(".is-sel"); if (sel) sel.scrollIntoView({ block: "center" }); }, 30);
+  });
   var clock = document.getElementById("app-clock");
   function tick() {
-    var tz = tzSel.value, txt;
+    var tz = currentTz, txt;
     try {
       txt = new Intl.DateTimeFormat("en-US", { timeZone: tz, month: "short", day: "numeric", year: "numeric", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).format(new Date());
     } catch (err) { txt = new Date().toLocaleString(); }
     clock.textContent = txt + " " + tz;
   }
-  tzSel.addEventListener("change", tick);
   tick();
   setInterval(tick, 30000);
 
@@ -243,7 +267,7 @@
     { t: "Set Up Email", g: "SetUp \u203a Connection", h: "setup.html#email", i: "fa-envelope" },
     { t: "Module Control (TEC + Laser)", g: "SetUp", h: "module-control.html", i: "fa-sliders-h" },
     { t: "Turn Off All Lasers & TECs", g: "SetUp \u203a Module Control", h: "module-control.html#safety", i: "fa-power-off" },
-    { t: "Turn All Outputs OFF / Turn Module OFF", g: "SetUp \u203a Module Control", h: "module-control.html#outputs", i: "fa-power-off" },
+    { t: "Turn All Outputs OFF / Turn Module OFF", g: "Status \u203a Current Settings", h: "status.html#outputs", i: "fa-power-off" },
     { t: "Calibration", g: "SetUp", h: "calibration.html", i: "fa-crosshairs" },
     { t: "Debug \u2014 iDAC / vDAC", g: "SetUp", h: "debug.html", i: "fa-bug" },
     { t: "Support", g: "Support", h: "support.html", i: "fa-life-ring" },

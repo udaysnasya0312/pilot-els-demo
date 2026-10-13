@@ -26,10 +26,15 @@
      success -> auto-closing "success" alert (real: swal(response.description, "", "success"))
      info    -> auto-closing "info" alert
      warning -> swal("Warning", text, "warning")  (real pattern)                         */
+  var AUTO_CLOSE = 4500;   // alerts with no confirmation / input close by themselves
   function toast(msg, kind) {
-    if (kind === "warning") { swal("Warning", msg, "warning"); return; }
-    swal({ title: msg, text: "", type: kind === "info" ? "info" : "success", timer: 1500, showConfirmButton: false });
+    if (kind === "warning") { swal({ title: "Warning", text: msg, type: "warning", timer: AUTO_CLOSE }); return; }
+    swal({ title: msg, text: "", type: kind === "info" ? "info" : "success", timer: AUTO_CLOSE, confirmButtonText: "OK" });
   }
+  // Bootstrap info dialogs marked data-autoclose (e.g. Support "Not Implemented") close after 4.5 s too
+  if (window.jQuery) $(document).on("shown.bs.modal", "[data-autoclose]", function () {
+    var m = this; clearTimeout(m._ppAuto); m._ppAuto = setTimeout(function () { $(m).modal("hide"); }, AUTO_CLOSE);
+  });
 
   /* ---------- Remembered UI choices (per browser; safe if storage is blocked) ---------- */
   function remember(key, value) {
@@ -195,7 +200,31 @@
     form.querySelectorAll("[data-save]").forEach(function (b) { if (b.closest("[data-form]") === form) b.disabled = !dirty || !valid; });
     form.querySelectorAll("[data-reset]").forEach(function (b) { if (b.closest("[data-form]") === form) b.disabled = !dirty; });
   }
+  /* ---------- Modern range sliders: filled track + value bubble while dragging ---------- */
+  function paintRange(r) {
+    var min = parseFloat(r.min) || 0, max = parseFloat(r.max) || 100, v = parseFloat(r.value) || 0;
+    var p = max > min ? (v - min) / (max - min) * 100 : 0;
+    r.style.setProperty("--p", p + "%");
+    if (r._bubble) { r._bubble.textContent = r.value; r._bubble.style.left = "calc(" + p + "% + " + (10 - p * 0.2) + "px)"; }
+  }
+  function initRanges(root) {
+    (root || document).querySelectorAll("input[type=range].pp-range").forEach(function (r) {
+      if (!r._bubble) {
+        var wrap = document.createElement("span"); wrap.className = "pp-range-wrap";
+        r.parentNode.insertBefore(wrap, r); wrap.appendChild(r);
+        r._bubble = document.createElement("span"); r._bubble.className = "pp-range-bubble"; wrap.appendChild(r._bubble);
+      }
+      paintRange(r);
+    });
+  }
+  document.addEventListener("input", function (e) {
+    if (e.target.matches && e.target.matches("input[type=range].pp-range")) paintRange(e.target);
+    else if (e.target.id) { var r = document.querySelector('[data-sync="' + e.target.id + '"]') || document.getElementById("sl" + e.target.id.slice(2)); if (r && r.matches && r.matches(".pp-range")) setTimeout(function () { paintRange(r); }, 0); }
+  });
+  document.addEventListener("change", function (e) { if (e.target.getAttribute && e.target.getAttribute("data-range")) setTimeout(function () { initRanges(); }, 0); });
+
   function initForms(root) {
+    initRanges(root);
     (root || document).querySelectorAll("[data-validate]").forEach(function (el) { if (!el._touched) render(el); });   // silent: nothing red on load
     (root || document).querySelectorAll("[data-form]").forEach(snapshot);
   }

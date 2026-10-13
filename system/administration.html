@@ -46,7 +46,7 @@
             <input id="pkgFile" type="file" accept=".zip" class="sr-only-input" />
           </label>
           <div class="d-flex flex-wrap justify-content-end gap-2 mt-3">
-            <button type="button" id="pkgCancel" class="btn btn-ghost">Cancel</button>
+            <button type="button" id="pkgCancel" class="btn btn-cancel">Cancel</button>
             <button type="button" id="pkgUpload" data-toast="Package uploaded" class="btn btn-primary" disabled><i class="fas fa-cloud-upload-alt"></i>Upload</button>
             <button type="button" id="pkgActivate" class="btn btn-default" data-action="activate" disabled><i class="fas fa-bolt text-muted"></i>Activate</button>
           </div>
@@ -158,7 +158,7 @@
     }, function (value) {
       if (value === false) return false;                                  // Cancel
       if (!value) { swal.showInputError("Please enter password"); return false; }
-      swal(RESULT[action][0], RESULT[action][1], "success");
+      swal({ title: RESULT[action][0], text: RESULT[action][1], type: "success", timer: 4500 });   // info only -> closes by itself
     });
   });
 </script>

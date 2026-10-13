@@ -624,7 +624,7 @@ mark { padding: 0 2px; border-radius: 3px; background: #FFF3BF; color: inherit; 
 @media (max-width: 540px) { .sweet-alert { width: auto; left: 16px; right: 16px; margin-left: 0 !important; } }
 .sweet-alert h2 { margin: 14px 0 6px; font-size: 18px; font-weight: 600; line-height: 1.35; letter-spacing: -.01em; color: var(--ink); }
 .sweet-alert p { font-size: 13.5px; font-weight: 400; line-height: 1.55; color: var(--muted); }
-.sweet-alert .sa-icon { zoom: .75; margin: 6px auto 4px; }
+.sweet-alert .sa-icon { margin: 4px auto 16px; }
 .sweet-alert .sa-icon.sa-warning { border-color: var(--warn); }
 .sweet-alert .sa-icon.sa-warning .sa-body, .sweet-alert .sa-icon.sa-warning .sa-dot { background-color: var(--warn); }
 .sweet-alert .sa-icon.sa-success { border-color: var(--ok); }
@@ -979,3 +979,91 @@ fieldset:disabled { opacity: .55; }
 .app-alert-lvl.is-info { background: var(--brand-soft); color: var(--brand); }
 .app-menu a.app-alert-all { justify-content: center; gap: 8px; border-top: 1px solid var(--line); font-weight: 500; color: var(--brand); }
 .app-menu a.app-alert-all i { width: auto; font-size: 11px; color: var(--brand); }
+
+/* ======================= Consistency fixes ======================= */
+/* 1. One button size everywhere (login keeps its large button) */
+.btn, .btn-sm { height: 36px; min-width: 88px; padding: 0 16px; font-size: 13px; }
+.btn-lg { height: 44px; }
+.sweet-alert button { height: 36px; min-width: 88px; padding: 0 18px; font-size: 13px; margin: 18px 4px 0; }
+.app-crumb .btn, .pp-presets button { min-width: 0; }
+
+/* 2. Hand cursor on everything clickable */
+a, button, summary, select, label[for], .pp-switch, .pp-check, .pp-check-head, .pp-tile-link, .pp-link-card[href], .db-kpi[href],
+input[type="checkbox"], input[type="radio"], input[type="range"], input[type="file"] + *, .app-nav-parent, .app-user-btn,
+[data-menu], [data-toggle], [data-reveal], [data-target], .ha-drop, .cn-choice label, .pp-segment button, .pp-tabs a, .pp-tabs button { cursor: pointer; }
+button:disabled, .btn:disabled, .btn.disabled, input:disabled, select:disabled, fieldset:disabled label { cursor: not-allowed; }
+.is-locked, .app-sub-link.is-locked, .pp-switch.is-readonly { cursor: no-drop; }
+
+/* 3. Cancel-type actions in a soft red */
+.btn.btn-cancel, .btn[data-reset], .modal-footer .btn[data-dismiss="modal"] {
+  border-color: transparent; background: var(--bad-bg); color: var(--bad-text); }
+.btn.btn-cancel:hover, .btn[data-reset]:hover, .modal-footer .btn[data-dismiss="modal"]:hover {
+  background: #fddcdf; color: #a01d2a; }
+.btn.btn-cancel:disabled, .btn[data-reset]:disabled { background: var(--bad-bg); color: var(--bad-text); opacity: .45; }
+.cs-icon-btn[data-reset] { color: var(--bad-text); }
+.cs-icon-btn[data-reset]:hover { background: var(--bad-bg); color: #a01d2a; }
+.sweet-alert button.cancel { border: 0 !important; background-color: var(--bad-bg) !important; color: var(--bad-text) !important; }
+.sweet-alert button.cancel:hover { background-color: #fddcdf !important; }
+
+/* 4. No leftover border on hover / press */
+.btn:hover, .btn:not(:disabled):not(.disabled):active { border-color: transparent; }
+.btn-default:hover { background: #EEF2F7; }
+
+/* 5. SweetAlert: icon sits above the title, never over it */
+.sweet-alert h2 { position: relative; z-index: 1; margin-top: 4px; }
+.sweet-alert .sa-icon.sa-success::before, .sweet-alert .sa-icon.sa-success::after, .sweet-alert .sa-icon.sa-success .sa-fix { background: transparent !important; }
+.col-lg-auto.d-flex.align-items-end, .col-sm-auto.d-flex.align-items-end { padding-bottom: 2px; }
+.sweet-alert button:focus, .sweet-alert button:focus-visible { box-shadow: none !important; outline: none; }
+
+/* Module Control: one strip per channel — name | TEC (status · Ok · reading) | Laser (status · Ok · reading) */
+.mc-row { display: grid; grid-template-columns: 1fr; gap: 8px 0; align-items: center; }
+@media (min-width: 1200px) { .mc-row { grid-template-columns: 190px 1fr 1fr; } }
+.mc-row .mc-name { font-size: 14px; }
+.mc-half { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 0 16px; }
+@media (min-width: 1200px) { .mc-half { border-left: 1px solid var(--line); } }
+.mc-half-title { display: inline-flex; align-items: center; gap: 6px; min-width: 58px; font-size: 12px; font-weight: 600; letter-spacing: .04em;
+  text-transform: uppercase; color: var(--muted); }
+.mc-half-title i { font-size: 11px; color: var(--brand); }
+.mc-half .mc-read { margin-left: auto; min-width: 230px; }
+.pp-channel > summary { align-items: center; }
+.pp-channel > summary .chev { margin-top: 0 !important; }
+
+/* ---------- Modern range slider ---------- */
+.pp-range-wrap { position: relative; display: block; padding-top: 4px; }
+input[type=range].pp-range { --p: 0%; -webkit-appearance: none; appearance: none; width: 100%; height: 22px; margin: 0; background: none; accent-color: auto; }
+input[type=range].pp-range:focus { outline: none; }
+input[type=range].pp-range::-webkit-slider-runnable-track { height: 6px; border-radius: 99px;
+  background: linear-gradient(90deg, #1677FF, #4C9AFF) 0 / var(--p) 100% no-repeat, #E4EAF2; }
+input[type=range].pp-range::-moz-range-track { height: 6px; border-radius: 99px; background: #E4EAF2; }
+input[type=range].pp-range::-moz-range-progress { height: 6px; border-radius: 99px; background: linear-gradient(90deg, #1677FF, #4C9AFF); }
+input[type=range].pp-range::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; margin-top: -7px; border: 3px solid #fff; border-radius: 50%;
+  background: var(--brand); box-shadow: 0 1px 4px rgba(16,42,92,.35), 0 0 0 1px rgba(22,119,255,.25); transition: transform .12s, box-shadow .12s; }
+input[type=range].pp-range::-moz-range-thumb { width: 14px; height: 14px; border: 3px solid #fff; border-radius: 50%; background: var(--brand); box-shadow: 0 1px 4px rgba(16,42,92,.35); }
+input[type=range].pp-range:hover::-webkit-slider-thumb { transform: scale(1.1); }
+input[type=range].pp-range:active::-webkit-slider-thumb, input[type=range].pp-range:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 6px rgba(22,119,255,.18), 0 1px 4px rgba(16,42,92,.35); }
+input[type=range].pp-range:disabled::-webkit-slider-runnable-track { background: #E4EAF2; }
+input[type=range].pp-range:disabled::-webkit-slider-thumb { background: var(--faint); }
+.pp-range-bubble { position: absolute; bottom: 100%; transform: translateX(-50%); padding: 2px 8px; border-radius: 6px; background: var(--navy);
+  font-family: var(--mono); font-size: 11px; color: #fff; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .15s; }
+.pp-range-bubble::after { content: ""; position: absolute; left: 50%; top: 100%; transform: translateX(-50%); border: 4px solid transparent; border-top-color: var(--navy); }
+.pp-range-wrap:hover .pp-range-bubble, .pp-range-wrap:focus-within .pp-range-bubble { opacity: 1; }
+
+/* ---------- Time zone panel ---------- */
+.app-menu.tz-menu { width: 320px; padding: 0; }
+.tz-head { padding: 12px 14px 8px; font-size: 12px; font-weight: 600; color: var(--ink); }
+.tz-search { position: relative; margin: 0 12px 8px; }
+.tz-search i { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); font-size: 12px; color: var(--muted); }
+.tz-search input { width: 100%; height: 36px; padding: 0 12px 0 32px; border: 1px solid var(--line); border-radius: var(--radius); font-size: 13px; color: var(--ink); }
+.tz-search input:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px rgba(22,119,255,.15); }
+.tz-list { max-height: 320px; overflow-y: auto; padding: 0 6px 6px; border-top: 1px solid var(--line); }
+.tz-item { display: flex; width: 100%; justify-content: space-between; align-items: center; gap: 12px; padding: 8px 10px; border: 0; border-radius: 6px;
+  background: none; font-size: 13px; color: var(--ink); text-align: left; }
+.tz-item:hover { background: var(--canvas); }
+.tz-item .mono { font-size: 12px; color: var(--muted); }
+.tz-item.is-sel { background: var(--brand-soft); color: var(--brand); font-weight: 500; }
+.tz-item.is-sel .mono { color: var(--brand); }
+.tz-empty { padding: 16px; text-align: center; font-size: 13px; color: var(--muted); }
+/* Laser tiles: blinking LED + no label wrap */
+.cs-lname { white-space: nowrap; }
+.cs-onoff { display: inline-flex; align-items: center; gap: 5px; background: var(--bad-bg); color: var(--bad-text); }
+.cs-onoff .pp-dot { width: 7px; height: 7px; }

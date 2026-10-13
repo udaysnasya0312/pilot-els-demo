@@ -6,7 +6,7 @@
 (function () {
   var tec = [], lasers = [];
   for (var i = 1; i <= 16; i++) {
-    tec.push({ id: i, name: "TEC " + i, connected: false });          // Status page: TEC Disconnected (real screenshot)
+    tec.push({ id: i, name: "TEC " + i, connected: false, temp: +(24.6 + ((i * 7) % 10) / 10).toFixed(1) });   // temp = Temperature Reading (°C), shown only when connected          // Status page: TEC Disconnected (real screenshot)
     lasers.push({ id: i, name: "Laser" + i, current: 0 });             // Current(mA) = 0 (real screenshot)
   }
 
