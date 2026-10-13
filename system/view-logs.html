@@ -8,6 +8,8 @@
   <!-- All local: Bootstrap 4.0.0 + FontAwesome 5.11.2 (same as the real box) + theme -->
   <link rel="stylesheet" href="../assets/vendor/bootstrap/bootstrap.min.css" />
   <link rel="stylesheet" href="../assets/vendor/fontawesome/css/all.min.css" />
+  <!-- SweetAlert v1: the same plugin the real Pilot ships (Plugins/SweetAlerts), restyled in pilot-theme.css -->
+  <link rel="stylesheet" href="../assets/vendor/sweetalert/sweetalert.css" />
   <link rel="stylesheet" href="../assets/pilot-theme.css" />
 </head>
 <body class="shell-pending" data-page="view-logs">
@@ -25,6 +27,7 @@
   <div class="pp-tabs-wrap">
     <nav id="logTabs" class="pp-tabs">
       <button data-tab="logs"><i class="fas fa-list"></i>Logs</button>
+      <button data-tab="alerts"><i class="far fa-bell"></i>Alerts</button>
       <button data-tab="console"><i class="fas fa-terminal"></i>Console Logs</button>
       <button data-tab="tec"><i class="fas fa-snowflake"></i>Tec Results</button>
     </nav>
@@ -35,8 +38,8 @@
     <div class="pp-card-body" style="border-bottom:1px solid var(--line)">
       <div class="row">
         <div class="col-sm-6 col-lg mb-3 mb-lg-0"><label class="pp-label" for="txtStartDate">Start Date</label><input id="txtStartDate" type="date" class="form-control" value="2026-10-01" /></div>
-        <div class="col-sm-6 col-lg mb-3 mb-lg-0"><label class="pp-label" for="txtEndDate">End Date</label><input id="txtEndDate" type="date" class="form-control" value="2026-10-12" /></div>
-        <div class="col-sm-6 col-lg mb-3 mb-lg-0"><label class="pp-label" for="txtLogLevel">Max Log Level</label><input id="txtLogLevel" type="number" class="form-control" placeholder="eg: 1 to 100" /></div>
+        <div class="col-sm-6 col-lg mb-3 mb-lg-0"><label class="pp-label" for="txtEndDate">End Date</label><input id="txtEndDate" type="date" class="form-control" value="2026-10-12" data-validate="daterange" data-after="txtStartDate" /></div>
+        <div class="col-sm-6 col-lg mb-3 mb-lg-0"><label class="pp-label" for="txtLogLevel">Max Log Level</label><input id="txtLogLevel" type="number" class="form-control" placeholder="eg: 1 to 100" min="1" max="100" data-validate="optional range" /></div>
         <div class="col-sm-6 col-lg mb-3 mb-lg-0"><label class="pp-label" for="ddlLogType">Log Type</label>
           <select id="ddlLogType" class="form-control"><option>All</option><option>Info</option><option>Warning</option><option>Debug</option><option>Error</option></select></div>
         <div class="col-lg-auto d-flex align-items-end gap-2">
@@ -44,6 +47,17 @@
           <button type="button" data-toast="Download started" class="btn btn-default" style="height:40px"><i class="fas fa-download"></i>Download</button>
         </div>
       </div>
+    </div>
+    <div class="d-flex flex-wrap align-items-center gap-3" style="padding:12px 20px;border-bottom:1px solid var(--line)">
+      <div class="pp-input-icon" style="flex:1;min-width:220px;max-width:360px">
+        <i class="fas fa-search"></i><input id="logSearch" type="search" class="form-control sm" placeholder="Search element, name or message…" />
+      </div>
+      <div class="pp-presets" id="logPresets">
+        <button type="button" data-days="0">Today</button>
+        <button type="button" data-days="7">Last 7 days</button>
+        <button type="button" data-days="30">Last 30 days</button>
+      </div>
+      <span id="logCount" class="ml-auto small-12 text-muted"></span>
     </div>
     <div class="pp-table-wrap">
       <table class="pp-table flush" style="min-width:900px">
@@ -53,12 +67,30 @@
     </div>
   </section>
 
+  <!-- Alerts: appliance alert history (cgi_CCMLogs.py request_Type = "read_CCMAlerts", same columns as Logs) -->
+  <section data-panel="alerts" class="pp-card d-none">
+    <div class="pp-card-head flex-wrap">
+      <span class="pp-icon"><i class="far fa-bell"></i></span>
+      <h2 class="pp-card-title">Alerts <span class="light">&middot; read_CCMAlerts</span></h2>
+      <div id="alertFilter" class="pp-segment">
+        <button data-f="All" class="is-active">All</button><button data-f="Alert">Alert</button><button data-f="Warning">Warning</button><button data-f="Info">Info</button>
+      </div>
+      <span id="alertCount" class="small-12 text-muted"></span>
+    </div>
+    <div class="pp-table-wrap">
+      <table class="pp-table flush" style="min-width:900px">
+        <thead><tr><th>Date Time</th><th>Element</th><th>Element Name</th><th>Log Level</th><th>State</th><th>Action</th><th>Message</th></tr></thead>
+        <tbody id="alertRows"><tr><td colspan="7" class="center text-muted" style="padding:24px"><i class="fas fa-circle-notch fa-spin mr-2"></i>Loading…</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
   <!-- Console Logs -->
   <section data-panel="console" class="pp-card d-none">
     <div class="pp-card-body" style="border-bottom:1px solid var(--line)">
       <div class="row">
         <div class="col-sm mb-3 mb-sm-0"><label class="pp-label" for="StartDate">Start Date</label><input id="StartDate" type="date" class="form-control" value="2026-10-01" /></div>
-        <div class="col-sm mb-3 mb-sm-0"><label class="pp-label" for="EndDate">End Date</label><input id="EndDate" type="date" class="form-control" value="2026-10-12" /></div>
+        <div class="col-sm mb-3 mb-sm-0"><label class="pp-label" for="EndDate">End Date</label><input id="EndDate" type="date" class="form-control" value="2026-10-12" data-validate="daterange" data-after="StartDate" /></div>
         <div class="col-sm-auto d-flex align-items-end gap-2">
           <button type="button" class="btn btn-primary" style="height:40px"><i class="fas fa-search"></i>Search</button>
           <button type="button" data-toast="Download started" class="btn btn-default" style="height:40px"><i class="fas fa-download"></i>Download</button>
@@ -85,6 +117,8 @@
 <script src="../assets/vendor/jquery/jquery-3.4.1.min.js"></script>
 <script src="../assets/vendor/bootstrap/popper.min.js"></script>
 <script src="../assets/vendor/bootstrap/bootstrap.min.js"></script>
+<script src="../assets/vendor/sweetalert/sweetalert.js"></script>
+<script src="../assets/demo-state.js"></script>
 <script src="../assets/shell.js"></script>
 <script src="../assets/ui.js"></script>
 <script>
@@ -103,22 +137,48 @@
     ["Oct 11, 2026, 18:20:33", "SYSTEM", "Firmware", "Info", "-", "set", "Activated AdopELS_110126"],
   ];
   var BADGE = { Info: "info", Warning: "warn", Error: "bad", Debug: "muted" };
+  var $start = document.getElementById("txtStartDate"), $end = document.getElementById("txtEndDate"), $q = document.getElementById("logSearch");
+
+  function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function hl(t, q) {
+    t = esc(t); if (!q) return t;
+    var i = t.toLowerCase().indexOf(q.toLowerCase());
+    return i < 0 ? t : t.slice(0, i) + "<mark>" + t.slice(i, i + q.length) + "</mark>" + t.slice(i + q.length);
+  }
+  function day(str) { var d = new Date(str.replace(/, (\d\d:)/, " $1")); d.setHours(0, 0, 0, 0); return d; }
+  function iso(d) { return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2); }
 
   function renderLogs() {
-    var type = document.getElementById("ddlLogType").value;
-    var rows = LOGS.filter(function (r) { return type === "All" || r[3] === type; });
+    if (window.ui.check($end) !== true) { window.ui.validate($end); return; }   // wrong date range: keep the last result
+    var type = document.getElementById("ddlLogType").value, q = $q.value.trim();
+    var from = $start.value ? new Date($start.value + "T00:00:00") : null, to = $end.value ? new Date($end.value + "T00:00:00") : null;
+    var rows = LOGS.filter(function (r) {
+      var d = day(r[0]);
+      return (type === "All" || r[3] === type) && (!from || d >= from) && (!to || d <= to) &&
+        (!q || (r[1] + " " + r[2] + " " + r[6]).toLowerCase().indexOf(q.toLowerCase()) !== -1);
+    });
+    document.getElementById("logCount").textContent = rows.length + " of " + LOGS.length + " records";
     document.getElementById("logRows").innerHTML = rows.length ? rows.map(function (r) {
       return "<tr>" +
         '<td class="mono text-muted" style="white-space:nowrap;font-size:12.5px">' + r[0] + "</td>" +
-        '<td class="mono" style="font-size:12px">' + r[1] + "</td>" +
-        "<td>" + r[2] + "</td>" +
+        '<td class="mono" style="font-size:12px">' + hl(r[1], q) + "</td>" +
+        "<td>" + hl(r[2], q) + "</td>" +
         '<td><span class="pp-badge no-dot sm ' + BADGE[r[3]] + '">' + r[3] + "</span></td>" +
         '<td class="text-muted">' + r[4] + "</td>" +
         '<td class="mono text-muted" style="font-size:12px">' + r[5] + "</td>" +
-        "<td>" + r[6] + "</td></tr>";
+        "<td>" + hl(r[6], q) + "</td></tr>";
     }).join("") : '<tr><td colspan="7" class="center text-muted" style="padding:32px">No Record</td></tr>';
   }
   document.getElementById("btnSearch").addEventListener("click", renderLogs);
+  $q.addEventListener("input", renderLogs);                       // search as you type
+  [$start, $end, document.getElementById("ddlLogType")].forEach(function (el) { el.addEventListener("change", function () { setPreset(null); renderLogs(); }); });
+  function setPreset(btn) { document.querySelectorAll("#logPresets button").forEach(function (b) { b.classList.toggle("is-active", b === btn); }); }
+  document.querySelectorAll("#logPresets button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var to = new Date(), from = new Date(); from.setDate(to.getDate() - (+b.getAttribute("data-days")));
+      $start.value = iso(from); $end.value = iso(to); setPreset(b); renderLogs();
+    });
+  });
   renderLogs();
 
   // Console logs (real columns: Date Time, Message)
@@ -136,14 +196,38 @@
     "TEC 1   state: Connected   temp: 25.1 °C   status: Ok\n" +
     "TEC 2   state: Connected   temp: 25.0 °C   status: Ok\n";
 
+  // Alerts tab (read_CCMAlerts)
+  var ALERTS = [], aFilter = "All", ATONE = { Alert: "bad", Warning: "warn", Info: "info" };
+  function renderAlerts() {
+    var rows = ALERTS.filter(function (r) { return aFilter === "All" || r.sate === aFilter; });
+    document.getElementById("alertCount").textContent = rows.length + " of " + ALERTS.length + " alerts";
+    document.getElementById("alertRows").innerHTML = rows.length ? rows.map(function (r) {
+      return "<tr>" +
+        '<td class="mono text-muted" style="white-space:nowrap;font-size:12.5px">' + r.datetime + "</td>" +
+        '<td class="mono" style="font-size:12px">' + r.element + "</td><td>" + r.elementname + "</td>" +
+        '<td class="mono text-muted">' + r.loglevel + "</td>" +
+        '<td><span class="pp-badge sm ' + (ATONE[r.sate] || "muted") + '">' + r.sate + "</span></td>" +
+        '<td class="mono text-muted" style="font-size:12px">' + r.action + "</td><td>" + r.message + "</td></tr>";
+    }).join("") : '<tr><td colspan="7" class="center text-muted" style="padding:32px">No Record</td></tr>';
+  }
+  document.querySelectorAll("#alertFilter button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      aFilter = b.getAttribute("data-f");
+      document.querySelectorAll("#alertFilter button").forEach(function (x) { x.classList.toggle("is-active", x === b); });
+      renderAlerts();
+    });
+  });
+  window.PILOT_FETCH_ALERTS(function (rows) { ALERTS = rows; renderAlerts(); });
+
   // Tabs
   var btns = document.querySelectorAll("#logTabs button");
   function show(tab) {
     btns.forEach(function (b) { b.classList.toggle("is-active", b.getAttribute("data-tab") === tab); });
     document.querySelectorAll("[data-panel]").forEach(function (p) { p.classList.toggle("d-none", p.getAttribute("data-panel") !== tab); });
   }
-  btns.forEach(function (b) { b.addEventListener("click", function () { show(b.getAttribute("data-tab")); }); });
-  show("logs");
+  btns.forEach(function (b) { b.addEventListener("click", function () { show(b.getAttribute("data-tab")); window.ui.remember("logs-tab", b.getAttribute("data-tab")); }); });
+  document.addEventListener("pp:section", function (e) { if (["logs", "alerts", "console", "tec"].indexOf(e.detail) !== -1) show(e.detail); });
+  show(["logs", "alerts", "console", "tec"].indexOf(location.hash.slice(1)) !== -1 ? location.hash.slice(1) : (window.ui.remember("logs-tab") || "logs"));
 })();
 </script>
 </body>

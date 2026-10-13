@@ -76,14 +76,14 @@
             <label for="txtUserName" class="login-label">User Name</label>
             <div class="pp-input-icon">
               <i class="fas fa-user"></i>
-              <input id="txtUserName" type="text" class="form-control" autocomplete="username" placeholder="User Name" />
+              <input id="txtUserName" type="text" class="form-control" autocomplete="username" placeholder="User Name" data-validate="required" />
             </div>
           </div>
           <div class="form-group mb-3">
             <label for="txtPassword" class="login-label">Password</label>
             <div class="pp-input-icon pp-input-reveal">
               <i class="fas fa-lock"></i>
-              <input id="txtPassword" type="password" class="form-control" autocomplete="current-password" placeholder="Password" />
+              <input id="txtPassword" type="password" class="form-control" autocomplete="current-password" placeholder="Password" data-validate="required" />
               <button type="button" id="togglePassword" class="pp-reveal" aria-label="Show password"><i class="far fa-eye"></i></button>
             </div>
           </div>
@@ -100,6 +100,7 @@
 
   <footer class="login-footer">&copy; Pilot Photonics</footer>
 
+<script src="assets/ui.js"></script>
 <script>
   (function () {
     var pwd = document.getElementById("txtPassword");
@@ -113,7 +114,11 @@
       e.preventDefault();
       var u = document.getElementById("txtUserName").value.trim();
       var err = document.getElementById("systemError");
-      if (!u || !pwd.value) { err.textContent = "Please enter User Name and Password."; return; }
+      if (!u || !pwd.value) {
+        err.textContent = "Please enter User Name and Password.";
+        [document.getElementById("txtUserName"), pwd].forEach(function (el) { window.ui.validate(el); });
+        return;
+      }
       location.href = "system/index.html";
     });
   })();

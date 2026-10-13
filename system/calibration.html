@@ -8,6 +8,8 @@
   <!-- All local: Bootstrap 4.0.0 + FontAwesome 5.11.2 (same as the real box) + theme -->
   <link rel="stylesheet" href="../assets/vendor/bootstrap/bootstrap.min.css" />
   <link rel="stylesheet" href="../assets/vendor/fontawesome/css/all.min.css" />
+  <!-- SweetAlert v1: the same plugin the real Pilot ships (Plugins/SweetAlerts), restyled in pilot-theme.css -->
+  <link rel="stylesheet" href="../assets/vendor/sweetalert/sweetalert.css" />
   <link rel="stylesheet" href="../assets/pilot-theme.css" />
 </head>
 <body class="shell-pending" data-page="calibration">
@@ -23,6 +25,7 @@
 
   <div id="setup-tabs"></div>
 
+  <div id="calForm" data-form>
   <div id="groups" class="row"></div>
 
   <div class="row">
@@ -46,16 +49,20 @@
     <div class="d-flex flex-wrap gap-2">
       <button type="button" id="btnStart" class="btn btn-success"><i class="fas fa-play"></i>Start</button>
       <button type="button" id="btnStop" class="btn btn-danger"><i class="fas fa-stop"></i>Stop</button>
-      <button type="button" data-toast class="btn btn-primary">Save Settings</button>
+      <button type="button" data-toast data-save class="btn btn-primary">Save Settings</button>
       <button type="button" data-toast="Default settings restored" class="btn btn-default">Restore Default Settings</button>
-      <button type="button" class="btn btn-ghost">Cancel</button>
+      <button type="button" data-reset class="btn btn-ghost">Cancel</button>
+      <span class="pp-unsaved" data-dirty-flag hidden>Unsaved</span>
     </div>
     <div id="setup-pager"></div>
+  </div>
   </div>
 </main>
 <script src="../assets/vendor/jquery/jquery-3.4.1.min.js"></script>
 <script src="../assets/vendor/bootstrap/popper.min.js"></script>
 <script src="../assets/vendor/bootstrap/bootstrap.min.js"></script>
+<script src="../assets/vendor/sweetalert/sweetalert.js"></script>
+<script src="../assets/demo-state.js"></script>
 <script src="../assets/shell.js"></script>
 <script src="../assets/setup-tabs.js"></script>
 <script src="../assets/ui.js"></script>
@@ -76,7 +83,7 @@
       '<div class="pp-card-head"><span class="pp-icon"><i class="fas ' + g.icon + '"></i></span><h2 class="pp-card-title">' + g.t + "</h2></div>" +
       '<div class="pp-card-body"><div class="row">' + g.f.map(function (f, k) {
         return '<div class="col-6 col-sm-3 mb-2"><label class="pp-label muted two-line">' + f + "</label>" +
-          '<input type="number" value="0" placeholder="' + PH[k] + '" class="form-control mono"' + (k === 3 ? ' style="background:var(--canvas)"' : "") + " /></div>";
+          '<input type="number" value="0" placeholder="' + PH[k] + '" data-validate="required number" class="form-control mono"' + (k === 3 ? ' style="background:var(--canvas)"' : "") + " /></div>";
       }).join("") + "</div></div></section></div>";
   }).join("");
 

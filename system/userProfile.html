@@ -8,10 +8,12 @@
   <!-- All local: Bootstrap 4.0.0 + FontAwesome 5.11.2 (same as the real box) + theme -->
   <link rel="stylesheet" href="../assets/vendor/bootstrap/bootstrap.min.css" />
   <link rel="stylesheet" href="../assets/vendor/fontawesome/css/all.min.css" />
+  <!-- SweetAlert v1: the same plugin the real Pilot ships (Plugins/SweetAlerts), restyled in pilot-theme.css -->
+  <link rel="stylesheet" href="../assets/vendor/sweetalert/sweetalert.css" />
   <link rel="stylesheet" href="../assets/pilot-theme.css" />
 </head>
 <body class="shell-pending" data-page="userProfile">
-<main id="page" class="page page-narrow">
+<main id="page" class="page">
 
   <div class="page-head">
     <div>
@@ -20,47 +22,108 @@
     </div>
   </div>
 
-  <section class="pp-card">
-    <div class="pp-card-head" style="padding:20px">
-      <span class="app-avatar is-navy" style="width:48px;height:48px;font-size:16px"><i class="fas fa-user"></i></span>
-      <div class="ml-2">
-        <div class="fw-600" style="font-size:15px">admin</div>
-        <div class="text-muted" style="font-size:12.5px">Adoption-ELS</div>
-      </div>
+  <div class="row">
+    <!-- Profile summary -->
+    <div class="col-lg-4 col-xl-3 mb-4">
+      <section class="pp-card pp-profile-card">
+        <div class="pp-profile-cover"></div>
+        <div class="pp-profile-body">
+          <span id="pfInitials" class="pp-profile-avatar">AA</span>
+          <h2 id="pfName" class="pp-profile-name">admin A</h2>
+          <div class="pp-profile-user mono">@admin</div>
+          <span class="pp-badge info no-dot sm mt-2"><i class="fas fa-microchip" style="font-size:10px"></i>Adoption-ELS</span>
+        </div>
+        <dl class="pp-profile-facts">
+          <div><dt><i class="far fa-envelope"></i>Email Address</dt><dd id="pfEmail" class="text-muted">Not set</dd></div>
+          <div><dt><i class="fas fa-phone-alt"></i>Phone</dt><dd id="pfPhone" class="mono">+354 674 5654</dd></div>
+        </dl>
+      </section>
     </div>
 
-    <div class="pp-rows">
-      <div class="pp-form-row"><label for="txtUserName">User Name</label><input id="txtUserName" class="form-control" value="admin" readonly /></div>
-      <div class="pp-form-row"><label for="txtFirstName">First Name</label><input id="txtFirstName" class="form-control" value="admin" /></div>
-      <div class="pp-form-row"><label for="txtLastName">Last Name</label><input id="txtLastName" class="form-control" value="A" /></div>
-      <div class="pp-form-row"><label for="txtEmail">Email Address</label><input id="txtEmail" type="email" class="form-control" placeholder="Email" readonly /></div>
-      <div class="pp-form-row">
-        <label for="txtPassword">Password</label>
-        <div class="pp-input-reveal">
-          <input id="txtPassword" type="password" class="form-control" value="demo-password" />
-          <button type="button" data-reveal="txtPassword" class="pp-reveal" aria-label="Show password"><i class="far fa-eye"></i></button>
+    <div class="col-lg-8 col-xl-9">
+      <!-- Personal details -->
+      <section class="pp-card mb-4" data-form>
+        <div class="pp-card-head">
+          <span class="pp-icon"><i class="fas fa-id-card"></i></span>
+          <h2 class="pp-card-title">Personal details</h2>
+          <span class="pp-unsaved" data-dirty-flag hidden>Unsaved</span>
         </div>
-      </div>
-      <div class="pp-form-row">
-        <label for="txtPhone">Phone</label>
-        <div class="d-flex gap-2">
-          <select class="form-control mono" style="width:112px" aria-label="Country code">
-            <option>+353</option><option selected>+354</option><option>+44</option><option>+91</option><option>+1</option>
-          </select>
-          <input id="txtPhone" type="tel" class="form-control mono" value="674 5654" />
+        <div class="pp-card-body">
+          <div class="row">
+            <div class="col-md-6 mb-3"><label class="pp-label" for="txtUserName">User Name</label>
+              <input id="txtUserName" class="form-control" value="admin" readonly /></div>
+            <div class="col-md-6 mb-3"><label class="pp-label" for="txtEmail">Email Address</label>
+              <input id="txtEmail" type="email" class="form-control" placeholder="Email" readonly /></div>
+            <div class="col-md-6 mb-3"><label class="pp-label" for="txtFirstName">First Name</label>
+              <input id="txtFirstName" class="form-control" value="admin" data-validate="required" /></div>
+            <div class="col-md-6 mb-3"><label class="pp-label" for="txtLastName">Last Name</label>
+              <input id="txtLastName" class="form-control" value="A" /></div>
+            <div class="col-md-6 mb-1"><label class="pp-label" for="txtPhone">Phone</label>
+              <div class="d-flex gap-2">
+                <select id="ddlCode" class="form-control mono" style="width:112px" aria-label="Country code">
+                  <option>+353</option><option selected>+354</option><option>+44</option><option>+91</option><option>+1</option>
+                </select>
+                <input id="txtPhone" type="tel" class="form-control mono" value="674 5654" data-validate="phone" />
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+        <div class="pp-card-foot">
+          <button type="button" data-reset class="btn btn-ghost">Cancel</button>
+          <button type="button" data-toast="Updated Successfully!" data-save class="btn btn-primary">Save</button>
+        </div>
+      </section>
 
-    <div class="pp-card-foot">
-      <button type="button" data-toast="Updated Successfully!" class="btn btn-primary">Save</button>
+      <!-- Security -->
+      <section class="pp-card" data-form>
+        <div class="pp-card-head">
+          <span class="pp-icon"><i class="fas fa-lock"></i></span>
+          <h2 class="pp-card-title">Security</h2>
+          <span class="pp-unsaved" data-dirty-flag hidden>Unsaved</span>
+        </div>
+        <div class="pp-card-body">
+          <div class="row">
+            <div class="col-md-6 mb-1">
+              <label class="pp-label" for="txtPassword">Password</label>
+              <div class="pp-input-reveal">
+                <input id="txtPassword" type="password" class="form-control" value="Demo@2026" data-validate="required password" />
+                <button type="button" data-reveal="txtPassword" class="pp-reveal" aria-label="Show password"><i class="far fa-eye"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pp-card-foot">
+          <button type="button" data-reset class="btn btn-ghost">Cancel</button>
+          <button type="button" data-toast="Updated Successfully!" data-save class="btn btn-primary">Save</button>
+        </div>
+      </section>
     </div>
-  </section>
+  </div>
 </main>
 <script src="../assets/vendor/jquery/jquery-3.4.1.min.js"></script>
 <script src="../assets/vendor/bootstrap/popper.min.js"></script>
 <script src="../assets/vendor/bootstrap/bootstrap.min.js"></script>
+<script src="../assets/vendor/sweetalert/sweetalert.js"></script>
+<script src="../assets/demo-state.js"></script>
 <script src="../assets/shell.js"></script>
 <script src="../assets/ui.js"></script>
+<script>
+  // Profile card follows the form as you type
+  (function () {
+    var $ = function (id) { return document.getElementById(id); };
+    function sync() {
+      var first = $("txtFirstName").value.trim(), last = $("txtLastName").value.trim();
+      $("pfName").textContent = (first + " " + last).trim() || "admin";
+      $("pfInitials").textContent = ((first[0] || "") + (last[0] || "")).toUpperCase() || "A";
+      $("pfPhone").textContent = $("ddlCode").value + " " + $("txtPhone").value;
+      var mail = $("txtEmail").value.trim();
+      $("pfEmail").textContent = mail || "Not set";
+      $("pfEmail").className = mail ? "" : "text-muted";
+    }
+    document.addEventListener("input", sync);
+    document.addEventListener("change", sync);
+    sync();
+  })();
+</script>
 </body>
 </html>

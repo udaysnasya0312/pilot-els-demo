@@ -8,6 +8,8 @@
   <!-- All local: Bootstrap 4.0.0 + FontAwesome 5.11.2 (same as the real box) + theme -->
   <link rel="stylesheet" href="../assets/vendor/bootstrap/bootstrap.min.css" />
   <link rel="stylesheet" href="../assets/vendor/fontawesome/css/all.min.css" />
+  <!-- SweetAlert v1: the same plugin the real Pilot ships (Plugins/SweetAlerts), restyled in pilot-theme.css -->
+  <link rel="stylesheet" href="../assets/vendor/sweetalert/sweetalert.css" />
   <link rel="stylesheet" href="../assets/pilot-theme.css" />
 </head>
 <body class="shell-pending" data-page="support">
@@ -21,7 +23,7 @@
   </div>
 
   <section class="pp-card pp-rows">
-    <div class="pp-action-row">
+    <div id="self-test" class="pp-action-row">
       <span class="pp-icon lg"><i class="fas fa-vial"></i></span>
       <span class="flex-1 fw-600">Self Test</span>
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#selfTest"><i class="fas fa-play"></i>Start Self test</button>
@@ -41,10 +43,10 @@
       <span class="flex-1 fw-600">API Command List</span>
       <button type="button" class="btn btn-default" data-toggle="modal" data-target="#notImpl">Open API Command List</button>
     </div>
-    <div class="pp-action-row">
+    <div id="send-logs" class="pp-action-row">
       <span class="pp-icon lg"><i class="fas fa-paper-plane"></i></span>
       <span class="flex-1 fw-600">Send Logs</span>
-      <button type="button" class="btn btn-default" data-toast="Logs sent">Send logs</button>
+      <button type="button" class="btn btn-default" data-toast="Logs sent" data-confirm-title="Send logs?" data-confirm-text="The appliance logs will be sent to support@pilotphotonics.com." data-confirm-ok="Send logs" data-confirm-danger="false">Send logs</button>
     </div>
   </section>
 
@@ -88,6 +90,8 @@
 <script src="../assets/vendor/jquery/jquery-3.4.1.min.js"></script>
 <script src="../assets/vendor/bootstrap/popper.min.js"></script>
 <script src="../assets/vendor/bootstrap/bootstrap.min.js"></script>
+<script src="../assets/vendor/sweetalert/sweetalert.js"></script>
+<script src="../assets/demo-state.js"></script>
 <script src="../assets/shell.js"></script>
 <script src="../assets/ui.js"></script>
 </body>

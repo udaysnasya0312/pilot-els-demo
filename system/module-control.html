@@ -8,6 +8,8 @@
   <!-- All local: Bootstrap 4.0.0 + FontAwesome 5.11.2 (same as the real box) + theme -->
   <link rel="stylesheet" href="../assets/vendor/bootstrap/bootstrap.min.css" />
   <link rel="stylesheet" href="../assets/vendor/fontawesome/css/all.min.css" />
+  <!-- SweetAlert v1: the same plugin the real Pilot ships (Plugins/SweetAlerts), restyled in pilot-theme.css -->
+  <link rel="stylesheet" href="../assets/vendor/sweetalert/sweetalert.css" />
   <link rel="stylesheet" href="../assets/pilot-theme.css" />
 </head>
 <body class="shell-pending" data-page="module-control">
@@ -20,13 +22,11 @@
     </div>
   </div>
 
-  <div id="setup-tabs"></div>
-
-  <!-- Top controls (real: TEC Test | Rocker Key : Off | Key Switch : Off | Turn Off All Lasers & TECs) -->
-  <div class="pp-card pp-bar mb-4">
+  <!-- Safety (real: TEC Test | Rocker Key : Off | Key Switch : Off | Turn Off All Lasers & TECs) -->
+  <div id="safety" class="pp-card pp-bar mb-4">
     <label class="d-flex align-items-center gap-3 m-0" style="cursor:pointer">
       <span class="small-13 fw-500">TEC Test</span>
-      <span class="pp-switch brand"><input type="checkbox" id="tecTestInput" /><span class="track"></span><span class="thumb"></span></span>
+      <span class="pp-switch brand"><input type="checkbox" id="tecTestInput" data-no-track /><span class="track"></span><span class="thumb"></span></span>
     </label>
     <div class="d-flex align-items-center gap-3 small-13">
       <span class="fw-500">Rocker Key</span><span class="pp-badge bad sm">Off</span>
@@ -35,8 +35,26 @@
     </div>
     <label class="d-flex align-items-center gap-3 m-0" style="cursor:pointer">
       <span class="small-13 fw-500">Turn Off All Lasers &amp; TECs</span>
-      <span class="pp-switch danger"><input type="checkbox" id="tecOffInput" /><span class="track"></span><span class="thumb"></span></span>
+      <span class="pp-switch danger"><input type="checkbox" id="tecOffInput" data-no-track data-confirm-when="on" data-confirm-title="Are you sure?" data-confirm-text="This will turn off all Lasers &amp; TECs." data-confirm-ok="Yes, Turn Off" /><span class="track"></span><span class="thumb"></span></span>
     </label>
+  </div>
+
+  <!-- Outputs (moved here from the old Status page: Turn All Outputs OFF / Turn Module OFF) -->
+  <div id="outputs" class="row">
+    <div class="col-sm-6 mb-4">
+      <div class="pp-link-card d-flex align-items-center gap-3">
+        <span class="pp-icon lg muted"><i class="fas fa-power-off"></i></span>
+        <span class="flex-1"><span class="d-block fw-600">Turn All Outputs OFF</span><span class="d-block small-12 text-muted">Outputs <b data-state-for="switch_output" class="text-ok">ON</b></span></span>
+        <label class="pp-switch" title="Turn off"><input type="checkbox" id="switch_output" checked data-no-track data-confirm-when="off" data-confirm-title="Are you sure?" data-confirm-text="This will turn off all outputs." data-confirm-ok="Yes, Turn Off" /><span class="track"></span><span class="thumb"></span></label>
+      </div>
+    </div>
+    <div class="col-sm-6 mb-4">
+      <div class="pp-link-card d-flex align-items-center gap-3">
+        <span class="pp-icon lg muted"><i class="fas fa-microchip"></i></span>
+        <span class="flex-1"><span class="d-block fw-600">Turn Module OFF</span><span class="d-block small-12 text-muted">Module <b data-state-for="switch_module" class="text-ok">ON</b></span></span>
+        <label class="pp-switch" title="Turn off"><input type="checkbox" id="switch_module" checked data-no-track data-confirm-when="off" data-confirm-title="Are you sure?" data-confirm-text="This will turn off the module." data-confirm-ok="Yes, Turn Off" /><span class="track"></span><span class="thumb"></span></label>
+      </div>
+    </div>
   </div>
 
   <!-- General + Current Controller clubbed: one accordion per channel (TEC n + Laser n) -->
@@ -53,17 +71,17 @@
   <!-- Footer bar -->
   <div class="pp-card pp-bar">
     <div class="d-flex flex-wrap gap-2">
-      <button type="button" data-toast class="btn btn-primary">Save Settings</button>
+      <button type="button" data-save-all class="btn btn-primary">Save Settings</button>
       <button type="button" data-toast="Default settings restored" class="btn btn-default">Restore Default Settings</button>
     </div>
-    <div id="setup-pager"></div>
   </div>
 </main>
 <script src="../assets/vendor/jquery/jquery-3.4.1.min.js"></script>
 <script src="../assets/vendor/bootstrap/popper.min.js"></script>
 <script src="../assets/vendor/bootstrap/bootstrap.min.js"></script>
+<script src="../assets/vendor/sweetalert/sweetalert.js"></script>
+<script src="../assets/demo-state.js"></script>
 <script src="../assets/shell.js"></script>
-<script src="../assets/setup-tabs.js"></script>
 <script src="../assets/ui.js"></script>
 <script>
 (function () {
@@ -73,56 +91,69 @@
   var CURR = { min: 0, max: 210 };            // Current Control (mA)
 
   function badge(ok, text) { return '<span class="pp-badge sm ' + (ok ? "ok" : "bad") + '">' + text + "</span>"; }
-  function sw(id) { return '<label class="pp-switch" title="ON / OFF"><input type="checkbox" id="' + id + '" /><span class="track"></span><span class="thumb"></span></label>'; }
-  function control(label, icon, key, r, val, step, unit) {
-    return '<div class="pp-control">' +
+  // Header line, real pattern: "<name> - <status> | <status>   <Ok> | <Reading> : <value>" in aligned columns
+  function conn(ok, text) { return '<span class="mc-conn' + (ok ? "" : " is-bad") + '"><span class="pp-dot ' + (ok ? "ok" : "bad") + '"></span>' + text + "</span>"; }
+  function line(name, a, b, okTxt, label, value) {
+    return '<div class="mc-line">' +
+      '<span class="mc-name">' + name + "</span>" +
+      '<span class="mc-conns">' + a + '<span class="mc-sep"></span>' + b + "</span>" +
+      '<span class="mc-ok">' + okTxt + "</span>" +
+      '<span class="mc-read"><small>' + label + '</small><b class="mono">' + value + "</b></span></div>";
+  }
+  function sw(id, confirm) { return '<label class="pp-switch" title="ON / OFF"><input type="checkbox" id="' + id + '"' + (confirm || "") + ' /><span class="track"></span><span class="thumb"></span></label>'; }
+  function control(label, icon, key, r, val, step, unit, confirm, saveMsg) {
+    return '<div class="pp-control has-save">' +
       '<span class="pp-control-label"><i class="fas ' + icon + ' text-brand"></i>' + label + "</span>" +
       '<div><input type="range" class="pp-range" data-sync="' + key + '" min="' + r.min + '" max="' + r.max + '" step="' + step + '" value="' + val + '" />' +
         '<div class="pp-range-scale"><span>' + r.min + "</span><span>" + r.max + "</span></div></div>" +
-      '<label class="pp-setvalue">Set Value <input id="' + key + '" type="number" min="' + r.min + '" max="' + r.max + '" step="' + step + '" value="' + val + '" class="form-control w-num" /> ' + unit + "</label>" +
-      sw(key + "-sw") + "</div>";
+      '<label class="pp-setvalue">Set Value <input id="' + key + '" type="number" min="' + r.min + '" max="' + r.max + '" step="' + step + '" value="' + val + '" class="form-control w-num" data-validate="range" /> ' + unit + "</label>" +
+      sw(key + "-sw", confirm) +
+      '<span class="d-flex align-items-center gap-2">' +
+        '<button type="button" class="cs-icon-btn" data-reset title="Undo changes"><i class="fas fa-undo-alt"></i></button>' +
+        '<button type="button" class="btn btn-primary" data-save data-toast="' + saveMsg + '">Save</button>' +
+      "</span></div>";
   }
 
   var html = "";
   for (var i = 1; i <= N; i++) {
     var temp = (24.6 + ((i * 7) % 10) / 10).toFixed(1);   // Temperature Reading (°C)
     var prev = 150 + ((i * 13) % 6) * 10;                  // Prev Laser Value (mA)
-    html += '<details class="pp-acc pp-channel">' +
+    html += '<details id="channel-' + i + '" class="pp-acc pp-channel">' +
       // Header: TEC n line + Laser n Current line (real labels unchanged)
       "<summary>" +
         '<span class="pp-channel-no">' + i + "</span>" +
         '<div class="flex-1 min-w-0">' +
-          '<div class="pp-channel-line">' +
-            '<span class="pp-channel-name">TEC ' + i + "</span>" + badge(true, "TEC Connected") + badge(true, "Laser Connected") +
-            '<span class="pp-channel-meta"><b class="text-ok">Ok</b> &nbsp;|&nbsp; Temperature Reading : <b class="mono text-ink">' + temp + " °C</b></span>" +
-          "</div>" +
-          '<div class="pp-channel-line">' +
-            '<span class="pp-channel-name">Laser' + i + " Current</span>" + badge(true, "Laser Connected") + badge(true, "TEC Connected") +
-            '<span class="pp-channel-meta"><b class="text-ok">Ok</b> &nbsp;|&nbsp; Prev Laser Value : <b class="mono text-ink">' + prev + " mA</b></span>" +
-          "</div>" +
+          line("TEC " + i, conn(true, "TEC Connected"), conn(true, "Laser Connected"), "Ok", "Temperature Reading", temp + " °C") +
+          line("Laser" + i + " Current", conn(true, "Laser Connected"), conn(true, "TEC Connected"), "Ok", "Prev Laser Value", prev + " mA") +
         "</div>" +
+        '<span class="pp-unsaved" data-dirty-flag hidden>Unsaved</span>' +
         '<i class="fas fa-chevron-down chev" style="margin-top:8px"></i>' +
       "</summary>" +
-      // Body: TEC block + Laser block, one Save for both
+      // Body — real placement: TEC indicators on top, then each control line ends with its own Save
       '<div class="pp-channel-body">' +
-        '<div class="pp-subcard">' +
-          '<div class="pp-subcard-title">TEC ' + i +
+        '<div class="pp-subcard" data-form>' +
+          '<div class="mc-indicators">' +
             '<span class="pp-pill"><span class="pp-dot ok"></span>TEC ON</span>' +
             '<span class="pp-pill"><span class="pp-dot ok"></span>Temperature Sensor</span>' +
           "</div>" +
-          control("Temperature Control (°C)", "fa-thermometer-half", "tc" + i, TEMP, TEMP.set.toFixed(2), 0.01, "°C") +
+          control("Temperature Control (°C)", "fa-thermometer-half", "tc" + i, TEMP, TEMP.set.toFixed(2), 0.01, "°C", "", "TEC " + i + " updated") +
         "</div>" +
-        '<div class="pp-subcard">' +
-          '<div class="pp-subcard-title">Laser' + i + " Current</div>" +
-          control("Current Control (mA)", "fa-bolt", "cc" + i, CURR, prev, 1, "mA") +
-        "</div>" +
-        '<div class="d-flex justify-content-end gap-2">' +
-          '<button type="button" class="btn btn-ghost">Cancel</button>' +
-          '<button type="button" class="btn btn-primary" data-toast="TEC ' + i + " &amp; Laser" + i + ' updated">Save</button>' +
+        '<div class="pp-subcard" data-form>' +
+          control("Current Control (mA)", "fa-bolt", "cc" + i, CURR, prev, 1, "mA",
+            ' data-confirm-when="on" data-confirm-title="Turn ON Laser' + i + ' Current?" data-confirm-text="Laser' + i + ' output will be switched on." data-confirm-ok="Yes, Turn On" data-confirm-danger="false"',
+            "Laser" + i + " Current updated") +
         "</div>" +
       "</div></details>";
   }
   document.getElementById("channels").innerHTML = html;
+
+  // A channel header shows "Unsaved" while its TEC or Laser block has unsaved changes
+  function syncFlags() {
+    document.querySelectorAll("#channels details").forEach(function (d) {
+      d.querySelector("summary [data-dirty-flag]").hidden = !d.querySelector("[data-form].is-dirty");
+    });
+  }
+  ["input", "change", "click"].forEach(function (t) { document.addEventListener(t, function () { setTimeout(syncFlags, 0); }); });
 
   // slider <-> Set Value
   document.addEventListener("input", function (e) {
@@ -140,6 +171,17 @@
     exp.textContent = allOpen ? "Collapse all" : "Expand all";
   });
   document.querySelector("#channels details").open = true;   // first channel open by default
+  document.addEventListener("pp:section", function (e) { var d = document.getElementById(e.detail); if (d && d.tagName === "DETAILS") d.open = true; });   // #channel-N from Dashboard
+
+  /* ---------- Output / module switches (demo: visual only, no CGI call; confirmed first) ---------- */
+  ["switch_output", "switch_module"].forEach(function (id) {
+    var el = document.getElementById(id), label = document.querySelector('[data-state-for="' + id + '"]');
+    el.addEventListener("change", function () {
+      label.textContent = el.checked ? "ON" : "OFF";
+      label.className = el.checked ? "text-ok" : "text-bad";
+    });
+  });
+
 })();
 </script>
 </body>

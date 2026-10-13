@@ -8,134 +8,182 @@
   <!-- All local: Bootstrap 4.0.0 + FontAwesome 5.11.2 (same as the real box) + theme -->
   <link rel="stylesheet" href="../assets/vendor/bootstrap/bootstrap.min.css" />
   <link rel="stylesheet" href="../assets/vendor/fontawesome/css/all.min.css" />
+  <!-- SweetAlert v1: the same plugin the real Pilot ships (Plugins/SweetAlerts), restyled in pilot-theme.css -->
+  <link rel="stylesheet" href="../assets/vendor/sweetalert/sweetalert.css" />
   <link rel="stylesheet" href="../assets/pilot-theme.css" />
 </head>
 <body class="shell-pending" data-page="dashboard">
 <main id="page" class="page">
 
-  <!-- Page header -->
-  <div class="page-head">
-    <div>
-      <p class="page-eyebrow">Dashboard</p>
-      <h1 class="page-title">Adoption-ELS</h1>
-      <p class="page-sub">Lyra-ELS &middot; WDM External Laser Source</p>
+  <!-- 1. Hero: the appliance at a glance -->
+  <section class="db-hero">
+    <div class="db-hero-img"><img src="../assets/img/adoption.png" alt="Adoption-ELS appliance front panel" /></div>
+    <div class="db-hero-main">
+      <p class="db-hero-eyebrow">Dashboard</p>
+      <h1 class="db-hero-title">Adoption-ELS</h1>
+      <p class="db-hero-sub">Lyra-ELS &middot; WDM External Laser Source</p>
+      <div class="db-hero-meta">
+        <span><i class="fas fa-code-branch"></i>Software <b id="dbSw" class="mono"></b></span>
+        <span><i class="fas fa-cube"></i>Build <b id="dbBuild" class="mono"></b></span>
+        <span><i class="far fa-clock"></i><b id="dbUptime" class="mono"></b></span>
+      </div>
     </div>
-    <div class="d-flex flex-wrap gap-2">
-      <span class="pp-badge ok">Health OK</span>
-      <span class="pp-badge ok">Software OK</span>
+    <div class="db-hero-side">
+      <div class="db-hero-state"><span id="dbHealth" class="pp-dot"></span><span>Health</span><b id="dbHealthTxt"></b></div>
+      <div class="db-hero-state"><span id="dbSoft" class="pp-dot"></span><span>Software</span><b id="dbSoftTxt"></b></div>
+      <div class="db-hero-state"><span id="dbRocker" class="pp-dot"></span><span>Rocker Switch</span><b id="dbRockerTxt"></b></div>
+      <div class="db-hero-state"><span id="dbKey" class="pp-dot"></span><span>Key Switch</span><b id="dbKeyTxt"></b></div>
+    </div>
+  </section>
+
+  <!-- 2. KPI tiles -->
+  <div class="row">
+    <div class="col-sm-6 col-xl-3 mb-4">
+      <a href="status.html#lasers" class="db-kpi">
+        <div class="db-kpi-head"><span class="pp-icon"><i class="fas fa-bolt"></i></span>Lasers<i class="fas fa-arrow-right db-kpi-go"></i></div>
+        <div class="db-kpi-value"><span id="kLasers"></span><small>/ 16 on</small></div>
+        <div id="kLasersSub" class="db-kpi-sub"></div>
+      </a>
+    </div>
+    <div class="col-sm-6 col-xl-3 mb-4">
+      <a href="status.html#tec" class="db-kpi" id="kTecCard">
+        <div class="db-kpi-head"><span class="pp-icon"><i class="fas fa-snowflake"></i></span>TEC<i class="fas fa-arrow-right db-kpi-go"></i></div>
+        <div class="db-kpi-value"><span id="kTec"></span><small>/ 16 connected</small></div>
+        <div id="kTecSub" class="db-kpi-sub"></div>
+      </a>
+    </div>
+    <div class="col-sm-6 col-xl-3 mb-4">
+      <a href="status.html#charts" class="db-kpi">
+        <div class="db-kpi-head"><span class="pp-icon"><i class="fas fa-thermometer-half"></i></span>CPU Temperature<i class="fas fa-arrow-right db-kpi-go"></i></div>
+        <div class="db-kpi-value"><span id="kTemp"></span><small>°C</small></div>
+        <div class="db-kpi-bar"><span id="kTempBar"></span></div>
+        <div class="db-kpi-sub">Warning at 70 °C &middot; core_voltage <b id="kVolt" class="mono"></b></div>
+      </a>
+    </div>
+    <div class="col-sm-6 col-xl-3 mb-4">
+      <div class="db-kpi db-kpi-ring">
+        <div>
+          <div class="db-kpi-head"><span class="pp-icon"><i class="fas fa-memory"></i></span>Memory</div>
+          <div class="db-kpi-value"><span id="kMemPct"></span><small>% used</small></div>
+          <div id="kMemSub" class="db-kpi-sub mono"></div>
+        </div>
+        <div id="kMemRing" class="db-ring"><span></span></div>
+      </div>
     </div>
   </div>
 
+  <!-- 3. Needs attention + System information -->
   <div class="row">
-    <!-- Appliance image -->
-    <div class="col-lg-5 mb-4 mb-lg-0 d-flex">
-      <section class="pp-card d-flex flex-column w-100">
+    <div class="col-xl-7 mb-4">
+      <section id="attention" class="pp-card h-100">
         <div class="pp-card-head">
-          <h2 class="pp-card-title">Appliance</h2>
-          <span class="mono small-12 text-muted">Adoption-ELS</span>
+          <span class="pp-icon bad"><i class="fas fa-exclamation-triangle"></i></span>
+          <h2 class="pp-card-title">Needs attention</h2>
+          <span id="attnCount" class="pp-badge no-dot sm bad"></span>
         </div>
-        <div class="d-flex flex-1 align-items-center justify-content-center p-4" style="background:linear-gradient(#fff,var(--canvas));border-radius:0 0 12px 12px">
-          <img src="../assets/img/adoption.png" alt="Adoption-ELS appliance front panel" class="img-fluid" style="max-height:300px;object-fit:contain" />
-        </div>
+        <div id="attnList"></div>
       </section>
     </div>
-
-    <!-- System information (real fields from cgi_Index) -->
-    <div class="col-lg-7">
-      <section class="pp-card">
+    <div class="col-xl-5 mb-4">
+      <section id="system" class="pp-card h-100">
         <div class="pp-card-head">
+          <span class="pp-icon"><i class="fas fa-microchip"></i></span>
           <h2 class="pp-card-title">System Information</h2>
-          <i class="fas fa-microchip text-muted"></i>
         </div>
-        <dl class="pp-kv">
-          <div class="pp-kv-row"><dt>Software Version</dt><dd class="mono">2.05</dd></div>
-          <div class="pp-kv-row"><dt>Build Version</dt><dd class="mono">fw110126</dd></div>
-          <div class="pp-kv-row">
-            <dt>System</dt>
-            <dd>
-              <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
-                <span class="text-muted">Uptime</span>
-                <span class="mono">up 10 wk(s) 2 day(s) 4 hr(s) 27 min(s)</span>
-              </div>
-              <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
-                <span class="text-muted">Boot Time</span>
-                <span class="pp-badge bad no-dot"><i class="fas fa-exclamation-triangle" style="font-size:10px"></i>Not Available !!</span>
-              </div>
-            </dd>
-          </div>
-          <div class="pp-kv-row">
-            <dt>Free Space</dt>
-            <dd>
-              <div class="row">
-                <div class="col-6"><div class="pp-tile"><div class="pp-tile-label">Data</div><div class="pp-tile-value">10.98 GB</div></div></div>
-                <div class="col-6"><div class="pp-tile"><div class="pp-tile-label">xData</div><div class="pp-tile-value">10.98 GB</div></div></div>
-              </div>
-            </dd>
-          </div>
-          <div class="pp-kv-row">
-            <dt>Memory</dt>
-            <dd>
-              <div class="d-flex flex-wrap justify-content-between gap-2 mb-2 mono small-12">
-                <span class="text-muted">Total <span class="text-ink">4 GB</span></span>
-                <span class="text-muted">Used <span class="text-brand">1.02 GB</span></span>
-                <span class="text-muted">Free <span class="text-ink">2.8 GB</span></span>
-              </div>
-              <!-- bar width = Used / Total = 1.02 / 4 -->
-              <div class="pp-meter"><span style="width:25.5%"></span></div>
-            </dd>
-          </div>
-        </dl>
-
-        <!-- Name / Health / Software (real status table) -->
-        <div class="p-4" style="border-top:1px solid var(--line)">
-          <table class="pp-table">
-            <thead><tr><th>Name</th><th class="center">Health</th><th class="center">Software</th></tr></thead>
-            <tbody>
-              <tr>
-                <td class="fw-500">Status</td>
-                <td class="center"><i class="fas fa-check-circle" style="font-size:20px;color:var(--ok)" title="Healthy"></i></td>
-                <td class="center"><i class="fas fa-check-circle" style="font-size:20px;color:var(--ok)" title="Software OK"></i></td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="db-info">
+          <div><span>Software Version</span><b id="iSw" class="mono"></b></div>
+          <div><span>Build Version</span><b id="iBuild" class="mono"></b></div>
+          <div><span>Uptime</span><b id="iUptime" class="mono"></b></div>
+          <div><span>Boot Time</span><b id="iBoot"></b></div>
+          <div><span>Free Space &middot; Data</span><b id="iData" class="mono"></b></div>
+          <div><span>Free Space &middot; xData</span><b id="iXdata" class="mono"></b></div>
+          <div><span>Disk used</span><b id="iDisks" class="mono"></b></div>
+          <div><span>Ethernet</span><b id="iEth"></b></div>
         </div>
       </section>
     </div>
   </div>
 
-  <!-- Quick access to the real screens -->
-  <h2 class="section-label">Go to</h2>
-  <div class="row">
-    <div class="col-sm-6 col-xl-3 mb-3">
-      <a href="status.html" class="pp-link-card">
-        <div class="d-flex align-items-center gap-3"><span class="pp-icon lg"><i class="fas fa-tachometer-alt"></i></span><span class="fw-600">Status</span><i class="fas fa-arrow-right arrow"></i></div>
-        <p>Current Settings, laser currents, Temp / PSU / Ethernet / Disk charts</p>
-      </a>
+  <!-- 4. Channels at a glance (TEC n + Laser n) -->
+  <section class="pp-card">
+    <div class="pp-card-head flex-wrap">
+      <span class="pp-icon"><i class="fas fa-th"></i></span>
+      <h2 class="pp-card-title">Channels <span class="light">&middot; TEC + Laser</span></h2>
+      <span class="d-flex align-items-center gap-3 small-12 text-muted">
+        <span class="d-flex align-items-center gap-2"><span class="pp-dot ok static"></span>Connected / On</span>
+        <span class="d-flex align-items-center gap-2"><span class="pp-dot bad static"></span>Disconnected</span>
+        <span class="d-flex align-items-center gap-2"><span class="pp-dot static"></span>Off</span>
+      </span>
+      <a href="module-control.html" class="btn btn-default btn-sm">Open Module Control<i class="fas fa-arrow-right"></i></a>
     </div>
-    <div class="col-sm-6 col-xl-3 mb-3">
-      <a href="setup.html" class="pp-link-card">
-        <div class="d-flex align-items-center gap-3"><span class="pp-icon lg"><i class="fas fa-tools"></i></span><span class="fw-600">SetUp</span><i class="fas fa-arrow-right arrow"></i></div>
-        <p>Connection, Module Control, Calibration, Debug</p>
-      </a>
-    </div>
-    <div class="col-sm-6 col-xl-3 mb-3">
-      <a href="administration.html" class="pp-link-card">
-        <div class="d-flex align-items-center gap-3"><span class="pp-icon lg"><i class="fas fa-server"></i></span><span class="fw-600">Administration</span><i class="fas fa-arrow-right arrow"></i></div>
-        <p>Upload OS Package, Firmware Boot Image, Factory Reset</p>
-      </a>
-    </div>
-    <div class="col-sm-6 col-xl-3 mb-3">
-      <a href="support.html" class="pp-link-card">
-        <div class="d-flex align-items-center gap-3"><span class="pp-icon lg"><i class="fas fa-life-ring"></i></span><span class="fw-600">Support</span><i class="fas fa-arrow-right arrow"></i></div>
-        <p>Self Test, Remote Diagnostic, Manual, Send Logs</p>
-      </a>
-    </div>
-  </div>
+    <div id="channels" class="db-channels"></div>
+  </section>
 
 </main>
 <script src="../assets/vendor/jquery/jquery-3.4.1.min.js"></script>
 <script src="../assets/vendor/bootstrap/popper.min.js"></script>
 <script src="../assets/vendor/bootstrap/bootstrap.min.js"></script>
+<script src="../assets/vendor/sweetalert/sweetalert.js"></script>
+<script src="../assets/demo-state.js"></script>
 <script src="../assets/shell.js"></script>
+<script src="../assets/ui.js"></script>
+<script>
+(function () {
+  var S = window.PILOT_STATE, $ = function (id) { return document.getElementById(id); };
+  function txt(id, v) { $(id).textContent = v; }
+  function dot(id, ok) {
+    $(id).className = "pp-dot " + (ok ? "ok" : "bad");
+    var chip = $(id).closest(".db-hero-state"); if (chip) chip.className = "db-hero-state " + (ok ? "is-ok" : "is-bad");
+  }
+
+  /* Hero */
+  txt("dbSw", S.softwareVersion); txt("dbBuild", S.buildVersion); txt("dbUptime", S.uptime);
+  dot("dbHealth", S.health); txt("dbHealthTxt", S.health ? "OK" : "Fault");
+  dot("dbSoft", S.software); txt("dbSoftTxt", S.software ? "OK" : "Fault");
+  dot("dbRocker", S.rockerSwitch); txt("dbRockerTxt", S.rockerSwitch ? "ON" : "OFF");
+  dot("dbKey", S.keySwitch); txt("dbKeyTxt", S.keySwitch ? "ON" : "OFF");
+
+  /* KPIs */
+  var lasersOn = S.lasers.filter(function (l) { return l.current > 0; }).length;
+  txt("kLasers", lasersOn);
+  txt("kLasersSub", lasersOn ? "Total " + S.lasers.reduce(function (a, l) { return a + l.current; }, 0) + " mA" : "All channels at 0 mA");
+  var tecOk = S.tec.filter(function (t) { return t.connected; }).length;
+  txt("kTec", tecOk);
+  txt("kTecSub", tecOk === S.tec.length ? "All connected" : (S.tec.length - tecOk) + " disconnected");
+  $("kTecCard").classList.toggle("is-bad", tecOk < S.tec.length);
+  txt("kTemp", S.cpuTemp.toFixed(1)); txt("kVolt", S.coreVoltage.toFixed(2) + " V");
+  $("kTempBar").style.width = Math.min(100, S.cpuTemp / 80 * 100) + "%";          // scale 0–80 °C
+  $("kTempBar").className = S.cpuTemp >= 70 ? "warn" : "";
+  var memPct = S.memory.used / S.memory.total * 100;
+  txt("kMemPct", memPct.toFixed(1));
+  txt("kMemSub", S.memory.used + " of " + S.memory.total + " GB · " + S.memory.free + " GB free");
+  $("kMemRing").style.setProperty("--p", memPct);
+
+  /* Needs attention (same source as the bell) */
+  var alerts = window.PILOT_ALERTS();
+  txt("attnCount", alerts.length || "");
+  $("attnList").innerHTML = alerts.length ? alerts.map(function (a) {
+    return '<a class="pp-attn" href="' + a.href + '"><span class="pp-dot ' + a.level + '"></span>' +
+      '<span><span class="d-block fw-500">' + a.title + '</span><span class="d-block small-12 text-muted">' + a.detail + "</span></span>" +
+      '<span class="go">Open <i class="fas fa-arrow-right" style="font-size:11px"></i></span></a>';
+  }).join("") : '<div class="pp-card-body text-muted small-13"><i class="fas fa-check-circle text-ok mr-2"></i>All clear</div>';
+
+  /* System information */
+  txt("iSw", S.softwareVersion); txt("iBuild", S.buildVersion); txt("iUptime", S.uptime);
+  $("iBoot").innerHTML = S.bootTime ? '<span class="mono">' + S.bootTime + "</span>" : '<span class="pp-badge bad no-dot sm">Not Available !!</span>';
+  txt("iData", S.freeSpace.data + " GB"); txt("iXdata", S.freeSpace.xdata + " GB");
+  txt("iDisks", S.disks.map(function (d) { return d.name.replace(" Disk", "") + " " + d.used + "%"; }).join(" · "));
+  $("iEth").innerHTML = S.ethernet.map(function (e) { return '<span class="pp-badge sm ' + (e.up ? "ok" : "bad") + '">' + e.name + " " + (e.up ? "up" : "down") + "</span>"; }).join(" ");
+
+  /* Channels */
+  $("channels").innerHTML = S.lasers.map(function (l, k) {
+    var t = S.tec[k], on = l.current > 0;
+    return '<a href="module-control.html#channel-' + (k + 1) + '" class="db-ch" title="TEC ' + (k + 1) + " " + (t.connected ? "connected" : "disconnected") + " · Laser" + (k + 1) + " " + l.current + ' mA">' +
+      '<span class="db-ch-no">' + (k + 1) + "</span>" +
+      '<span class="db-ch-row"><span class="pp-dot ' + (t.connected ? "ok" : "bad") + '"></span>TEC</span>' +
+      '<span class="db-ch-row"><span class="pp-dot' + (on ? " ok" : "") + '"></span>Laser <b class="mono">' + l.current + "</b></span></a>";
+  }).join("");
+})();
+</script>
 </body>
 </html>
